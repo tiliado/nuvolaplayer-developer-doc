@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>URL Filtering (URL Sandbox)</title>
+    <link rel="stylesheet" href="../theme/bootstrap.min.css" />
+    <link rel="stylesheet" href="../theme/pygments.css" />
+    <link rel="stylesheet" href="../theme/main.css" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="../theme/jquery.min.js"></script>
+    <script src="../theme/bootstrap.min.js"></script>
+  </head>
+  <body>
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+<a class="navbar-brand" href="../index.html">Nuvola Player Development</a>    </div><!-- .navbar-header -->
+
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+  <ul class="nav navbar-nav">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../core.html">Core</a></li>
+            <li class="dropdown">
+              <a href="../apps.html" class="dropdown-toggle" data-toggle="dropdown">Service Integrations <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="../apps.html">Introduction</a></li>
+                <li><a href="../apps/porting.html">Porting to Nuvola Player 3</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Basic</li>
+                <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
+                <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
+                <li><a href="../apps/distribute.html">Distribute Service Integration</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Advanced</li>
+                <li><a href="../apps/guide.html">Full Service Integration Guide</a></li>
+                <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a></li>
+                <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a></li>
+                <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
+                <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
+                <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+              </ul>
+            </li>
+          </ul>
+</div><!-- .navbar-collapse -->  </div>
+</nav>    
+    <div class="container">
+      <div class="row">
+        
+  <div class="col-sm-12">
+      <div class="page-header text-center">
+        <h1 id="top">URL Filtering (URL Sandbox)</h1>
+      </div>
+  </div>
+  <div class="col-md-2 col-lg-3 sidebar">
+      <p><strong>Contents</strong></p>
+      <div class="toc">
+<ul>
+<li><a href="#default-url-filter">Default URL Filter</a></li>
+<li><a href="#custom-url-filter">Custom URL Filter</a></li>
+<li><a href="#debugging-url-filter">Debugging URL Filter</a></li>
+</ul>
+</div>
+    <span class="backtotop"><a href="#top">↑ Back to top ↑</a></span>
+  </div>
+  <div class="col-sm-12 col-md-10 col-lg-9">
+    <p>URL filtering (URL sandbox) is used to decide which URLs are opened in a default web browser instead
+of Nuvola Player. For example, a Google Play Music user definitely doesn't want to open a Google
+Plus link in Nuvola Player, but in his default web browser.</p>
+<h2 id="default-url-filter">Default URL Filter</h2>
+<p><a href="./api_reference.html#Nuvola.WebApp">Nuvola.WebApp</a> looks at <code>allowed_uri</code> field of <code>metadata.json</code>.
+If this field is not empty, it is compiled as a <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions">regular expression</a> and stored at
+<code>WebApp.allowedURI</code> property. The default URL filter implemented in
+<a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a> then allows
+navigation only to URLs that match that regular expression, other URLs are opened in a default web
+browser.</p>
+<div class="codehilite"><pre><span class="p">{</span>
+    <span class="p">...</span>
+    <span class="s2">"allowed_uri"</span><span class="o">:</span> <span class="s2">"^https?://(play\\.google\\.com/)"</span>
+<span class="p">}</span>
+</pre></div>
+<h2 id="custom-url-filter">Custom URL Filter</h2>
+<p>Since the default URL filter is a JavaScript function, you can override it to match your needs.
+The method <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a>
+is a handler for <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest signal</a>.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+
+<span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onNavigationRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Open in a new window? {1}"</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">newWindow</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"I hate long URLS: {1} has {2} characters!"</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+        <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
+<p>The <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest</a> signal is
+executed in a pure JavaScript environment without
+<a href="https://developer.mozilla.org/en/docs/Web/API/Window">Window object</a>.
+Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
+instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
+</div></div>
+<h2 id="debugging-url-filter">Debugging URL Filter</h2>
+<p>If you run Nuvola Player with <code>-D</code> or <code>--debug</code> flag, you will see URL filtering in action:</p>
+<div class="codehilite"><pre>[Runner:DEBUG    Nuvola] webengine.vala:443: Navigation, current window:
+uri = https://checkout.google.com/inapp/frontend/passive?&amp;usid=0&amp;plid=0,
+result = true, frame = (null), type = WEBKIT_NAVIGATION_TYPE_OTHER
+
+[Runner:DEBUG    Nuvola] webengine.vala:440: Navigation, new window:
+uri = https://plus.google.com/u/0/?tab=YX, result = true, frame = _blank,
+type = WEBKIT_NAVIGATION_TYPE_LINK_CLICKED
+</pre></div>
+<p>The debugging message contains following information:</p>
+<ul>
+<li>Whether to open request in a new window or in the current window (<code>request.newWindow</code>).</li>
+<li>The URL of the request (<code>request.url</code>).</li>
+<li>The result of the <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest</a>
+    signal (<code>request.approved</code>).</li>
+<li>The type of the request.</li>
+</ul>
+<div class="panel panel-danger"><p class="panel-heading">URL filter works only for link clicks</p><div class="panel-body">
+<p>While the <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest</a> signal
+is currently emitted for all types of navigation, the result of the URL filter is taken into
+account only for link clicks (<code>WEBKIT_NAVIGATION_TYPE_LINK_CLICKED</code>). This may change in the
+future.</p>
+</div></div>
+<div class="panel panel-danger"><p class="panel-heading">Opening in a new window</p><div class="panel-body">
+<p>Opening links in a new window hasn't been implemented yet. If your service's functionality
+depends on it, <a href="https://groups.google.com/d/forum/nuvola-player-devel">let us know that</a> so we can prioritize this task.</p>
+</div></div>
+
+<div class="footer">
+  <hr />
+  <div class="panel panel-primary">
+    <p class="panel-heading">
+      Questions? Feedback?
+    </p>
+    <div class="panel-body">
+      <p>
+        Having trouble? We'd like to help!
+      </p>
+      <ul>
+        <li>Search for information in the archives of
+          <a href="https://groups.google.com/d/forum/nuvola-player-devel">the nuvola-player-devel
+          mailing list</a>, or post a question.
+        </li>
+        <li>
+          If you notice errors with this documentation, please
+          <a href="https://github.com/tiliado/nuvolaplayer/issues">open a ticket and let us
+          know</a>! Please only use the ticket tracker for criticisms and improvements on the docs.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <p class="text-center">
+    Generated by <a href="http://getpelican.com/">Pelican</a>.
+    Get <a href="https://github.com/tiliado/nuvolaplayer/tree/master/doc">source code</a>.
+    Uses <a href="http://getbootstrap.com/">Bootstrap</a> theme
+    <a href="http://bootswatch.com/united/">United</a>.
+  </p>
+</div>  </div> 
+      </div>
+    </div>
+  </body>
+</html>

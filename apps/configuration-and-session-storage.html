@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Configuration and session storage</title>
+    <link rel="stylesheet" href="../theme/bootstrap.min.css" />
+    <link rel="stylesheet" href="../theme/pygments.css" />
+    <link rel="stylesheet" href="../theme/main.css" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="../theme/jquery.min.js"></script>
+    <script src="../theme/bootstrap.min.js"></script>
+  </head>
+  <body>
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+<a class="navbar-brand" href="../index.html">Nuvola Player Development</a>    </div><!-- .navbar-header -->
+
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+  <ul class="nav navbar-nav">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../core.html">Core</a></li>
+            <li class="dropdown">
+              <a href="../apps.html" class="dropdown-toggle" data-toggle="dropdown">Service Integrations <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="../apps.html">Introduction</a></li>
+                <li><a href="../apps/porting.html">Porting to Nuvola Player 3</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Basic</li>
+                <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
+                <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
+                <li><a href="../apps/distribute.html">Distribute Service Integration</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Advanced</li>
+                <li><a href="../apps/guide.html">Full Service Integration Guide</a></li>
+                <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a></li>
+                <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a></li>
+                <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
+                <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
+                <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+              </ul>
+            </li>
+          </ul>
+</div><!-- .navbar-collapse -->  </div>
+</nav>    
+    <div class="container">
+      <div class="row">
+        
+  <div class="col-sm-12">
+      <div class="page-header text-center">
+        <h1 id="top">Configuration and session storage</h1>
+      </div>
+  </div>
+  <div class="col-md-2 col-lg-3 sidebar">
+      <p><strong>Contents</strong></p>
+      <div class="toc">
+<ul>
+<li><a href="#persistent-configuration">Persistent Configuration</a><ul>
+<li><a href="#define-configuration-key-names">Define configuration key names</a></li>
+<li><a href="#set-default-values">Set default values</a></li>
+<li><a href="#getset-values">Get/set values</a></li>
+</ul>
+</li>
+<li><a href="#temporary-session-information">Temporary session information</a><ul>
+<li><a href="#define-configuration-key-names_1">Define configuration key names</a></li>
+<li><a href="#set-default-values_1">Set default values</a></li>
+<li><a href="#getset-values_1">Get/set values</a></li>
+</ul>
+</li>
+<li><a href="#forms-for-user-input">Forms for user input</a></li>
+</ul>
+</div>
+    <span class="backtotop"><a href="#top">↑ Back to top ↑</a></span>
+  </div>
+  <div class="col-sm-12 col-md-10 col-lg-9">
+    <p>Nuvola Player 3 allows service integrations to store both a persistent configuration and a temporary
+session information.</p>
+<h2 id="persistent-configuration">Persistent Configuration</h2>
+<p>Application can use <a href="./api_reference.html#Nuvola.ConfigStorage">Nuvola.ConfigStorage API</a> to store the persistent
+configuration. An initialized Nuvola.ConfigStorage object is available as
+<a href="./api_reference.html#Nuvola.config">Nuvola.config</a>. Here follows usual work-flow.</p>
+<h3 id="define-configuration-key-names">Define configuration key names</h3>
+<p>Define "constants" with names of configuration key.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
+<span class="p">{</span>
+
+
+<span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">"app.address"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">HOST</span> <span class="o">=</span> <span class="s2">"app.host"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="s2">"app.port"</span><span class="p">;</span>
+
+<span class="p">...</span>
+</pre></div>
+<h3 id="set-default-values">Set default values</h3>
+<p><a href="./api_reference.html#Nuvola.KeyValueStorage.setDefault">Set default values</a> in
+<a href="./api_reference.html#Nuvola.WebApp._onInitAppRunner">WebApp._onInitAppRunner</a> signal handler. This code is run
+only once at start-up.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">,</span> <span class="s2">"default"</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">HOST</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
+<p>The <a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal is executed in a
+pure JavaScript environment without <a href="https://developer.mozilla.org/en/docs/Web/API/Window">Window object</a>.
+Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
+instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
+</div></div>
+<h3 id="getset-values">Get/set values</h3>
+<p>Get/set values anywhere in your integration script with
+<a href="./api_reference.html#Nuvola.KeyValueStorage.get">Nuvola.config.get</a> or
+<a href="./api_reference.html#Nuvola.KeyValueStorage.set">Nuvola.config.set</a>.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+
+    <span class="cm">/* Start of example */</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"Current value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">)));</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"Current value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">HOST</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">HOST</span><span class="p">,</span> <span class="s2">"localhost"</span><span class="p">);</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">"8000"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"New value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">)));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"New value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)));</span>
+    <span class="p">}</span>
+    <span class="cm">/* End of example */</span>
+
+    <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="s2">"interactive"</span> <span class="o">||</span> <span class="nx">state</span> <span class="o">===</span> <span class="s2">"complete"</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">();</span>
+    <span class="k">else</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"DOMContentLoaded"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+<p>If you open JavaScript console in WebKit Web Inspector, you see following output:</p>
+<div class="codehilite"><pre># The first run
+Current value app.host = '' (integrate.js, line 76)
+Current value app.port = '' (integrate.js, line 77)
+New value app.host = 'localhost' (integrate.js, line 82)
+New value app.port = '8000' (integrate.js, line 83)
+
+# The second and other runs
+Current value app.host = 'localhost' (integrate.js, line 76)
+Current value app.port = '8000' (integrate.js, line 77)
+</pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Always use Nuvola.config.setDefault()</p><div class="panel-body">
+<p>It's a programmer's error to manipulate with configuration keys without
+<a href="./api_reference.html#Nuvola.KeyValueStorage.setDefault">default values</a>.  The behavior of
+<a href="./api_reference.html#Nuvola.KeyValueStorage.get">Nuvola.config.get()</a> is undefined in that case,
+i.e. it can do and return anything, throw error or launch a nuclear weapon.</p>
+</div></div>
+<div class="panel panel-info"><p class="panel-heading">Implementation detail</p><div class="panel-body">
+<p>The configuration is stored in a JSON file
+<code>~/.config/nuvolaplayer3/apps_data/&lt;app_id&gt;/config.json</code>.</p>
+</div></div>
+<h2 id="temporary-session-information">Temporary session information</h2>
+<p>Application can use Nuvola.SessionStorage API to store the temporary session information. An
+initialized <a href="./api_reference.html#Nuvola.SessionStorage">Nuvola.SessionStorage</a> object is available as
+<a href="./api_reference.html#Nuvola.session">Nuvola.session</a>. Here follows usual work-flow.</p>
+<h3 id="define-configuration-key-names_1">Define configuration key names</h3>
+<p>Define constants with names of session keys.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
+<span class="p">{</span>
+
+
+<span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">"app.address"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">HOST</span> <span class="o">=</span> <span class="s2">"app.host"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="s2">"app.port"</span><span class="p">;</span>
+
+<span class="p">...</span>
+</pre></div>
+<h3 id="set-default-values_1">Set default values</h3>
+<p><a href="./api_reference.html#Nuvola.KeyValueStorage.setDefault">Set default values</a> in
+<a href="./api_reference.html#Nuvola.WebApp._onInitAppRunner">WebApp._onInitAppRunner</a> signal handler. This code is run
+only once at start-up.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">,</span> <span class="s2">"default"</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">HOST</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
+<p>The <a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal is executed in a
+pure JavaScript environment without <a href="https://developer.mozilla.org/en/docs/Web/API/Window">Window object</a>.
+Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
+instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
+</div></div>
+<h3 id="getset-values_1">Get/set values</h3>
+<p>Get/set values anywhere in your integration script with
+<a href="./api_reference.html#Nuvola.KeyValueStorage.get">Nuvola.session.get</a> or
+<a href="./api_reference.html#Nuvola.KeyValueStorage.set">Nuvola.session.set</a>.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+
+    <span class="cm">/* Start of example */</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"Current value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">)));</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"Current value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">HOST</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">HOST</span><span class="p">,</span> <span class="s2">"localhost"</span><span class="p">);</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">"8000"</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"New value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">)));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"New value {1} = '{2}'"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">)));</span>
+    <span class="p">}</span>
+    <span class="cm">/* End of example */</span>
+
+    <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="s2">"interactive"</span> <span class="o">||</span> <span class="nx">state</span> <span class="o">===</span> <span class="s2">"complete"</span><span class="p">)</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">();</span>
+    <span class="k">else</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"DOMContentLoaded"</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+<p>If you open JavaScript console in WebKit Web Inspector, you see following output:</p>
+<div class="codehilite"><pre># When a new instance loads
+Current value app.host = '' (integrate.js, line 76)
+Current value app.port = '' (integrate.js, line 77)
+New value app.host = 'localhost' (integrate.js, line 82)
+New value app.port = '8000' (integrate.js, line 83)
+
+# When the page is reloaded
+Current value app.host = 'localhost' (integrate.js, line 76)
+Current value app.port = '8000' (integrate.js, line 77)
+</pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Always use Nuvola.session.setDefault()</p><div class="panel-body">
+<p>It's a programmer's error to manipulate with configuration keys without
+<a href="./api_reference.html#Nuvola.KeyValueStorage.setDefault">default values</a>. The behavior of
+<a href="./api_reference.html#Nuvola.KeyValueStorage.get">Nuvola.session.get()</a> is undefined in that case,
+i.e. it can do and return anything, throw error or launch a nuclear weapon.</p>
+</div></div>
+<h2 id="forms-for-user-input">Forms for user input</h2>
+<p>If you require input from user, take look at
+<a href="../apps/initialization-and-preferences-forms.html">Initialization and preferences forms</a>.</p>
+<p><img alt="App initialization form" src="../images/guide/form_fields_example.png"/></p>
+
+<div class="footer">
+  <hr />
+  <div class="panel panel-primary">
+    <p class="panel-heading">
+      Questions? Feedback?
+    </p>
+    <div class="panel-body">
+      <p>
+        Having trouble? We'd like to help!
+      </p>
+      <ul>
+        <li>Search for information in the archives of
+          <a href="https://groups.google.com/d/forum/nuvola-player-devel">the nuvola-player-devel
+          mailing list</a>, or post a question.
+        </li>
+        <li>
+          If you notice errors with this documentation, please
+          <a href="https://github.com/tiliado/nuvolaplayer/issues">open a ticket and let us
+          know</a>! Please only use the ticket tracker for criticisms and improvements on the docs.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <p class="text-center">
+    Generated by <a href="http://getpelican.com/">Pelican</a>.
+    Get <a href="https://github.com/tiliado/nuvolaplayer/tree/master/doc">source code</a>.
+    Uses <a href="http://getbootstrap.com/">Bootstrap</a> theme
+    <a href="http://bootswatch.com/united/">United</a>.
+  </p>
+</div>  </div> 
+      </div>
+    </div>
+  </body>
+</html>
