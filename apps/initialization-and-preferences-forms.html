@@ -50,6 +50,7 @@
                 <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
                 <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
                 <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+                <li><a href="../apps/translations.html">Translations</a></li>
               </ul>
             </li>
           </ul>
@@ -67,7 +68,7 @@
       <p><strong>Contents</strong></p>
       <div class="toc">
 <ul>
-<li><a href="#initialization-from">Initialization From</a></li>
+<li><a href="#initialization-form">Initialization Form</a></li>
 <li><a href="#preferences-form">Preferences form</a></li>
 <li><a href="#form-specification">Form Specification</a></li>
 <li><a href="#sample-form">Sample Form</a></li>
@@ -96,13 +97,13 @@
 you might want to get some user input. Theoretically, you could use
 JavaScript method <code>window.prompt()</code>, but Nuvola Player offers better methods:
 initialization and preferences forms.</p>
-<h2 id="initialization-from">Initialization From</h2>
+<h2 id="initialization-form">Initialization Form</h2>
 <p>Initialization form can be requested at a start-up of a web app instance before any web page is
 loaded. You should use it only for configuration your service information cannot live without.
 For example, Logitech Media Server integration needs to know an address of server instance,
 because it has no idea what web page to load without this information.</p>
 <p>The initialization from is show when <code>entries</code> parameter of 
-<a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal
+<a href="./api_reference.html#Nuvola.Core%3A%3AInitializationForm">Nuvola.Core::InitializationForm</a> signal
 handler is not left empty. The example bellow asks user to provide name to show a greeting.
 API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specification">described later</a>.</p>
 <div class="codehilite"><pre><span class="p">...</span>
@@ -116,12 +117,17 @@ API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specifi
 
 <span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
 
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="p">{</span>
     <span class="c1">// If user name is not configured, request initialization form</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">))</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
@@ -148,7 +154,7 @@ API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specifi
 <p><img alt="Initialization form" src="../images/guide/initialization_form.png"/>
 <img alt="After initialization form" src="../images/guide/after_initialization_form.png"/></p>
 <div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
-<p>The <a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal is executed in a
+<p>The <a href="./api_reference.html#Nuvola.Core%3A%3AInitializationForm">Nuvola.Core::InitializationForm</a> signal is executed in a
 pure JavaScript environment without <a href="https://developer.mozilla.org/en/docs/Web/API/Window">Window object</a>.
 Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
 instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
@@ -162,7 +168,7 @@ OK button.</p>
 add extra configuration option not necessary needed in initialization phase.</p>
 <p>Preferences form is shown when user select Preferences from menu. NuvolaKit allows you to add
 preferences specific to your service integration in 
-<a href="./api_reference.html#Nuvola.Core%3A%3AAppendPreferences">Nuvola.Core::AppendPreferences</a> signal handler.
+<a href="./api_reference.html#Nuvola.Core%3A%3APreferencesForm">Nuvola.Core::PreferencesForm</a> signal handler.
 API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specification">described later</a>.</p>
 <div class="codehilite"><pre><span class="p">...</span>
 
@@ -173,17 +179,24 @@ API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specifi
 
 <span class="p">...</span>
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
-    <span class="p">...</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
 
-    <span class="c1">// Call this._onAppendPreferences on AppendPreferences signal</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"AppendPreferences"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"PreferencesForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onAppendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// If user name is not configured, request initialization form</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">))</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPreferencesForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
 <span class="p">}</span>
@@ -199,7 +212,7 @@ API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specifi
 </pre></div>
 <p><img alt="Preferences form" src="../images/guide/preferences_form.png"/></p>
 <div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
-<p>The <a href="./api_reference.html#Nuvola.Core%3A%3AAppendPreferences">Nuvola.Core::AppendPreferences</a> signal is executed in a
+<p>The <a href="./api_reference.html#Nuvola.Core%3A%3APreferencesForm">Nuvola.Core::PreferencesForm</a> signal is executed in a
 pure JavaScript environment without <a href="https://developer.mozilla.org/en/docs/Web/API/Window">Window object</a>.
 Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
 instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
@@ -213,8 +226,8 @@ OK button.</p>
 a rule. Feel free to add different entries to these forms.</p>
 </div></div>
 <h2 id="form-specification">Form Specification</h2>
-<p>Both <a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> and
-<a href="./api_reference.html#Nuvola.Core%3A%3AAppendPreferences">Nuvola.Core::AppendPreferences</a> signals contain
+<p>Both <a href="./api_reference.html#Nuvola.Core%3A%3AInitializationForm">Nuvola.Core::InitializationForm</a> and
+<a href="./api_reference.html#Nuvola.Core%3A%3APreferencesForm">Nuvola.Core::PreferencesForm</a> signals contain
 <code>values</code> and <code>entries</code> parameters to describe forms. <code>values</code> is an object that contains
 key-value pairs describing current configuration. These values will appear in the form. <code>entries</code>
 is an array that contains specifications of form entries. Each form entry is an array, the first
@@ -246,12 +259,18 @@ item of a form entry describes a type of the entry.</p>
 </dd>
 </dl>
 <h2 id="sample-form">Sample Form</h2>
+<p>This sample form also makes use of <a href="../apps/translations.html">translation functions</a>.</p>
 <p><img alt="Example of form fields" src="../images/guide/form_fields_example.png"/></p>
 <div class="codehilite"><pre><span class="p">...</span>
 
 <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
 <span class="p">{</span>
 
+<span class="p">...</span>
+<span class="c1">// Translations</span>
+<span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<span class="p">...</span>
 <span class="cm">/* Form keys and values */</span>
 <span class="kd">var</span> <span class="nx">USER_NAME</span> <span class="o">=</span> <span class="s2">"app.user_name"</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">MARRIED</span> <span class="o">=</span> <span class="s2">"app.married"</span><span class="p">;</span>
@@ -265,14 +284,20 @@ item of a form entry describes a type of the entry.</p>
 <span class="kd">var</span> <span class="nx">HOST</span> <span class="o">=</span> <span class="s2">"app.host"</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="s2">"app.port"</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">COUNTRY_VARIANT</span> <span class="o">=</span> <span class="s2">"app.country_variant"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">COUNTRY_VARIANTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s2">"de"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"Germany"</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">"fr"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"France"</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">"co.uk"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"United Kingdom"</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">"com"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"United States"</span><span class="p">)]</span>
+<span class="p">];</span>
 
 <span class="p">...</span>
 
 <span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
     <span class="cm">/* Default configuration */</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">"Mr. Incognito"</span><span class="p">);</span>
@@ -284,12 +309,18 @@ item of a form entry describes a type of the entry.</p>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">"9000"</span><span class="p">);</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">"fr"</span><span class="p">);</span>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"AppendPreferences"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"PreferencesForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// If user name is not configured, request initialization form</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">))</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onAppendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPreferencesForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
 <span class="p">}</span>
@@ -300,31 +331,29 @@ item of a form entry describes a type of the entry.</p>
     <span class="nx">values</span><span class="p">[</span><span class="nx">MARRIED</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">MARRIED</span><span class="p">);</span>
     <span class="nx">values</span><span class="p">[</span><span class="nx">SPOUSE</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">SPOUSE</span><span class="p">);</span>
     <span class="nx">values</span><span class="p">[</span><span class="nx">WANNA_MARRY</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">WANNA_MARRY</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="s2">"My Beautiful Media Server"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">"Your name"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"bool"</span><span class="p">,</span> <span class="nx">MARRIED</span><span class="p">,</span> <span class="s2">"I'm married"</span><span class="p">,</span> <span class="p">[</span><span class="nx">SPOUSE</span><span class="p">],</span> <span class="p">[</span><span class="nx">WANNA_MARRY</span><span class="p">]]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">SPOUSE</span><span class="p">,</span> <span class="s2">"Your spouse"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"bool"</span><span class="p">,</span> <span class="nx">WANNA_MARRY</span><span class="p">,</span> <span class="s2">"I want to get married"</span><span class="p">]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"My Beautiful Media Server"</span><span class="p">)]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">USER_NAME</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"Your name"</span><span class="p">)]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"bool"</span><span class="p">,</span> <span class="nx">MARRIED</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"I'm married"</span><span class="p">),</span> <span class="p">[</span><span class="nx">SPOUSE</span><span class="p">],</span> <span class="p">[</span><span class="nx">WANNA_MARRY</span><span class="p">]]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">SPOUSE</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"Your spouse"</span><span class="p">)]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"bool"</span><span class="p">,</span> <span class="nx">WANNA_MARRY</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"I want to get married"</span><span class="p">)]);</span>
 
     <span class="nx">values</span><span class="p">[</span><span class="nx">ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">);</span>
     <span class="nx">values</span><span class="p">[</span><span class="nx">HOST</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">);</span>
     <span class="nx">values</span><span class="p">[</span><span class="nx">PORT</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="s2">"Logitech Media Server"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="s2">"Address of your Logitech Media Server"</span><span class="p">]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Logitech Media Server"</span><span class="p">)]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Address of your Logitech Media Server"</span><span class="p">)]);</span>
     <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_DEFAULT</span><span class="p">,</span>
-        <span class="s2">"use default address ('localhost:9000')"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">]]);</span>
+        <span class="nx">_</span><span class="p">(</span><span class="s2">"use default address ('localhost:9000')"</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">]]);</span>
     <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_CUSTOM</span><span class="p">,</span>
-        <span class="s2">"use custom address"</span><span class="p">,</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">],</span> <span class="kc">null</span><span class="p">]);</span>
+        <span class="nx">_</span><span class="p">(</span><span class="s2">"use custom address"</span><span class="p">),</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">],</span> <span class="kc">null</span><span class="p">]);</span>
     <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="s2">"Host"</span><span class="p">]);</span>
     <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="s2">"Port"</span><span class="p">]);</span>
 
     <span class="nx">values</span><span class="p">[</span><span class="nx">COUNTRY_VARIANT</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="s2">"Amazon Cloud Player"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="s2">"Preferred national variant"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">"de"</span><span class="p">,</span> <span class="s2">"Germany"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">"fr"</span><span class="p">,</span> <span class="s2">"France"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">"co.uk"</span><span class="p">,</span> <span class="s2">"United Kingdom"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">"com"</span><span class="p">,</span> <span class="s2">"United States"</span><span class="p">]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Amazon Cloud Player"</span><span class="p">)]);</span>
+    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Preferred national variant"</span><span class="p">)]);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]);</span>
 <span class="p">}</span>
 
 <span class="p">...</span>

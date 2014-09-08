@@ -50,6 +50,7 @@
                 <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
                 <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
                 <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+                <li><a href="../apps/translations.html">Translations</a></li>
               </ul>
             </li>
           </ul>
@@ -112,8 +113,14 @@ from letters, digits and dash. Then we create the actions in
     <a href="./api_reference.html#Nuvola.Actions.addRadioAction">Nuvola.Actions.addRadioAction</a>. Options are specified
     by an array <code>ratingOptions</code> and the initial state is set to <code>0</code> (0 starts).</li>
 </ul>
+<p>Note that <a href="../apps/translations.html">translation function</a> alias <code>C_</code> is used mark short
+translatable strings with context information ("Action") and <code>ngettext</code> for string with both
+singular and plural forms.</p>
 <div class="codehilite"><pre><span class="p">...</span>
-
+<span class="c1">// Translations</span>
+<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<span class="p">...</span>
 <span class="kd">var</span> <span class="nx">ACTION_ALERT</span> <span class="o">=</span> <span class="s2">"x-alert"</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">ACTION_THUMBS_UP</span> <span class="o">=</span> <span class="s2">"thumbs-up"</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">ACTION_THUMBS_DOWN</span> <span class="o">=</span> <span class="s2">"thumbs-down"</span><span class="p">;</span>
@@ -123,25 +130,26 @@ from letters, digits and dash. Then we create the actions in
 
 <span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="s2">"Alert!"</span><span class="p">,</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Action"</span><span class="p">,</span> <span class="s2">"Alert!"</span><span class="p">),</span>
         <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="s2">"Thumbs up"</span><span class="p">,</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Action"</span><span class="p">,</span> <span class="s2">"Thumbs up"</span><span class="p">),</span>
         <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">,</span> <span class="s2">"Thumbs down"</span><span class="p">,</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Action"</span><span class="p">,</span> <span class="s2">"Thumbs down"</span><span class="p">),</span>
         <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="c1">// stateId, label, mnemo_label, icon, keybinding</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"Rating: 0 stars"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"Rating: 1 star"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"Rating: 2 stars"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">"Rating: 3 stars"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s2">"Rating: 4 stars"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-        <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s2">"Rating: 5 stars"</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">]</span>
-    <span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">ratingOptions</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
+            <span class="nx">stars</span><span class="p">,</span> <span class="c1">// stateId</span>
+            <span class="c1">/// Star rating, {1} is a placeholder for a number </span>
+            <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">ngettext</span><span class="p">(</span><span class="s2">"Rating: {1} star"</span><span class="p">,</span> <span class="s2">"Rating: {1} stars"</span><span class="p">,</span> <span class="nx">stars</span><span class="p">),</span> <span class="nx">stars</span><span class="p">),</span> <span class="c1">// label</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="c1">// mnemo_label</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="c1">// icon</span>
+            <span class="kc">null</span>  <span class="c1">// keybinding</span>
+            <span class="p">]);</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">);</span>
 <span class="p">}</span>
 

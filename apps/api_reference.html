@@ -60,6 +60,7 @@
                 <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
                 <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
                 <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+                <li><a href="../apps/translations.html">Translations</a></li>
               </ul>
             </li>
           </ul>
@@ -133,12 +134,13 @@
 <li><a href="#Nuvola.Core">Core</a>
 <ul><li><a href="#Nuvola.Core.$init">$init</a></li>
 <li><a href="#Nuvola.Core.setHideOnClose">setHideOnClose</a></li>
-<li><a href="#Nuvola.Core::AppendPreferences">AppendPreferences</a></li>
 <li><a href="#Nuvola.Core::HomePageRequest">HomePageRequest</a></li>
 <li><a href="#Nuvola.Core::InitAppRunner">InitAppRunner</a></li>
 <li><a href="#Nuvola.Core::InitWebWorker">InitWebWorker</a></li>
+<li><a href="#Nuvola.Core::InitializationForm">InitializationForm</a></li>
 <li><a href="#Nuvola.Core::LastPageRequest">LastPageRequest</a></li>
 <li><a href="#Nuvola.Core::NavigationRequest">NavigationRequest</a></li>
+<li><a href="#Nuvola.Core::PreferencesForm">PreferencesForm</a></li>
 <li><a href="#Nuvola.Core::UriChanged">UriChanged</a></li>
 </ul></li>
 <li><a href="#Nuvola.KeyValueStorage">KeyValueStorage</a>
@@ -195,6 +197,13 @@
 <li><a href="#Nuvola.WebApp._onNavigationRequest">_onNavigationRequest</a></li>
 <li><a href="#Nuvola.WebApp._onUriChanged">_onUriChanged</a></li>
 <li><a href="#Nuvola.WebApp.start">start</a></li>
+</ul></li>
+</ul><h4>Namespaces</h4>
+<ul>
+<li><a href="#Nuvola.Translate">Translate</a>
+<ul><li><a href="#Nuvola.Translate.gettext">gettext</a></li>
+<li><a href="#Nuvola.Translate.ngettext">ngettext</a></li>
+<li><a href="#Nuvola.Translate.pgettext">pgettext</a></li>
 </ul></li>
 </ul><h4>Mixins</h4>
 <ul>
@@ -397,6 +406,10 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 <div class="codehilite"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
 <span class="c1">// &quot;My name is Bond. James Bond!&quot;</span>
+
+<span class="c1">// You can create an alias</span>
+<span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
 </pre></div></li>
 
 <li><small>function</small> <b id="Nuvola.log">Nuvola.log</b>(template)<br />
@@ -719,15 +732,6 @@ and run in background.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>signal</small> <b id="Nuvola.Core::AppendPreferences">AppendPreferences</b>(emitter, values, entries)<br />
-<p>Emitted when preferences dialog is being built.</p><p><b>Parameters</b></p>
-<ul>
-<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
-<li>Object <b>values</b> - mapping between form field names and their values</li>
-<li>Array of FormFieldArray <b>entries</b> - specification of form fields, see <a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a> for details</li>
-</ul>
-</li>
-
 <li><small>signal</small> <b id="Nuvola.Core::HomePageRequest">HomePageRequest</b>(emitter, request)<br />
 <p>Emitted on request for home page URL.</p>
 <p>See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p><p><b>Parameters</b></p>
@@ -741,14 +745,11 @@ and run in background.</p><p><b>Parameters</b></p>
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>signal</small> <b id="Nuvola.Core::InitAppRunner">InitAppRunner</b>(emitter, values, fields)<br />
+<li><small>signal</small> <b id="Nuvola.Core::InitAppRunner">InitAppRunner</b>(emitter)<br />
 <p>Emitted at start-up when initialization of the app runner process is needed.
-You can use it to append entries to initialization form (e. g. preferred national variant
-or address of custom service instance) and to perform own initialization routine.</p><p><b>Parameters</b></p>
+You can use it to perform own initialization routine.</p><p><b>Parameters</b></p>
 <ul>
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
-<li>Object <b>values</b> - mapping between form field names and their values</li>
-<li>Array of FormFieldArray <b>fields</b> - specification of form fields, see <a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a> for details</li>
 </ul>
 </li>
 
@@ -757,6 +758,15 @@ or address of custom service instance) and to perform own initialization routine
 <p>This signal is emitted just before a web page is loaded in the main frame of the web view.</p><p><b>Parameters</b></p>
 <ul>
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+</ul>
+</li>
+
+<li><small>signal</small> <b id="Nuvola.Core::InitializationForm">InitializationForm</b>(emitter, values, fields)<br />
+<p>Emitted at start-up when initialization form is being built.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>Object <b>values</b> - mapping between form field names and their values</li>
+<li>Array of FormFieldArray <b>fields</b> - specification of form fields, see <a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a> for details</li>
 </ul>
 </li>
 
@@ -785,6 +795,15 @@ or address of custom service instance) and to perform own initialization routine
     <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="nx">isAddressAllowed</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div></li>
+
+<li><small>signal</small> <b id="Nuvola.Core::PreferencesForm">PreferencesForm</b>(emitter, values, entries)<br />
+<p>Emitted when preferences dialog is being built.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>Object <b>values</b> - mapping between form field names and their values</li>
+<li>Array of FormFieldArray <b>entries</b> - specification of form fields, see <a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a> for details</li>
+</ul>
+</li>
 
 <li><small>signal</small> <b id="Nuvola.Core::UriChanged">UriChanged</b>(emitter, uri)<br />
 <p>Emitted after <a href="#Nuvola.Core::NavigationRequest">approved navigation</a> to a new page URL.</p><p><b>Parameters</b></p>
@@ -849,9 +868,9 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
 </ul>
-<div class="codehilite"><pre><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
+<div class="codehilite"><pre><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
     <span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;app.address&quot;</span><span class="p">;</span>
     <span class="c1">// Nuvola.config is a KeyValueStorage</span>
@@ -1071,7 +1090,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li><small>method</small> <b id="Nuvola.WebApp._onHomePageRequest">_onHomePageRequest</b>(emitter, result)<br />
 <p>Signal handler for <a href="#Nuvola.Core::HomePageRequest">Core::HomePageRequest</a></p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onInitAppRunner">_onInitAppRunner</b>(emitter, values, entries)<br />
+<li><small>method</small> <b id="Nuvola.WebApp._onInitAppRunner">_onInitAppRunner</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitAppRunner">Core::InitAppRunner</a></p></li>
 
 <li><small>method</small> <b id="Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</b>(emitter)<br />
@@ -1109,6 +1128,110 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</pre></div></li>
+
+</ul></li>
+</ul><h3>Namespaces</h3>
+<ul>
+<li><small>namespace</small> <b id="Nuvola.Translate">Nuvola.Translate</b>
+<br /><p>Translation functions.</p>
+<p>These functions are only placeholders for now, but you can use them to mark translatable strings
+and then check whether they are properly recognized by a tool <code>xgettext</code> from the <code>gettext</code>
+package.</p>
+<p>See also <a href="../apps/translations.html">translations documentation</a>.</p><ul>
+
+<li><small>method</small> <b id="Nuvola.Translate.gettext">gettext</b>(text)<br />
+<p>Translate string.</p>
+<p><strong>Placeholder</strong>: This function is only a placeholder for future functionality, but you can use it to mark
+translatable strings.</p>
+<p><strong>Usage notes</strong></p>
+<ul>
+<li>It is usual to create alias <code>var _ = Nuvola.Translate.gettext;</code></li>
+<li>You have to pass plain string literals, not expressions nor variables.</li>
+</ul><p><b>Parameters</b></p>
+<ul>
+<li>String <b>text</b> - text to translate</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>String        translated string</p></li>
+</ul>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<span class="c1">/// You can use tree slashes to add comment for translators.</span>
+<span class="c1">/// It has to be on a line preceding the translated string though.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">));</span> <span class="c1">// Right</span>
+
+<span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">greeting</span><span class="p">));</span> <span class="c1">// Wrong!</span>
+
+<span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">);</span> <span class="c1">// Right</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;!&quot;</span><span class="p">));</span> <span class="c1">// Wrong!</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello {1}!&quot;</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span> <span class="c1">// Right</span>
+</pre></div></li>
+
+<li><small>method</small> <b id="Nuvola.Translate.ngettext">ngettext</b>(text1, text2, n)<br />
+<p>Translate string with support of singluar and plural forms.</p>
+<p><strong>Placeholder</strong>: This function is only a placeholder for future functionality, but you can use it to mark
+translatable strings.</p>
+<p><strong>Usage notes</strong></p>
+<ul>
+<li>It is usual to create alias <code>var ngettext = Nuvola.Translate.ngettext;</code></li>
+<li>You have to pass plain string literals, not expressions nor variables.</li>
+</ul><p><b>Parameters</b></p>
+<ul>
+<li>String <b>text1</b> - singular form</li>
+<li>String <b>text2</b> - plural form</li>
+<li>Number <b>n</b> - number of items</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>String           translated string</p></li>
+</ul>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="s2">&quot;There is {1} egg in the fridge.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;There are {1} eggs in the fridge.&quot;</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="c1">/// You can use tree slashes to add comment for translators.</span>
+    <span class="c1">/// It has to be on a line preceding the singular string though.</span>
+    <span class="c1">/// {1} will be replaced by number of eggs in both forms,</span>
+    <span class="c1">/// but can be omitted as shown in singular form.</span>
+    <span class="s2">&quot;There is one egg in the fridge.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;There are {1} eggs in the fridge.&quot;</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+</pre></div></li>
+
+<li><small>method</small> <b id="Nuvola.Translate.pgettext">pgettext</b>(context, text)<br />
+<p>Translate string with support of a disambiguating message context.</p>
+<p>This is mainly useful for short strings which may need different translations, depending on the context in which they
+are used. e.g.: <code>pgettext("Navigation", "Back")</code> vs <code>pgettext("Body part", "Back")</code>.</p>
+<p><strong>Placeholder</strong>: This function is only a placeholder for future functionality, but you can use it to mark
+translatable strings.</p>
+<p><strong>Usage notes</strong></p>
+<ul>
+<li>It is usual to create alias <code>var C_ = Nuvola.Translate.pgettext;</code></li>
+<li>You have to pass plain string literals, not expressions nor variables.</li>
+</ul><p><b>Parameters</b></p>
+<ul>
+<li>String <b>context</b> - the message context</li>
+<li>String <b>text</b> - text to translate</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>String           translated string</p></li>
+</ul>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<span class="c1">/// You can use tree slashes to add comment for translators.</span>
+<span class="c1">/// It has to be on a line preceding the translated string though.</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">&quot;Navigation&quot;</span><span class="p">,</span> <span class="s2">&quot;Back&quot;</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">&quot;Body part&quot;</span><span class="p">,</span> <span class="s2">&quot;Back&quot;</span><span class="p">));</span>
 </pre></div></li>
 
 </ul></li>
