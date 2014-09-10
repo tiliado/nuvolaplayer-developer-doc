@@ -179,7 +179,7 @@ Expecting a JSON object, but the root node is of type '(null)'
 <a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.json</code>.
 Let's look at the example:</p>
 <div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"test-integration"</span><span class="p">,</span>
+    <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"test_integration"</span><span class="p">,</span>
     <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"My Test Integration"</span><span class="p">,</span>
     <span class="nt">"maintainer_name"</span><span class="p">:</span> <span class="s2">"Jiří Janoušek"</span><span class="p">,</span>
     <span class="nt">"maintainer_link"</span><span class="p">:</span> <span class="s2">"https://github.com/fenryxo"</span><span class="p">,</span>
@@ -195,8 +195,8 @@ Let's look at the example:</p>
 <dl>
 <dt><code>id</code></dt>
 <dd>
-<p>Identifier of the service. It can contain only letters <code>a-z</code>, digits <code>0-9</code> and dash <code>-</code> to
-separate words, e.g. <code>google-play</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.
+<p>Identifier of the service. It can contain only letters <code>a-z</code>, digits <code>0-9</code> and underscore <code>_</code> to
+separate words, e.g. <code>google_play_music</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.
 (Nuvola Player 2 required the id must be same as the directory name of the service
 integration, but Nuvola Player 3 doesn't have this limitation.)</p>
 </dd>
@@ -409,7 +409,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
     that is processed by <a href="./api_reference.html#Nuvola.WebApp._onLastPageRequest">Nuvola.WebApp._onLastPageRequest handler</a>
     by default. This handler returns URL of the last visited page or null. If the URL is valid, it
     is loaded in the Web Worker process and initialization is finished.
-    <strong>TODO</strong> Advanced - Specify which URL should not be used as a last visited page</p>
+    (TODO: Advanced - Specify which URL should not be used as a last visited page)</p>
 </li>
 <li>
 <p>If the last visited page is null, App Runner emits the
@@ -435,7 +435,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 <p>App Runner emits <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest</a>
     just before navigation to a new page. That signal is processed by
     <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest handler</a> by
-    default. <strong>TODO</strong> URL filtering.</p>
+    default and used for <a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a>.</p>
 </li>
 <li>
 <p>App Runner emits <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::UriChanged signal</a>

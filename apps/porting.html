@@ -94,7 +94,15 @@
   <div class="col-sm-12 col-md-10 col-lg-9">
     <p>This guide describes porting of service integrations from Nuvola Player 2 to Nuvola Player 3.</p>
 <h2 id="prepare-development-environment">Prepare development environment</h2>
-<p>Steps are described in <a href="../apps/tutorial.html">service integrations tutorial</a>.</p>
+<p><a href="https://github.com/tiliado">Tiliado organization account</a> at Github.com might already contain a repository for
+your service integration you can base your work on. Names of the repositories of service
+integrations start with <code>nuvola-app-</code>. If there is no repository for your service integration,
+follow steps described in section Prepare development environment of the
+<a href="../apps/tutorial.html">service integrations tutorial</a>.</p>
+<p>If you are not familiar with the
+<a href="http://git-scm.com/">Git version control system</a>, you can check
+<a href="https://try.github.io/levels/1/challenges/1">Git tutorial</a> and
+<a href="http://git-scm.com/book">Pro Git Book</a>.</p>
 <h2 id="port-metadata">Port metadata</h2>
 <p><strong>Metadata file contains basic information about your service integration.</strong> While Nuvola Player 2
 read metadata from a INI-style file <code>metadata.conf</code>, Nuvola Player 3 uses
@@ -104,9 +112,9 @@ See <a href="../apps/tutorial.html#create-metadata-file">sample metadata file in
 <dt>Mapping of old <code>metadata.conf</code> fields to the new <code>metadata.json</code> fields:</dt>
 <dd>
 <ul>
-<li><code>id</code> - it can now contain letters a-z, digits 0-9 and dash - to separate words, e.g.
-    google-play for Google Play Music, 8tracks for 8tracks.com. The id can differ from the directory
-    name of the service integration.</li>
+<li><code>id</code> - it can now contain letters <code>a-z</code>, digits <code>0-9</code> and dash <code>_</code> to separate
+    words, e.g. <code>google_play_music</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.
+    The id can differ from the directory name of the service integration.</li>
 <li><code>name</code> - unchanged</li>
 <li><code>version</code> - increase major version number by one</li>
 <li><code>version_minor</code> - set minor version number to 0</li>
@@ -173,7 +181,7 @@ taking into account following porting notes:</p>
 </li>
 <li>
 <p>Actions <code>Nuvola.ACTION_THUMBS_UP/ACTION_THUMBS_DOWN/ACTION_LOVE</code> are not defined by default,
-    but you can create them using custom actions API. <strong>TODO</strong> write docs.</p>
+    but you can create them using <a href="../apps/custom-actions.html">Custom Actions API </a>.</p>
 </li>
 </ul>
 <h2 id="port-settings">Port settings</h2>

@@ -144,7 +144,9 @@ would like to have your service integration maintained as a part of the Nuvola P
 and available in the Nuvola Player repository, you will increase maintenance burden of the
 project, because somebody (<a href="http://fenryxo.cz"><em>me</em></a>) will have to create Git repository from tar.gz archive of your
 service integration anyway.</p>
-<p>See <a href="https://try.github.io/levels/1/challenges/1">Git tutorial</a>.</p>
+<p>If you are not familiar with the <a href="http://git-scm.com/">Git version control system</a>,
+you can check <a href="https://try.github.io/levels/1/challenges/1">Git tutorial</a>
+and <a href="http://git-scm.com/book">Pro Git Book</a>.</p>
 <div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
 git init .
 git add metadata.json integrate.js
@@ -157,7 +159,7 @@ git commit -m <span class="s2">"Initial commit"</span>
 <a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.json</code>.
 Let's look at the example:</p>
 <div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"test-integration"</span><span class="p">,</span>
+    <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"test_integration"</span><span class="p">,</span>
     <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"My Test Integration"</span><span class="p">,</span>
     <span class="nt">"maintainer_name"</span><span class="p">:</span> <span class="s2">"Jiří Janoušek"</span><span class="p">,</span>
     <span class="nt">"maintainer_link"</span><span class="p">:</span> <span class="s2">"https://github.com/fenryxo"</span><span class="p">,</span>
@@ -173,8 +175,8 @@ Let's look at the example:</p>
 <dl>
 <dt><code>id</code></dt>
 <dd>
-<p>Identifier of the service. It can contain only letters <code>a-z</code>, digits <code>0-9</code> and dash <code>-</code> to
-separate words, e.g. <code>google-play</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.
+<p>Identifier of the service. It can contain only letters <code>a-z</code>, digits <code>0-9</code> and underscore <code>_</code> to
+separate words, e.g. <code>google_play_music</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.
 (Nuvola Player 2 required the id must be same as the directory name of the service
 integration, but Nuvola Player 3 doesn't have this limitation.)</p>
 </dd>
