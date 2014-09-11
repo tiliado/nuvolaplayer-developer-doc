@@ -283,7 +283,7 @@ of them in Nuvola Player:</p>
 </ul>
 <h2 id="app-runner-process">App Runner Process</h2>
 <p>If you launch your service, either from the list of services or with command
-<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a test-integration</code>, you will see an error
+<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a test_integration</code>, you will see an error
 dialog saying "Invalid home page URL - The web app integration script has provided an empty home
 page URL." and the app will quit. That's because Nuvola Player makes no assumption about where the
 homepage URL is stored and expect service integration script provides this information explicitly
@@ -466,7 +466,6 @@ allows us to reuse NuvolaKit for other web apps like Unity Web Apps in the futur
 <p>The web page of a streaming service is loaded in the Web Worker process, so major part of your
 integration script will be running here.</p>
 <h3 id="initialization">Initialization</h3>
-<p><a href="./api_reference.html#Nuvola.%3A%3A"></a></p>
 <p>Web Worker emits <a href="./api_reference.html#Nuvola.Core%3A%3AInitWebWorker">Nuvola.Core::InitWebWorker signal</a> when a
 new page is about to be loaded. The default handler
 <a href="./api_reference.html#Nuvola.WebApp._onInitWebWorker">Nuvola.WebApp._onInitWebWorker</a> does nothing, so let's
