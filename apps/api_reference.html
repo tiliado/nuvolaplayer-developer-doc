@@ -183,6 +183,7 @@
 </ul></li>
 <li><a href="#Nuvola.Notifications">Notifications</a>
 <ul><li><a href="#Nuvola.Notifications.getNamedNotification">getNamedNotification</a></li>
+<li><a href="#Nuvola.Notifications.isPersistenceSupported">isPersistenceSupported</a></li>
 <li><a href="#Nuvola.Notifications.showNotification">showNotification</a></li>
 </ul></li>
 <li><a href="#Nuvola.SessionStorage">SessionStorage</a>
@@ -1020,11 +1021,12 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li> <small>prototype</small> <b id="Nuvola.Notification">Nuvola.Notification</b> extends Object<br />
 <p>Desktop notification.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Notification.$init">$init</b>(name, resident)<br />
+<li><small>method</small> <b id="Nuvola.Notification.$init">$init</b>(name, resident, category)<br />
 <p>Creates new named notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - notification name (identifier)</li>
 <li>Boolean <b>resident</b> - mark the notification as resident by default</li>
+<li>optional String <b>category</b> - category of a notification</li>
 </ul>
 </li>
 
@@ -1060,10 +1062,23 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li> <small>prototype</small> <b id="Nuvola.Notifications">Nuvola.Notifications</b> extends Object<br />
 <p>Manages desktop notifications.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Notifications.getNamedNotification">getNamedNotification</b>(name)<br />
-<p>Convenience method to creates new named notification.</p></li>
+<li><small>method</small> <b id="Nuvola.Notifications.getNamedNotification">getNamedNotification</b>(name, resident, category)<br />
+<p>Convenience method to creates new named notification.</p><p><b>Parameters</b></p>
+<ul>
+<li>String <b>name</b> - notification name (identifier)</li>
+<li>Boolean <b>resident</b> - mark the notification as resident by default</li>
+<li>optional String <b>category</b> - category of a notification</li>
+</ul>
+</li>
 
-<li><small>method</small> <b id="Nuvola.Notifications.showNotification">showNotification</b>(title, text, iconName, iconPath, force)<br />
+<li><small>method</small> <b id="Nuvola.Notifications.isPersistenceSupported">isPersistenceSupported</b>()<br />
+<p>Check whether persistence is supported</p><p><b>Returns</b></p>
+<ul>
+<li><p>Boolean true if persistence is supported</p></li>
+</ul>
+</li>
+
+<li><small>method</small> <b id="Nuvola.Notifications.showNotification">showNotification</b>(title, text, iconName, iconPath, force, category)<br />
 <p>Instantly show anonymous notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>title</b> - short title</li>
@@ -1071,6 +1086,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String? <b>iconName</b> - name of icon for notification</li>
 <li>String? <b>iconPath</b> - path to an icon for notification</li>
 <li>Boolean <b>force</b> - ensure notification is shown if true, otherwise show it when suitable</li>
+<li>optional String <b>category</b> - category of a notification</li>
 </ul>
 </li>
 

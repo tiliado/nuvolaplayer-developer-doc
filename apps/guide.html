@@ -73,6 +73,7 @@
 <li><a href="#app-runner-and-web-worker">App Runner and Web Worker</a></li>
 <li><a href="#debugging-and-logging-messages">Debugging and logging messages</a></li>
 <li><a href="#app-runner-process">App Runner Process</a><ul>
+<li><a href="#developer-tools">Developer Tools</a></li>
 <li><a href="#initialization-routines">Initialization routines</a></li>
 <li><a href="#run-time-events">Run-time events</a></li>
 <li><a href="#mediaplayer-component">MediaPlayer Component</a></li>
@@ -390,6 +391,25 @@ requires more magic ;-)</p>
 Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
 instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
 </div></div>
+<h3 id="developer-tools">Developer Tools</h3>
+<p>Launch your service integration, either from the list of services or with command
+<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a test_integration</code>, and show ow important developer
+tools:</p>
+<ul>
+<li>
+<p><strong>Developer's Sidebar</strong> shows information provided by the integration script to the Nuvola Player
+    core. To enable it, click Gear menu or GNOME Shell App Menu → Show sidebar → select "Developer"
+    in the right sidebar.</p>
+</li>
+<li>
+<p><strong>WebKit Web Inspector</strong> is used to examine HTML &amp; JavaScript code of a web page. Right-click
+    the web page anywhere and select "Inspect element".</p>
+</li>
+</ul>
+<p><img alt="Show sidebar - Unity" src="../images/guide/show_sidebar_unity.png"/></p>
+<p><img alt="Show sidebar - GNOME Shell" src="../images/guide/show_sidebar_gnome_shell.png"/></p>
+<p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
+<p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
 <h3 id="initialization-routines">Initialization routines</h3>
 <p>On start-up, Nuvola Player performs following actions:</p>
 <ol>
@@ -460,8 +480,26 @@ allows us to reuse NuvolaKit for other web apps like Unity Web Apps in the futur
 
 <span class="p">...</span>
 </pre></div>
-<p>The first visible effect is a new menu with playback control actions:</p>
-<p><img alt="Without and with media player component" src="../images/guide/without_and_with_media_player_component.png"/></p>
+<p>Once MediaPlayer Component is initialized, playback control actions are exported. They are also
+available in the command line controller:</p>
+<div class="codehilite"><pre>$ nuvolaplayer3ctl list-actions
+Available actions
+
+Format: NAME (is enabled?) - label
+
+...
+
+Group: playback
+
+ *  play (enabled) - Play
+ *  pause (disabled) - Pause
+ *  toggle-play (enabled) - Toggle play/pause
+ *  stop (disabled) - Stop
+ *  prev-song (disabled) - Previous song
+ *  next-song (disabled) - Next song
+
+...
+</pre></div>
 <h2 id="web-worker-process">Web Worker Process</h2>
 <p>The web page of a streaming service is loaded in the Web Worker process, so major part of your
 integration script will be running here.</p>
@@ -727,7 +765,29 @@ simulate clicking.</p>
 <span class="p">}</span>
 </pre></div>
 <div class="panel panel-danger"><p class="panel-heading">Always test playback actions</p><div class="panel-body">
-<p>You should click action buttons in the developer's sidebar to be sure they are working as expected.</p>
+<p>You should click action buttons in the developer's sidebar to be sure they are working as expected.
+You can also trigger actions from command line:</p>
+<div class="codehilite"><pre>$ nuvolaplayer3ctl list-actions
+Available actions
+
+Format: NAME (is enabled?) - label
+
+...
+
+Group: playback
+
+ *  play (enabled) - Play
+ *  pause (disabled) - Pause
+ *  toggle-play (enabled) - Toggle play/pause
+ *  stop (disabled) - Stop
+ *  prev-song (disabled) - Previous song
+ *  next-song (enabled) - Next song
+
+...
+
+$ nuvolaplayer3ctl action toggle-play
+$ nuvolaplayer3ctl action next-song
+</pre></div>
 </div></div>
 <div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
 <div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
