@@ -281,59 +281,59 @@ template including translation comments.</p>
 </pre></div>
 <div class="codehilite"><pre>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
 </pre></div>
-<div class="codehilite"><pre><span class="cp"># SOME DESCRIPTIVE TITLE.</span>
-<span class="cp"># Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER</span>
-<span class="cp"># This file is distributed under the same license as the PACKAGE package.</span>
-<span class="cp"># FIRST AUTHOR &lt;EMAIL@ADDRESS&gt;, YEAR.</span>
-<span class="cp">#</span>
-<span class="cp">#, fuzzy</span>
-<span class="n">msgid</span> <span class="s">""</span>
-<span class="n">msgstr</span> <span class="s">""</span>
-<span class="s">"Project-Id-Version: PACKAGE VERSION</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Report-Msgid-Bugs-To: </span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"POT-Creation-Date: 2014-09-07 10:21+0200</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Language-Team: LANGUAGE &lt;LL@li.org&gt;</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Language: </span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"MIME-Version: 1.0</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Content-Type: text/plain; charset=CHARSET</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Content-Transfer-Encoding: 8bit</span><span class="se">\n</span><span class="s">"</span>
-<span class="s">"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;</span><span class="se">\n</span><span class="s">"</span>
+<div class="codehilite"><pre><span class="err">#</span> <span class="nt">SOME</span> <span class="nt">DESCRIPTIVE</span> <span class="nt">TITLE</span><span class="o">.</span>
+<span class="err">#</span> <span class="nt">Copyright</span> <span class="o">(</span><span class="nt">C</span><span class="o">)</span> <span class="nt">YEAR</span> <span class="nt">THE</span> <span class="nt">PACKAGE</span><span class="err">'</span><span class="nt">S</span> <span class="nt">COPYRIGHT</span> <span class="nt">HOLDER</span>
+<span class="err">#</span> <span class="nt">This</span> <span class="nt">file</span> <span class="nt">is</span> <span class="nt">distributed</span> <span class="nt">under</span> <span class="nt">the</span> <span class="nt">same</span> <span class="nt">license</span> <span class="nt">as</span> <span class="nt">the</span> <span class="nt">PACKAGE</span> <span class="nt">package</span><span class="o">.</span>
+<span class="err">#</span> <span class="nt">FIRST</span> <span class="nt">AUTHOR</span> <span class="o">&lt;</span><span class="nt">EMAIL</span><span class="k">@ADDRESS</span><span class="o">&gt;,</span> <span class="nt">YEAR</span><span class="o">.</span>
+<span class="err">#</span>
+<span class="err">#</span><span class="o">,</span> <span class="nt">fuzzy</span>
+<span class="nt">msgid</span> <span class="s2">""</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
+<span class="s2">"Project-Id-Version: PACKAGE VERSION\n"</span>
+<span class="s2">"Report-Msgid-Bugs-To: \n"</span>
+<span class="s2">"POT-Creation-Date: 2014-09-07 10:21+0200\n"</span>
+<span class="s2">"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"</span>
+<span class="s2">"Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n"</span>
+<span class="s2">"Language-Team: LANGUAGE &lt;LL@li.org&gt;\n"</span>
+<span class="s2">"Language: \n"</span>
+<span class="s2">"MIME-Version: 1.0\n"</span>
+<span class="s2">"Content-Type: text/plain; charset=CHARSET\n"</span>
+<span class="s2">"Content-Transfer-Encoding: 8bit\n"</span>
+<span class="s2">"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"</span>
 
-<span class="cp">#: integrate.js:131</span>
-<span class="n">msgid</span> <span class="s">"Hello world!"</span>
-<span class="n">msgstr</span> <span class="s">""</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:131</span>
+<span class="nt">msgid</span> <span class="s2">"Hello world!"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
 
-<span class="cp">#. / {1} is a placeholder for user name</span>
-<span class="cp">#: integrate.js:136 integrate.js:137</span>
-<span class="n">msgid</span> <span class="s">"Hello {1}!"</span>
-<span class="n">msgstr</span> <span class="s">""</span>
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="nt">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">user</span> <span class="nt">name</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:136</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:137</span>
+<span class="nt">msgid</span> <span class="s2">"Hello {1}!"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
 
-<span class="cp">#. / My comment</span>
-<span class="cp">#: integrate.js:140</span>
-<span class="n">msgctxt</span> <span class="s">"Action label"</span>
-<span class="n">msgid</span> <span class="s">"Show notification"</span>
-<span class="n">msgstr</span> <span class="s">""</span>
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="nt">My</span> <span class="nt">comment</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:140</span>
+<span class="nt">msgctxt</span> <span class="s2">"Action label"</span>
+<span class="nt">msgid</span> <span class="s2">"Show notification"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
 
-<span class="cp">#. / My comment</span>
-<span class="cp">#: integrate.js:144</span>
-<span class="n">msgctxt</span> <span class="s">"Checkbox label"</span>
-<span class="n">msgid</span> <span class="s">"Show notification"</span>
-<span class="n">msgstr</span> <span class="s">""</span>
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="nt">My</span> <span class="nt">comment</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:144</span>
+<span class="nt">msgctxt</span> <span class="s2">"Checkbox label"</span>
+<span class="nt">msgid</span> <span class="s2">"Show notification"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
 
-<span class="cp">#: integrate.js:149</span>
-<span class="n">msgid</span> <span class="s">"There is {1} egg in the fridge."</span>
-<span class="n">msgid_plural</span> <span class="s">"There are {1} eggs in the fridge."</span>
-<span class="n">msgstr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="s">""</span>
-<span class="n">msgstr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="s">""</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:149</span>
+<span class="nt">msgid</span> <span class="s2">"There is {1} egg in the fridge."</span>
+<span class="nt">msgid_plural</span> <span class="s2">"There are {1} eggs in the fridge."</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="s2">""</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="s2">""</span>
 
-<span class="cp">#. / {1} is a placeholder for a number</span>
-<span class="cp">#: integrate.js:158</span>
-<span class="n">msgid</span> <span class="s">"There is one egg in the fridge."</span>
-<span class="n">msgid_plural</span> <span class="s">"There are {1} eggs in the fridge."</span>
-<span class="n">msgstr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="s">""</span>
-<span class="n">msgstr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="s">""</span>
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="m">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">a</span> <span class="nt">number</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:158</span>
+<span class="nt">msgid</span> <span class="s2">"There is one egg in the fridge."</span>
+<span class="nt">msgid_plural</span> <span class="s2">"There are {1} eggs in the fridge."</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="s2">""</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="s2">""</span>
 </pre></div>
 
 <div class="footer">

@@ -134,7 +134,7 @@ mv integrate.js integrate.old.js
     for example).</p>
 <div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
 touch metadata.json integrate.js
-gedit metadata.json integrate.js &gt;/dev/null 2&gt;&amp;1 &amp;
+gedit metadata.json integrate.js &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
 </pre></div>
 </li>
 <li>
@@ -469,7 +469,7 @@ git commit -m <span class="s2">"Add skeleton of integration script"</span>
 <p>Run Nuvola Player 3 from terminal with following command and you will see a list with only one
 service, because we told Nuvola Player to load service integrations only from directory
 <code>~/projects/nuvola-player</code>.</p>
-<div class="codehilite"><pre><span class="n">nuvolaplayer3</span> <span class="o">-</span><span class="n">D</span> <span class="o">-</span><span class="n">A</span> <span class="o">~/</span><span class="n">projects</span><span class="o">/</span><span class="n">nuvola</span><span class="o">-</span><span class="n">player</span>
+<div class="codehilite"><pre>nuvolaplayer3 -D -A ~/projects/nuvola-player
 </pre></div>
 <p><img alt="A list with single service integration" src="../images/guide/app_list_one_service.png"/></p>
 <p>Launch your service integration and a new window will be opened with the test service. First of all,
@@ -481,7 +481,7 @@ sidebar), then enable <strong>WebKit Web Inspector</strong> (right-click the web
 <p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
 <p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
 <p>You can also launch your service integration with id <code>test_integration</code> directly.</p>
-<div class="codehilite"><pre><span class="n">nuvolaplayer3</span> <span class="o">-</span><span class="n">D</span> <span class="o">-</span><span class="n">A</span> <span class="o">~/</span><span class="n">projects</span><span class="o">/</span><span class="n">nuvola</span><span class="o">-</span><span class="n">player</span> <span class="o">-</span><span class="n">a</span> <span class="n">test_integration</span>
+<div class="codehilite"><pre>nuvolaplayer3 -D -A ~/projects/nuvola-player -a test_integration
 </pre></div>
 <h2 id="debugging-and-logging-messages">Debugging and logging messages</h2>
 <p>You might want to print some debugging messages to console during development. There are two types

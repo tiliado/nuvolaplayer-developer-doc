@@ -120,21 +120,14 @@ git commit -m <span class="s2">"Update copyright information and license"</span>
 </div></div>
 <h2 id="create-makefile">Create Makefile</h2>
 <p>Makefile is a recipe how to build and install your service integration. The test service comes
-with samples of two Makefiles:</p>
-<dl>
-<dt><code>Makefile.full</code></dt>
-<dd>
-<p>Use <code>Makefile.full</code> and rename it to <code>Makefile</code> if you need to build a PNG icon from source
-SVG icon. This Makefile expects icon to be named <code>src/icon.svg</code>. Also change service
+with sample <code>Makefile</code>. All you need to do is to change service
 integration id <code>APP_ID</code>. Run <code>make help</code> to see available actions.</p>
-</dd>
-<dt><code>Makefile.basic</code></dt>
-<dd>
-<p>If you don't need to do something special, use <code>Makefile.basic</code> and rename it to <code>Makefile</code>.
-Change service integration id <code>APP_ID</code>. Run <code>make help</code> to see available actions.</p>
-</dd>
-</dl>
-<p>Let's try out your Makefile:</p>
+<div class="panel panel-info"><p class="panel-heading">Service icon</p><div class="panel-body">
+<p>You can replace generic Nuvola Player icon <code>src/icon.svg</code> with an actual icon of the service. However, beware of
+any copyright violations, you cannot just download the offical icon and modify it. Better option is to let
+Alexander King, the author of other service icons, to create a new icon for your service.</p>
+</div></div>
+<p>Let's try out your Makefile. You will need application <code>rsvg-convert</code> to proceed.</p>
 <div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
 make install
 nuvolaplayer3 -D

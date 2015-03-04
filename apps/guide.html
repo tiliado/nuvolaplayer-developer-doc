@@ -144,7 +144,7 @@ mv integrate.js integrate.old.js
     for example).</p>
 <div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
 touch metadata.json integrate.js
-gedit metadata.json integrate.js &gt;/dev/null 2&gt;&amp;1 &amp;
+gedit metadata.json integrate.js &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
 </pre></div>
 </li>
 <li>
@@ -166,7 +166,7 @@ git commit -m <span class="s2">"Initial commit"</span>
 <p>Let's try to launch Nuvola Player 3 with our empty service integration. Argument <code>-D</code> enables
 debugging output to console and arguments <code>-A ~/projects/nuvola-player</code> tells Nuvola Player to
 load service integrations only from directory <code>~/projects/nuvola-player</code>.</p>
-<div class="codehilite"><pre><span class="n">nuvolaplayer3</span> <span class="o">-</span><span class="n">D</span> <span class="o">-</span><span class="n">A</span> <span class="o">~/</span><span class="n">projects</span><span class="o">/</span><span class="n">nuvola</span><span class="o">-</span><span class="n">player</span>
+<div class="codehilite"><pre>nuvolaplayer3 -D -A ~/projects/nuvola-player
 </pre></div>
 <p>You will see an empty list of services and an error message in terminal that tells you Nuvola Player
 failed to load your service integration because of invalid metadata file. So let's create it!</p>
