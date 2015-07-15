@@ -141,6 +141,7 @@
 <li><a href="#Nuvola.Core::LastPageRequest">LastPageRequest</a></li>
 <li><a href="#Nuvola.Core::NavigationRequest">NavigationRequest</a></li>
 <li><a href="#Nuvola.Core::PreferencesForm">PreferencesForm</a></li>
+<li><a href="#Nuvola.Core::ResourceRequest">ResourceRequest</a></li>
 <li><a href="#Nuvola.Core::UriChanged">UriChanged</a></li>
 </ul></li>
 <li><a href="#Nuvola.KeyValueStorage">KeyValueStorage</a>
@@ -807,6 +808,19 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Array of FormFieldArray <b>entries</b> - specification of form fields, see <a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a> for details</li>
 </ul>
 </li>
+
+<li><small>signal</small> <b id="Nuvola.Core::ResourceRequest">ResourceRequest</b>(emitter, request)<br />
+<p>Emitted on request for loading a web resource.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>String <b>request.url</b> - URL of the resource (can be overwritten)</li>
+<li>Boolean <b>request.approved</b> - whether the resource loading is approved</li>
+</ul>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onResourceRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;webcomponents.js&quot;</span><span class="p">,</span> <span class="s2">&quot;webcomponents2.js&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::UriChanged">UriChanged</b>(emitter, uri)<br />
 <p>Emitted after <a href="#Nuvola.Core::NavigationRequest">approved navigation</a> to a new page URL.</p><p><b>Parameters</b></p>

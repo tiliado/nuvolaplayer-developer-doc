@@ -111,8 +111,8 @@
   <div class="col-sm-12 col-md-10 col-lg-9">
     
 <p>This guide describes creation of <strong>a new service integration for Nuvola Player 3 from
-scratch</strong>. The goal is to write an integration script for <em>Test service</em> shipped with Nuvola Player
-and to prepare you to create your own service integration. Unlike the
+scratch</strong>. The goal is to write an integration script for <em>a fake Happy Songs service</em> shipped
+with Nuvola Player and to prepare you to create your own service integration. Unlike the
 <a href="../apps/guide.html">Service Integrations Tutorial</a>, this guide provides also insight to the Nuvola
 Player Core and explain some design decisions.</p>
 <h2 id="prepare-development-environment">Prepare development environment</h2>
@@ -127,22 +127,15 @@ Player Core and explain some design decisions.</p>
 <li>
 <p>Create a copy of the test service shipped with Nuvola Player 3.</p>
 <div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player
-cp -r /usr/share/nuvolaplayer3/web_apps/test ./test-integration
+cp -r /usr/share/nuvolaplayer3/web_apps/template ./happy-songs
 <span class="c"># or</span>
-cp -r /usr/local/share/nuvolaplayer3/web_apps/test ./test-integration
-</pre></div>
-</li>
-<li>
-<p>Rename old integration files (or remove it).</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
-mv metadata.json metadata.old.json
-mv integrate.js integrate.old.js
+cp -r /usr/local/share/nuvolaplayer3/web_apps/template ./happy-songs
 </pre></div>
 </li>
 <li>
 <p>Create new integration files and open them in your preferred plan-text editor (Gedit,
     for example).</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
 touch metadata.json integrate.js
 gedit metadata.json integrate.js &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
 </pre></div>
@@ -155,7 +148,7 @@ and available in the Nuvola Player repository, you will increase maintenance bur
 project, because somebody (<a href="http://fenryxo.cz"><em>me</em></a>) will have to create Git repository from tar.gz archive of your
 service integration anyway.</p>
 <p>See <a href="https://try.github.io/levels/1/challenges/1">Git tutorial</a>.</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
 git init .
 git add metadata.json integrate.js
 git commit -m <span class="s2">"Initial commit"</span>
@@ -168,11 +161,21 @@ debugging output to console and arguments <code>-A ~/projects/nuvola-player</cod
 load service integrations only from directory <code>~/projects/nuvola-player</code>.</p>
 <div class="codehilite"><pre>nuvolaplayer3 -D -A ~/projects/nuvola-player
 </pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Make sure all Nuvola Player instances have been closed</p><div class="panel-body">
+<p>If you see following warning in terminal, there is a running instance of Nuvola Player
+that must be closed. Otherwise, the <code>-A</code> parameter is ignored.</p>
+<div class="codehilite"><pre>[Master:INFO     Nuvola] master.vala:135: Nuvola Player 3 Beta instance is already running
+and will be activated.
+[Master:WARNING  Nuvola] master.vala:137: Some command line parameters (-D, -v, -A, -L) are
+ignored because they apply only to a new instance. You might want to close all Nuvola Player
+instances and run it again with your parameters.
+</pre></div>
+</div></div>
 <p>You will see an empty list of services and an error message in terminal that tells you Nuvola Player
 failed to load your service integration because of invalid metadata file. So let's create it!</p>
 <div class="codehilite"><pre>[Master:WARNING  Nuvola] webappregistry.vala:169: Unable to load app from
-/home/fenryxo/projects/nuvola-player/test-integration: Invalid metadata file
-'/home/fenryxo/projects/nuvola-player/test-integration/metadata.json'.
+/home/fenryxo/projects/nuvola-player/happy-songs: Invalid metadata file
+'/home/fenryxo/projects/nuvola-player/happy-songs/metadata.json'.
 Expecting a JSON object, but the root node is of type '(null)'
 </pre></div>
 <p><img alt="Empty list of service integrations" src="../images/guide/empty_app_list.png"/></p>
@@ -180,8 +183,8 @@ Expecting a JSON object, but the root node is of type '(null)'
 <a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.json</code>.
 Let's look at the example:</p>
 <div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"test_integration"</span><span class="p">,</span>
-    <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"My Test Integration"</span><span class="p">,</span>
+    <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"happy_songs"</span><span class="p">,</span>
+    <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Happy Songs"</span><span class="p">,</span>
     <span class="nt">"maintainer_name"</span><span class="p">:</span> <span class="s2">"Jiří Janoušek"</span><span class="p">,</span>
     <span class="nt">"maintainer_link"</span><span class="p">:</span> <span class="s2">"https://github.com/fenryxo"</span><span class="p">,</span>
     <span class="nt">"version_major"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
@@ -236,15 +239,15 @@ Nuvola Player services should be in <code>"AudioVideo;Audio;"</code>.</p>
 </dd>
 <dt><code>home_url</code></dt>
 <dd>
-<p>Home page of your service. The test integration service uses <code>nuvola://home.html</code> that refers to
-file  <code>home.html</code> in the service's directory. You will use real homepage later in your own
+<p>Home page of your service. The template contains fake service home page <code>home.html</code>, which
+has a special address <code>nuvola://home.html</code>. You will use a real homepage later in your own
 service integration (e.g. <code>https://play.google.com/music/</code> for Google Play Music).</p>
 <p>This field is not required if you use custom function to handle home page request.
 See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p>
 </dd>
 </dl>
 <div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
 git add metadata.json
 git commit -m <span class="s2">"Add initial metadata for service"</span>
 </pre></div>
@@ -284,7 +287,7 @@ of them in Nuvola Player:</p>
 </ul>
 <h2 id="app-runner-process">App Runner Process</h2>
 <p>If you launch your service, either from the list of services or with command
-<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a test_integration</code>, you will see an error
+<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a happy_songs</code>, you will see an error
 dialog saying "Invalid home page URL - The web app integration script has provided an empty home
 page URL." and the app will quit. That's because Nuvola Player makes no assumption about where the
 homepage URL is stored and expect service integration script provides this information explicitly
@@ -326,7 +329,7 @@ nothing, nobody has told Nuvola Player "Hey, look at home_url field of metadata.
 33
 34
 35</pre></div></td><td class="code"><div class="codehilite"><pre><span class="cm">/*</span>
-<span class="cm"> * Copyright 2014 Your name &lt;your e-mail&gt;</span>
+<span class="cm"> * Copyright 2015 Your name &lt;your e-mail&gt;</span>
 <span class="cm"> *</span>
 <span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
 <span class="cm"> * modification, are permitted provided that the following conditions are met: </span>
@@ -393,12 +396,12 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 </div></div>
 <h3 id="developer-tools">Developer Tools</h3>
 <p>Launch your service integration, either from the list of services or with command
-<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a test_integration</code>, and show ow important developer
+<code>nuvolaplayer3 -D -A ~/projects/nuvola-player -a happy_songs</code>, and show ow important developer
 tools:</p>
 <ul>
 <li>
 <p><strong>Developer's Sidebar</strong> shows information provided by the integration script to the Nuvola Player
-    core. To enable it, click Gear menu or GNOME Shell App Menu → Show sidebar → select "Developer"
+    core. To enable it, click Gear menu → Show sidebar → select "Developer"
     in the right sidebar.</p>
 </li>
 <li>
@@ -406,7 +409,6 @@ tools:</p>
     the web page anywhere and select "Inspect element".</p>
 </li>
 </ul>
-<p><img alt="Show sidebar - Unity" src="../images/guide/show_sidebar_unity.png"/></p>
 <p><img alt="Show sidebar - GNOME Shell" src="../images/guide/show_sidebar_gnome_shell.png"/></p>
 <p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
 <p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
@@ -586,6 +588,9 @@ state and track details:</p>
 <span class="c1">// Extract data from the web page</span>
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
+
+    <span class="c1">// Schedule the next update</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">500</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="p">...</span>
@@ -661,7 +666,7 @@ might be. Playback states are defined in an enumeration
 </pre></div>
 <p><img alt="Track details" src="../images/guide/track_details.png"/></p>
 <div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
 git add integrate.js
 git commit -m <span class="s2">"Extract metadata and playback state"</span>
 </pre></div>
@@ -790,7 +795,7 @@ $ nuvolaplayer3ctl action next-song
 </pre></div>
 </div></div>
 <div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/test-integration
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
 git add integrate.js
 git commit -m <span class="s2">"Add player actions handling"</span>
 </pre></div>
