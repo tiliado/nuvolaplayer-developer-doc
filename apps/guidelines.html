@@ -68,8 +68,16 @@
       <p><strong>Contents</strong></p>
       <div class="toc">
 <ul>
-<li><a href="#rules">Rules</a></li>
+<li><a href="#formal-rules">Formal Rules</a></li>
 <li><a href="#license">License</a></li>
+<li><a href="#artwork">Artwork</a></li>
+<li><a href="#git-github-guidelines">Git &amp; GitHub Guidelines</a><ul>
+<li><a href="#commit-messages">Commit Messages</a></li>
+<li><a href="#pull-requests">Pull Requests</a></li>
+<li><a href="#merge-commits">Merge Commits</a></li>
+<li><a href="#releases">Releases</a></li>
+</ul>
+</li>
 <li><a href="#coding-style">Coding Style</a><ul>
 <li><a href="#basics">Basics</a></li>
 <li><a href="#naming">Naming</a></li>
@@ -98,11 +106,16 @@
   <div class="col-sm-12 col-md-10 col-lg-9">
     <p>If you would like to have your service integration <strong>maintained as a part of the Nuvola Player project
 and distributed in the Nuvola Player repository</strong>, following rules apply.</p>
-<h2 id="rules">Rules</h2>
+<h2 id="formal-rules">Formal Rules</h2>
 <ol>
 <li>
-<p>Your work must have license approved by <a href="http://opensource.org/licenses">the Open Source Initiative</a>,
-   preferably the same license as Nuvola Player (BSD 2-Clause "Simplified" or "FreeBSD" license).</p>
+<p>Copyright and license of all files must be clearly documented in <code>README.md</code>. All files must
+   have license approved by <a href="http://opensource.org/licenses">the Open Source Initiative</a>,
+   preferably the same license as Nuvola Player (BSD 2-Clause "Simplified" or "FreeBSD" license).
+   Full text of a license must be provided in file <code>LICENSE</code> or <code>LICENSE.txt</code>. If more than one
+   license are used, add a distinguishing suffix, e.g. <code>LICENSE-BSD.txt</code>. You can look at
+   <a href="https://github.com/tiliado/nuvolaplayer/blob/master/web_apps/template/README.md">README.md template</a>
+   for inspiration.</p>
 </li>
 <li>
 <p>The field <code>maintainer_link</code> of <code>metadata.json</code> must contain URL of your
@@ -110,7 +123,7 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
    integrations).</p>
 </li>
 <li>
-<p>You must provide contact e-mail.</p>
+<p>You must provide contact e-mail in <code>README.md</code>, e.g. inside Copyright section.</p>
 </li>
 <li>
 <p>You must use a consistent coding style of <code>integrate.json</code>, preferably the coding style of
@@ -128,8 +141,9 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
 </li>
 </ol>
 <h2 id="license">License</h2>
-<p>You should use the same license as Nuvola Player does (BSD 2-Clause "Simplified" or "FreeBSD"
-license) unless you have severe reasons to choose different license. In that case you should stick
+<p>You should use the same license as Nuvola Player does
+(<a href="http://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause "Simplified" or "FreeBSD" license</a>)
+unless you have severe reasons to choose different license. In that case you should stick
 to the popular open-source licenses with strong communities:</p>
 <ul>
 <li><a href="http://opensource.org/licenses/Apache-2.0">Apache License 2.0</a></li>
@@ -137,8 +151,163 @@ to the popular open-source licenses with strong communities:</p>
 <li><a href="http://opensource.org/licenses/BSD-2-Clause">BSD 2-Clause "Simplified" or "FreeBSD" license</a></li>
 <li><a href="http://opensource.org/licenses/gpl-license">GNU General Public License (GPL)</a></li>
 <li><a href="http://opensource.org/licenses/lgpl-license">GNU Library or "Lesser" General Public License (LGPL)</a></li>
-<li><a href="/licenses/MIT">MIT license</a></li>
-<li><a href="/licenses/MPL-2.0">Mozilla Public License 2.0</a></li>
+<li><a href="http://opensource.org/licenses/MIT">MIT license</a></li>
+<li><a href="http://opensource.org/licenses/MPL-2.0">Mozilla Public License 2.0</a></li>
+</ul>
+<h2 id="artwork">Artwork</h2>
+<p>Nuvola Player expects your integration to provide a set of icons in the <code>icons</code> directory. However,
+you don't have to care about it as service integration template already contains generic Nuvola
+Player source icons and a Makefile target to build the icon set from them. These generic icons
+will be later replaced by icons provided by Alexander King. In case you insist on providing your
+own icons, the resulting icon set must consist of:</p>
+<ul>
+<li><code>16.png</code> - 16×16 px PNG icon</li>
+<li><code>22.png</code> - 22×22 px PNG icon</li>
+<li><code>24.png</code> - 24×24 px PNG icon</li>
+<li><code>32.png</code> - 32×32 px PNG icon</li>
+<li><code>48.png</code> - 48×48 px PNG icon</li>
+<li><code>64.png</code> - 64×64 px PNG icon</li>
+<li><code>128.png</code> - 128×128 px PNG icon</li>
+<li><code>256.png</code> - 256×256 px PNG icon</li>
+<li><code>scalable.svg</code> - scalable SVG icon</li>
+</ul>
+<p>All PNG icons should be build from source SVG icons via a Makefile rule. While the file
+<code>scalable.svg</code> can be used to build icon sizes 32-256, smaller icons will need their own fine-tuned
+source SVG icons.</p>
+<div class="panel panel-danger"><p class="panel-heading">Beware of copyright infringement</p><div class="panel-body">
+<p>Common mistake is to take an official logo of a particular streaming service, resize it or crop
+it and then use it as icon for Nuvola Player. This approach has always led to violation of the
+first rule regarding to copyright and license and affected integration scripts were rejected
+until the file was removed</p>
+</div></div>
+<h2 id="git-github-guidelines">Git &amp; GitHub Guidelines</h2>
+<h4 id="commit-messages">Commit Messages</h4>
+<p>Commit messages should follow this template:</p>
+<div class="codehilite"><pre>Short (50 chars or less) summary of changes
+
+More detailed explanatory text, if necessary.  Wrap it to
+about 72 characters or so. The blank line separating the
+summary from the body is critical (unless you omit the body
+entirely); tools like rebase can get confused if you run
+the two together.
+
+Further paragraphs come after blank lines. Also don't
+forget to link to issues.
+
+Issue: tiliado/nuvolaplayer#128
+</pre></div>
+<ul>
+<li>Write <strong>useful commit summary</strong> (the first line. max 50 chars):<ul>
+<li>Use verbs and don't end summary with a dot, e.g. "Add test for AboutDialog" instead of
+  "Added test for AboutDialog." or "Adding test for AboutDialog."</li>
+<li>Be specific, e.g. "Increase version to 2.1" instead of "Update metadata", "Remove extra comma
+  to fix JSON parse error" instead "Fix JSON file".</li>
+<li>You can use shortcuts "w/" = with, "w/o" = without, etc.</li>
+</ul>
+</li>
+<li>If short summary is not clear enough, add one or a few paragraphs with <strong>description</strong> about what you
+  changed and why.</li>
+<li>Add link to a <strong>Github issue</strong>, e.g. <code>tiliado/nuvolaplayer#128</code>, if there is any. See 
+  <a href="https://help.github.com/articles/writing-on-github/#references">Writing on GitHub</a> for details.</li>
+</ul>
+<h4 id="pull-requests">Pull Requests</h4>
+<p>If you would like to <strong>get your code</strong> contributions <strong>merged</strong> to the main repository,
+<a href="https://help.github.com/articles/creating-a-pull-request/">create a pull request</a>.
+Pull request should follow similar template like commit messages, because a merge commit message
+will be based it:</p>
+<div class="codehilite"><pre>Short (50 chars or less) summary of changes
+
+More detailed explanatory text, if necessary.  Wrap it to
+about 72 characters or so. The blank line separating the
+summary from the body is critical (unless you omit the body
+entirely); tools like rebase can get confused if you run
+the two together.
+
+Further paragraphs come after blank lines. Also don't
+forget to link to issues.
+
+- Author: Pull Request Author Name &lt;your@email&gt;
+- Reviewed by: FIXME &lt;FIXME&gt;
+- Issue: tiliado/nuvolaplayer#128
+
+---
+
+If you have some other notes regarding the pull request,
+add a separator "---" and then write anything you want to ;-)
+This part won't be included in a commit message.
+</pre></div>
+<ul>
+<li>The same rules as for the commit summary apply to <strong>the title</strong> of a pull requests.</li>
+<li>Always provide <strong>description</strong> of the pull request: what you changed and why. The merge commit
+  message will be based on this description.</li>
+<li>Add lines:</li>
+<li><code>Author: Pull Request Author Name &lt;your@email&gt;</code> - you will be recorded as the <em>author</em> of the
+      merge commit (see bellow)</li>
+<li><code>Reviewed by: FIXME &lt;FIXME&gt;</code> - the <code>FIXME</code> placeholder will be filled by a <em>reviewer</em>,</li>
+<li>Add link to a related issue, if there is any: <code>Issue: tiliado/nuvolaplayer#128</code></li>
+</ul>
+<h4 id="merge-commits">Merge Commits</h4>
+<p>If you are a <strong>maintainer of a repository</strong>, follow these rules how to accept pull requests and
+create merge commits. First of all, check whether the <strong>title</strong> of a pull request and a
+<strong>description conforms guidelines</strong> above. If not, notify the author of the pull request (less work
+for you) or prepare a well formed commit message on your own (more work for you).</p>
+<p><strong>Message of merge commits</strong> should follow this template:</p>
+<div class="codehilite"><pre>Short (50 chars or less) summary of changes
+
+More detailed explanatory text, if necessary.  Wrap it to
+about 72 characters or so. The blank line separating the
+summary from the body is critical (unless you omit the body
+entirely); tools like rebase can get confused if you run
+the two together.
+
+Further paragraphs come after blank lines. Also don't
+forget to link to issues.
+
+ - Reviewed by: Your Name &lt;your@email&gt;
+ - Reviewed by: Another Reviewer &lt;his@email&gt;
+ - Pull Request: fenryxo/test#2
+ - Issue: fenryxo/test#3
+</pre></div>
+<ul>
+<li>Link to a pull request <code>https://github.com/fenryxo/test/pull/2</code> → <code>- Pull request: fenryxo/test#2</code></li>
+<li>Link to an issue <code>https://github.com/fenryxo/test/issues/3</code> -&gt; <code>+ - Issue: fenryxo/test#3</code></li>
+</ul>
+<p><strong>Don't use GitHub to do a merge.</strong> It's a pure crap:</p>
+<ul>
+<li>It creates a commit summary like "Merge pull request #1 from fenryxo/mybranch.". That has
+    <strong>zero</strong> information <strong>value</strong>.</li>
+<li>It provides only a basic text box to fill in a commit description. No control of line wrapping
+    at 75 characters. </li>
+</ul>
+<p><img alt="no_github_merge" src="https://cloud.githubusercontent.com/assets/853706/8862021/fb68290e-318d-11e5-8e5e-5989d7df0a83.png"/></p>
+<p>Always <strong>merge</strong> pull requests <strong>via command line</strong>:</p>
+<ul>
+<li>Add remote repository if necessary:
+   <code>git remote add gh-USER https://github.com/USER/REPO.git; git fetch gh-USER</code></li>
+<li>Switch to the branch of the pull request: <code>git checkout gh-USER/BRANCH</code></li>
+<li>Review and test changes.</li>
+<li>Switch to the master branch: <code>git checkout master</code> </li>
+<li>Use <code>git merge --no-ff --no-commit gh-USER/BRANCH</code> instead of a plain <code>git merge</code> to merge the
+   pull request.</li>
+<li>Use <code>git commit --author "Pull Request Author Name &lt;author@email&gt;"</code> to commit the merge on
+   behalf of the pull request author with a very descriptive commit message:<ul>
+<li>Fill in  <code>Reviewed by: Your Name &lt;Your@email&gt;</code></li>
+<li>Link to a pull request <code>https://github.com/fenryxo/test/pull/2</code> → <code>- Pull Request: fenryxo/test#2</code></li>
+<li>Link to an issue <code>https://github.com/fenryxo/test/issues/3</code> -&gt; <code>+ - Issue: fenryxo/test#3</code></li>
+</ul>
+</li>
+<li><em>Optionally</em>, you can squash all commits of the pull request and the merge commit into one final
+   commit. However, you should not ask author of the pull request to do rebasing and squashing to
+   keep entrance barrier for contributors as low as possible.</li>
+<li>Finally, <code>git push</code>.</li>
+<li><em>Optionally</em>, you can remove remote repository: <code>git remote remove gh-USER/BRANCH</code></li>
+</ul>
+<h4 id="releases">Releases</h4>
+<ul>
+<li>Create a Github issue "Make release X.Y" and assing it to @fenryxo when ready for a new release, but don't increase version fields in metadata.</li>
+<li>Don't hesitate to release often. Packages of service integration script are lightweight
+    with a typical build time a few seconds thanks to <a href="https://github.com/jordansissel/fpm">fpm</a>.</li>
+<li>Users will love you if you release a fix as soon as possible.</li>
 </ul>
 <h2 id="coding-style">Coding Style</h2>
 <p>Service integrations are maintained in separate repositories as more or less independent sub-projects.

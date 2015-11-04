@@ -133,7 +133,6 @@
 </ul></li>
 <li><a href="#Nuvola.Core">Core</a>
 <ul><li><a href="#Nuvola.Core.$init">$init</a></li>
-<li><a href="#Nuvola.Core.setHideOnClose">setHideOnClose</a></li>
 <li><a href="#Nuvola.Core::HomePageRequest">HomePageRequest</a></li>
 <li><a href="#Nuvola.Core::InitAppRunner">InitAppRunner</a></li>
 <li><a href="#Nuvola.Core::InitWebWorker">InitWebWorker</a></li>
@@ -141,6 +140,7 @@
 <li><a href="#Nuvola.Core::LastPageRequest">LastPageRequest</a></li>
 <li><a href="#Nuvola.Core::NavigationRequest">NavigationRequest</a></li>
 <li><a href="#Nuvola.Core::PreferencesForm">PreferencesForm</a></li>
+<li><a href="#Nuvola.Core::QuitRequest">QuitRequest</a></li>
 <li><a href="#Nuvola.Core::ResourceRequest">ResourceRequest</a></li>
 <li><a href="#Nuvola.Core::UriChanged">UriChanged</a></li>
 </ul></li>
@@ -728,14 +728,6 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li><small>method</small> <b id="Nuvola.Core.$init">$init</b>()<br />
 <p>Initializes new Core instance object</p></li>
 
-<li><small>method</small> <b id="Nuvola.Core.setHideOnClose">setHideOnClose</b>(hide)<br />
-<p>Set whether the main window should be hidden when close button is pressed
-and run in background.</p><p><b>Parameters</b></p>
-<ul>
-<li>Boolean <b>hide</b> - whether to hide on close</li>
-</ul>
-</li>
-
 <li><small>signal</small> <b id="Nuvola.Core::HomePageRequest">HomePageRequest</b>(emitter, request)<br />
 <p>Emitted on request for home page URL.</p>
 <p>See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p><p><b>Parameters</b></p>
@@ -808,6 +800,20 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Array of FormFieldArray <b>entries</b> - specification of form fields, see <a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a> for details</li>
 </ul>
 </li>
+
+<li><small>signal</small> <b id="Nuvola.Core::QuitRequest">QuitRequest</b>(emitter, result)<br />
+<p>Emitted on request to quit the application by closing the main window.</p>
+<p>This signal is emitted in both App Runner and Web Worker processes.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>bool <b>result.approved</b> - Whether application can quit. If false, application will continue running in background.</li>
+</ul>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onQuitRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;myapp.run_in_background&quot;</span><span class="p">))</span>
+         <span class="nx">result</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::ResourceRequest">ResourceRequest</b>(emitter, request)<br />
 <p>Emitted on request for loading a web resource.</p><p><b>Parameters</b></p>
