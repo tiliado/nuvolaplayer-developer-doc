@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <title>Custom Actions</title>
+    
+    
+    <link rel="stylesheet" href="../theme/bootstrap.min.css" />
+    <link rel="stylesheet" href="../theme/pygments.css" />
+    <link rel="stylesheet" href="../theme/main.css" />
+    
+    
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="../theme/jquery.min.js"></script>
+    <script src="../theme/bootstrap.min.js"></script>
+    
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Nuvola Player Documentation</a>
+    </div><!-- .navbar-header -->
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+  <ul class="nav navbar-nav">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../core.html">Core</a></li>
+            <li class="dropdown">
+              <a href="../apps.html" class="dropdown-toggle" data-toggle="dropdown">Service Integrations <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="../apps.html">Introduction</a></li>
+                <li><a href="../apps/porting.html">Porting to Nuvola Player 3</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Basic</li>
+                <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
+                <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
+                <li><a href="../apps/distribute.html">Distribute Service Integration</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Advanced</li>
+                <li><a href="../apps/guide.html">Full Service Integration Guide</a></li>
+                <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a></li>
+                <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a></li>
+                <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
+                <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
+                <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+                <li><a href="../apps/translations.html">Translations</a></li>
+              </ul>
+            </li>
+          </ul>
+</div><!-- .navbar-collapse -->
+  </div>
+</nav>
+    
+    <div class="container">
+      <div class="row">
+        
+        
+  <div class="col-sm-12">
+      <div class="page-header text-center">
+        <h1 id="top">Custom Actions</h1>
+      </div>
+  </div>
+  <div class="col-md-2 col-lg-3 sidebar">
+    
+      <p><strong>Contents</strong></p>
+      <div class="toc">
+<ul>
+<li><a href="#create-actions">Create Actions</a></li>
+<li><a href="#show-actions-in-user-interface">Show Actions in User Interface</a></li>
+<li><a href="#manage-actions">Manage Actions</a></li>
+<li><a href="#respond-to-actions">Respond to Actions</a></li>
+<li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+<li><a href="#conditional-actions">Conditional Actions</a></li>
+</ul>
+</div>
+    
+    <p><strong>Download documentation</strong></p>
+
+<p>You can download the whole documentation in HTML format as</p>
+<ul>
+  <li><a href="https://github.com/tiliado/nuvolaplayer-developer-doc/archive/master.zip">Zip Archive</a></li>
+  <li><a href="https://github.com/tiliado/nuvolaplayer-developer-doc">Git Repository</a></li>
+</ul>
+
+<p><strong>Get source</strong></p>
+<p>
+  This documentation is built from the
+  <a href="https://github.com/tiliado/nuvolaplayer/tree/master/doc">doc directory</a>
+  of the
+  <a href="https://github.com/tiliado/nuvolaplayer">Nuvola Player repository</a>.
+</p>
+    <span class="backtotop"><a href="#top">↑ Back to top ↑</a></span>
+  </div>
+  <div class="col-sm-12 col-md-10 col-lg-9">
+    <p>Actions API allows you to add custom actions alongside <a href="./api_reference.html#Nuvola.PlayerAction">player actions</a>.
+Typical examples include thumbs up/down, like/love or star rating, but we don't want to limit your
+fantasy.</p>
+<h2 id="create-actions">Create Actions</h2>
+<p>First of all, we define some constants with action names. The action name has to consist only
+from letters, digits and dash. Then we create the actions in
+<a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal handler:</p>
+<ul>
+<li>We create a <strong>simple action</strong> <code>ACTION_ALERT</code> with method
+    <a href="./api_reference.html#Nuvola.Actions.addAction">Nuvola.Actions.addAction</a> within action group <code>playback</code>,
+    with scope <code>win</code> and label <code>Alert!</code>. Other parameters (mnemo_label, icon, keybinding, state)
+    are null.</li>
+<li>We create two <strong>toggle actions</strong> (on/off, checked/unchecked) <code>ACTION_THUMBS_UP</code> and
+    <code>ACTION_THUMBS_DOWN</code> with the same method 
+    <a href="./api_reference.html#Nuvola.Actions.addAction">Nuvola.Actions.addAction</a>, but we specify initial state to be
+    <code>true</code> (on, checked).</li>
+<li>We create one <strong>radio action</strong> (action with multiple options/states) <code>ACTION_RATING</code> with method
+    <a href="./api_reference.html#Nuvola.Actions.addRadioAction">Nuvola.Actions.addRadioAction</a>. Options are specified
+    by an array <code>ratingOptions</code> and the initial state is set to <code>0</code> (0 starts).</li>
+</ul>
+<p>Note that <a href="../apps/translations.html">translation function</a> alias <code>C_</code> is used mark short
+translatable strings with context information ("Action") and <code>ngettext</code> for string with both
+singular and plural forms.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+<span class="c1">// Translations</span>
+<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="kd">var</span> <span class="nx">ACTION_ALERT</span> <span class="o">=</span> <span class="s2">"x-alert"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ACTION_THUMBS_UP</span> <span class="o">=</span> <span class="s2">"thumbs-up"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ACTION_THUMBS_DOWN</span> <span class="o">=</span> <span class="s2">"thumbs-down"</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ACTION_RATING</span> <span class="o">=</span> <span class="s2">"rating"</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Action"</span><span class="p">,</span> <span class="s2">"Alert!"</span><span class="p">),</span>
+        <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Action"</span><span class="p">,</span> <span class="s2">"Thumbs up"</span><span class="p">),</span>
+        <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Action"</span><span class="p">,</span> <span class="s2">"Thumbs down"</span><span class="p">),</span>
+        <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">ratingOptions</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
+            <span class="nx">stars</span><span class="p">,</span> <span class="c1">// stateId</span>
+            <span class="c1">/// Star rating, {1} is a placeholder for a number </span>
+            <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">ngettext</span><span class="p">(</span><span class="s2">"Rating: {1} star"</span><span class="p">,</span> <span class="s2">"Rating: {1} stars"</span><span class="p">,</span> <span class="nx">stars</span><span class="p">),</span> <span class="nx">stars</span><span class="p">),</span> <span class="c1">// label</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="c1">// mnemo_label</span>
+            <span class="kc">null</span><span class="p">,</span> <span class="c1">// icon</span>
+            <span class="kc">null</span>  <span class="c1">// keybinding</span>
+            <span class="p">]);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s2">"playback"</span><span class="p">,</span> <span class="s2">"win"</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
+<p>The <a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal is
+executed in a pure JavaScript environment without
+<a href="https://developer.mozilla.org/en/docs/Web/API/Window">Window object</a>.
+Use <a href="./api_reference.html#Nuvola.log">Nuvola.log()</a> to print logging and debugging messages to terminal
+instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log">console.log()</a>.</p>
+</div></div>
+<h2 id="show-actions-in-user-interface">Show Actions in User Interface</h2>
+<p>Nuvola Player is happy about the new actions, but it has no idea what to do with them. Let's
+add these actions to the media player component with method
+<a href="./api_reference.html#Nuvola.MediaPlayer.addExtraActions">Nuvola.MediaPlayer.addExtraActions</a>. Note that we have
+to add one identifier for each option/state of a radio action, the indentifier consists of the
+action name and the option id separated by two colons <code>::</code>.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="kd">var</span> <span class="nx">player</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">MediaPlayer</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+
+<span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">actions</span> <span class="o">=</span> <span class="p">[</span><span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">actions</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s2">"::"</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+
+    <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">actions</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<p>The media player component than orders Nuvola Player to show the actions in user interface:</p>
+<p><img alt="Custom actions" src="../images/guide/custom_actions.png"/></p>
+<h2 id="manage-actions">Manage Actions</h2>
+<p>As you can see in the previous picture, <em>new actions are disabled/insensitive by default</em>.
+Your task is to examine the web page whether the a particular action is available/enabled
+and to extract state of toggle and radio actions. Then update enabled flag with method
+<a href="./api_reference.html#Nuvola.Actions.updateEnabledFlag">Nuvola.actions.updateEnabledFlag</a> or
+<a href="./api_reference.html#Nuvola.Actions.updateEnabledFlags">Nuvola.actions.updateEnabledFlags</a> and
+state of radio and toggle actions with method 
+<a href="./api_reference.html#Nuvola.Actions.updateState">Nuvola.actions.updateState</a> or
+<a href="./api_reference.html#Nuvola.Actions.updateStates">Nuvola.actions.updateStates</a>.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// Extract whether the action is enabled and its state from a web page</span>
+    <span class="kd">var</span> <span class="nx">actionsEnabled</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="kd">var</span> <span class="nx">actionsStates</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_ALERT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// on/checked</span>
+
+    <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span> <span class="c1">// off/unchecked</span>
+
+    <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// three stars</span>
+
+    <span class="c1">// Compare with previous values and update if necessary</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlags</span><span class="p">(</span><span class="nx">actionsEnabled</span><span class="p">);</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateStates</span><span class="p">(</span><span class="nx">actionsStates</span><span class="p">);</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<p><img alt="Custom actions - enabled" src="../images/guide/custom_actions_enabled.png"/></p>
+<h2 id="respond-to-actions">Respond to Actions</h2>
+<p>The final step is to write handlers for the new actions similarly like for
+<a href="./api_reference.html#Nuvola.PlayerAction">player actions</a>: extend <code>WebApp._onActionActivated</code> method
+from <a href="../apps/tutorial.html">tutorial</a>.</p>
+<div class="codehilite"><pre><span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="cm">/* Base media player actions */</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">TOGGLE_PLAY</span><span class="o">:</span>
+        <span class="p">...</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PLAY</span><span class="o">:</span>
+        <span class="p">...</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PAUSE</span><span class="o">:</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">STOP</span><span class="o">:</span>
+        <span class="p">...</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PREV_SONG</span><span class="o">:</span>
+        <span class="p">...</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">NEXT_SONG</span><span class="o">:</span>
+        <span class="p">...</span>
+        <span class="k">break</span><span class="p">;</span>
+
+    <span class="cm">/* Custom actions */</span>
+    <span class="k">case</span> <span class="nx">ACTION_ALERT</span><span class="o">:</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">"Alert!"</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">ACTION_THUMBS_UP</span><span class="o">:</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"thumbs-up"</span><span class="p">));</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="o">:</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"thumbs-down"</span><span class="p">));</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="nx">ACTION_RATING</span><span class="o">:</span>
+        <span class="c1">// param contains action's state, i.e. number of stars</span>
+        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"star-"</span> <span class="o">+</span> <span class="nx">param</span><span class="p">));</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<p><img alt="Custom action - Alert!" src="../images/guide/custom_action_alert.png"/></p>
+<div class="panel panel-info"><p class="panel-heading">Implementation detail</p><div class="panel-body">
+<p><a href="./api_reference.html#Nuvola.PlayerAction">Player actions</a> are created by
+<a href="./api_reference.html#Nuvola.MediaPlayer">Nuvola.MediaPlayer</a> with the same API as described here .</p>
+</div></div>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<p>Users can assign keyboard shortcuts to custom actions ;-)</p>
+<p><img alt="Custom action - Keyboard shortcuts" src="../images/guide/custom_actions_keyboard_shortcuts.png"/></p>
+<h2 id="conditional-actions">Conditional Actions</h2>
+<p>It might sometimes happen that some actions make sense only in a certain user configuration. For
+example, Google Play Music offers only thumbs up/down rating for songs by default, but users can
+turn on five-star ratting in Music Labs. The following code detects which rating type is supported
+and adds actions accordingly.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">THUMBS_ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">STARS_ACTIONS</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="nx">STARS_ACTIONS</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s2">"::"</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+
+<span class="p">...</span>
+
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+
+<span class="p">...</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">getThumbs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#player-right-wrapper .thumbs.rating-container"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nx">elm</span><span class="p">,</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">1</span><span class="p">]];</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">getStars</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#player-right-wrapper .stars.rating-container"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="p">...</span>
+
+    <span class="c1">// null = disabled; true/false toggled on/off</span>
+    <span class="kd">var</span> <span class="nx">thumbsUp</span><span class="p">,</span> <span class="nx">thumbsDown</span><span class="p">;</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">thumbs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getThumbs</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">thumbs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">==</span> <span class="s2">"hidden"</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">toggleThumbRating</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+            <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">className</span> <span class="o">==</span> <span class="s2">"selected"</span><span class="p">;</span>
+            <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">className</span> <span class="o">==</span> <span class="s2">"selected"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// null = disabled</span>
+    <span class="kd">var</span> <span class="nx">starRating</span><span class="p">;</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getStars</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">stars</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">==</span> <span class="s2">"hidden"</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nx">starRating</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">toggleStarRating</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+            <span class="nx">starRating</span> <span class="o">=</span> <span class="nx">stars</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">"data-rating"</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">starRating</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">toggleStarRating</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">enabled</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">enabled</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">starRatingEnabled</span> <span class="o">!==</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">STARS_ACTIONS</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">starRatingEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">toggleThumbRating</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">enabled</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">enabled</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">thumbRatingEnabled</span> <span class="o">!==</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">THUMBS_ACTIONS</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">thumbRatingEnabled</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+    <div class="footer">
+  <hr />
+  <div class="panel panel-primary">
+    <p class="panel-heading">
+      Questions? Feedback?
+    </p>
+    <div class="panel-body">
+      <p>
+        Having trouble? We'd like to help!
+      </p>
+      <ul>
+        <li>Search for information in the archives of
+          <a href="https://groups.google.com/d/forum/nuvola-player-devel">the nuvola-player-devel
+          mailing list</a>, or post a question.
+        </li>
+        <li>
+          If you notice errors with this documentation, please
+          <a href="https://github.com/tiliado/nuvolaplayer/issues">open a ticket and let us
+          know</a>! Please only use the ticket tracker for criticisms and improvements on the docs.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <p class="text-center">
+    Generated by <a href="http://getpelican.com/">Pelican</a>.
+    Get <a href="https://github.com/tiliado/nuvolaplayer/tree/master/doc">source code</a>.
+    Uses <a href="http://getbootstrap.com/">Bootstrap</a> theme
+    <a href="http://bootswatch.com/united/">United</a>.
+  </p>
+</div>
+  </div> 
+
+      </div>
+    </div>
+  </body>
+</html>

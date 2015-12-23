@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <title>Translations</title>
+    
+    
+    <link rel="stylesheet" href="../theme/bootstrap.min.css" />
+    <link rel="stylesheet" href="../theme/pygments.css" />
+    <link rel="stylesheet" href="../theme/main.css" />
+    
+    
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="../theme/jquery.min.js"></script>
+    <script src="../theme/bootstrap.min.js"></script>
+    
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Nuvola Player Documentation</a>
+    </div><!-- .navbar-header -->
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+  <ul class="nav navbar-nav">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../core.html">Core</a></li>
+            <li class="dropdown">
+              <a href="../apps.html" class="dropdown-toggle" data-toggle="dropdown">Service Integrations <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="../apps.html">Introduction</a></li>
+                <li><a href="../apps/porting.html">Porting to Nuvola Player 3</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Basic</li>
+                <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
+                <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
+                <li><a href="../apps/distribute.html">Distribute Service Integration</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Advanced</li>
+                <li><a href="../apps/guide.html">Full Service Integration Guide</a></li>
+                <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a></li>
+                <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a></li>
+                <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
+                <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a></li>
+                <li><a href="../apps/custom-actions.html">Custom Actions</a></li>
+                <li><a href="../apps/translations.html">Translations</a></li>
+              </ul>
+            </li>
+          </ul>
+</div><!-- .navbar-collapse -->
+  </div>
+</nav>
+    
+    <div class="container">
+      <div class="row">
+        
+        
+  <div class="col-sm-12">
+      <div class="page-header text-center">
+        <h1 id="top">Translations</h1>
+      </div>
+  </div>
+  <div class="col-md-2 col-lg-3 sidebar">
+    
+      <p><strong>Contents</strong></p>
+      <div class="toc">
+<ul>
+<li><a href="#translation-functions">Translation Functions</a><ul>
+<li><a href="#unambiguous-string">Unambiguous String</a></li>
+<li><a href="#disambiguating-message-context">Disambiguating message context</a></li>
+<li><a href="#singular-and-plural-form">Singular and plural form</a></li>
+</ul>
+</li>
+<li><a href="#extract-translations">Extract translations</a><ul>
+<li><a href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</div>
+    
+    <p><strong>Download documentation</strong></p>
+
+<p>You can download the whole documentation in HTML format as</p>
+<ul>
+  <li><a href="https://github.com/tiliado/nuvolaplayer-developer-doc/archive/master.zip">Zip Archive</a></li>
+  <li><a href="https://github.com/tiliado/nuvolaplayer-developer-doc">Git Repository</a></li>
+</ul>
+
+<p><strong>Get source</strong></p>
+<p>
+  This documentation is built from the
+  <a href="https://github.com/tiliado/nuvolaplayer/tree/master/doc">doc directory</a>
+  of the
+  <a href="https://github.com/tiliado/nuvolaplayer">Nuvola Player repository</a>.
+</p>
+    <span class="backtotop"><a href="#top">↑ Back to top ↑</a></span>
+  </div>
+  <div class="col-sm-12 col-md-10 col-lg-9">
+    <p>It is planned to provide a <a href="http://www.gnu.org/software/gettext/manual/gettext.html">gettext-based</a>
+translations framework for service integration scripts. The JavaScript API currently contains only
+<a href="./api_reference.html#Nuvola.Translate">translation placeholders</a> that can be used to mark strings for
+translation.</p>
+<h2 id="translation-functions">Translation Functions</h2>
+<p>There are three ways how to use translations</p>
+<ul>
+<li>Translations of strings that are unambiguous.</li>
+<li>Translations of short strings that need a disambiguating message context</li>
+<li>Translations of strings that have a singular and a plural form.</li>
+</ul>
+<h3 id="unambiguous-string">Unambiguous String</h3>
+<p>The most common case is you want to translate a string that is unambiguous,
+i. e. it cannot be translated differently depending on a message context.</p>
+<ul>
+<li>
+<p>Use function <a href="./api_reference.html#Nuvola.Translate.gettext">Translate.gettext</a>.</p>
+<div class="codehilite"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">(</span><span class="s2">"Bye World!"</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>It's common to create a short alias <code>_</code>. (Note that other aliases won't be recognized by
+    a translation extraction tool.)</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello world!"</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>Note that you have to provide a string literal, not variable nor expression, because the
+    translation extraction tool doesn't expand variables.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s2">"Hello world!"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">greeting</span><span class="p">));</span> <span class="c1">// Wrong!</span>
+
+<span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Hello world!"</span><span class="p">);</span> <span class="c1">// Right</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">)</span>
+</pre></div>
+</li>
+<li>
+<p>If you need to compose message with variables, use <a href="./api_reference.html#Nuvola.format">Nuvola.format</a>.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">"!"</span><span class="p">));</span> <span class="c1">// Wrong!</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span> <span class="c1">// Right</span>
+<span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span> <span class="c1">// Right</span>
+</pre></div>
+</li>
+<li>
+<p>You can optionally add a comment for translators after tree slashes. It has to be on a line
+    preceding the translated string though.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
+<span class="c1">/// {1} is a placeholder for user name</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span>
+</pre></div>
+</li>
+</ul>
+<h3 id="disambiguating-message-context">Disambiguating message context</h3>
+<p>You might sometimes have short strings that could be translated differently depending on a context.
+For example, "Back" string in navigation or in a body part. You should use this function for
+labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
+<a href="../apps/initialization-and-preferences-forms.html">initialization and preferences forms</a>.</p>
+<ul>
+<li>
+<p>Use function <a href="./api_reference.html#Nuvola.Translate.pgettext">Translate.pgettext</a>.</p>
+<div class="codehilite"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">(</span><span class="s2">"Checkbox label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>It's common to create a short alias <code>C_</code>. (Note that other aliases won't be recognized by
+    a translation extraction tool.)</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Checkbox label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>You can optionally add a comment for translators after tree slashes. It has to be on a line
+    preceding the translated string though.</p>
+<div class="codehilite"><pre><span class="c1">/// My comment</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span>
+    <span class="s2">"Checkbox label"</span><span class="p">,</span>
+    <span class="c1">/// My comment</span>
+    <span class="s2">"Show notification"</span>
+    <span class="p">));</span>
+</pre></div>
+</li>
+</ul>
+<h3 id="singular-and-plural-form">Singular and plural form</h3>
+<p>Gettext also support messages with a singular and a plural form.</p>
+<ul>
+<li>
+<p>Use function <a href="./api_reference.html#Nuvola.Translate.ngettext">Translate.ngettext</a>.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">(</span>
+    <span class="s2">"There is {1} egg in the fridge."</span><span class="p">,</span>
+    <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>It's common to create an  alias <code>ngettext</code>. (Note that other aliases won't be recognized by
+    a translation extraction tool.)</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="s2">"There is {1} egg in the fridge."</span><span class="p">,</span>
+    <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>It's possible to replace placeholder in the singular form with <code>one</code>.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="s2">"There is one egg in the fridge."</span><span class="p">,</span>
+    <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+</pre></div>
+</li>
+<li>
+<p>You can optionally add a comment for translators after tree slashes. It has to be on a line
+    preceding the singular string though.</p>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="c1">/// {1} is a placeholder for a number</span>
+    <span class="s2">"There is one egg in the fridge."</span><span class="p">,</span>
+    <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+</pre></div>
+</li>
+</ul>
+<h2 id="extract-translations">Extract translations</h2>
+<p>Translatable strings will be eventually extracted by <code>xgettext</code> tool from the <code>gettext</code> package.
+Make sure all strings you have intended to mark for translations do appear in generated translation
+template including translation comments.</p>
+<div class="codehilite"><pre>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
+</pre></div>
+<h3 id="example">Example</h3>
+<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Hello world!"</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
+<span class="c1">/// {1} is a placeholder for user name</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span>
+
+<span class="c1">/// My comment</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span>
+    <span class="s2">"Checkbox label"</span><span class="p">,</span>
+    <span class="c1">/// My comment</span>
+    <span class="s2">"Show notification"</span>
+    <span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="s2">"There is {1} egg in the fridge."</span><span class="p">,</span>
+    <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+    <span class="c1">/// {1} is a placeholder for a number</span>
+    <span class="s2">"There is one egg in the fridge."</span><span class="p">,</span>
+    <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
+    <span class="nx">eggs</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+</pre></div>
+<div class="codehilite"><pre>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
+</pre></div>
+<div class="codehilite"><pre><span class="err">#</span> <span class="nt">SOME</span> <span class="nt">DESCRIPTIVE</span> <span class="nt">TITLE</span><span class="o">.</span>
+<span class="err">#</span> <span class="nt">Copyright</span> <span class="o">(</span><span class="nt">C</span><span class="o">)</span> <span class="nt">YEAR</span> <span class="nt">THE</span> <span class="nt">PACKAGE</span><span class="err">'</span><span class="nt">S</span> <span class="nt">COPYRIGHT</span> <span class="nt">HOLDER</span>
+<span class="err">#</span> <span class="nt">This</span> <span class="nt">file</span> <span class="nt">is</span> <span class="nt">distributed</span> <span class="nt">under</span> <span class="nt">the</span> <span class="nt">same</span> <span class="nt">license</span> <span class="nt">as</span> <span class="nt">the</span> <span class="nt">PACKAGE</span> <span class="nt">package</span><span class="o">.</span>
+<span class="err">#</span> <span class="nt">FIRST</span> <span class="nt">AUTHOR</span> <span class="o">&lt;</span><span class="nt">EMAIL</span><span class="k">@ADDRESS</span><span class="o">&gt;,</span> <span class="nt">YEAR</span><span class="o">.</span>
+<span class="err">#</span>
+<span class="err">#</span><span class="o">,</span> <span class="nt">fuzzy</span>
+<span class="nt">msgid</span> <span class="s2">""</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
+<span class="s2">"Project-Id-Version: PACKAGE VERSION\n"</span>
+<span class="s2">"Report-Msgid-Bugs-To: \n"</span>
+<span class="s2">"POT-Creation-Date: 2014-09-07 10:21+0200\n"</span>
+<span class="s2">"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"</span>
+<span class="s2">"Last-Translator: FULL NAME &lt;EMAIL@ADDRESS&gt;\n"</span>
+<span class="s2">"Language-Team: LANGUAGE &lt;LL@li.org&gt;\n"</span>
+<span class="s2">"Language: \n"</span>
+<span class="s2">"MIME-Version: 1.0\n"</span>
+<span class="s2">"Content-Type: text/plain; charset=CHARSET\n"</span>
+<span class="s2">"Content-Transfer-Encoding: 8bit\n"</span>
+<span class="s2">"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"</span>
+
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:131</span>
+<span class="nt">msgid</span> <span class="s2">"Hello world!"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
+
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="nt">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">user</span> <span class="nt">name</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:136</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:137</span>
+<span class="nt">msgid</span> <span class="s2">"Hello {1}!"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
+
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="nt">My</span> <span class="nt">comment</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:140</span>
+<span class="nt">msgctxt</span> <span class="s2">"Action label"</span>
+<span class="nt">msgid</span> <span class="s2">"Show notification"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
+
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="nt">My</span> <span class="nt">comment</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:144</span>
+<span class="nt">msgctxt</span> <span class="s2">"Checkbox label"</span>
+<span class="nt">msgid</span> <span class="s2">"Show notification"</span>
+<span class="nt">msgstr</span> <span class="s2">""</span>
+
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:149</span>
+<span class="nt">msgid</span> <span class="s2">"There is {1} egg in the fridge."</span>
+<span class="nt">msgid_plural</span> <span class="s2">"There are {1} eggs in the fridge."</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="s2">""</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="s2">""</span>
+
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="m">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">a</span> <span class="nt">number</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:158</span>
+<span class="nt">msgid</span> <span class="s2">"There is one egg in the fridge."</span>
+<span class="nt">msgid_plural</span> <span class="s2">"There are {1} eggs in the fridge."</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="s2">""</span>
+<span class="nt">msgstr</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="s2">""</span>
+</pre></div>
+
+    <div class="footer">
+  <hr />
+  <div class="panel panel-primary">
+    <p class="panel-heading">
+      Questions? Feedback?
+    </p>
+    <div class="panel-body">
+      <p>
+        Having trouble? We'd like to help!
+      </p>
+      <ul>
+        <li>Search for information in the archives of
+          <a href="https://groups.google.com/d/forum/nuvola-player-devel">the nuvola-player-devel
+          mailing list</a>, or post a question.
+        </li>
+        <li>
+          If you notice errors with this documentation, please
+          <a href="https://github.com/tiliado/nuvolaplayer/issues">open a ticket and let us
+          know</a>! Please only use the ticket tracker for criticisms and improvements on the docs.
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <p class="text-center">
+    Generated by <a href="http://getpelican.com/">Pelican</a>.
+    Get <a href="https://github.com/tiliado/nuvolaplayer/tree/master/doc">source code</a>.
+    Uses <a href="http://getbootstrap.com/">Bootstrap</a> theme
+    <a href="http://bootswatch.com/united/">United</a>.
+  </p>
+</div>
+  </div> 
+
+      </div>
+    </div>
+  </body>
+</html>
