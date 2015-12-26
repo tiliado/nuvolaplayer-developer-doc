@@ -188,16 +188,18 @@ own icons, the resulting icon set must consist of:</p>
 <li><code>64.png</code> - 64×64 px PNG icon</li>
 <li><code>128.png</code> - 128×128 px PNG icon</li>
 <li><code>256.png</code> - 256×256 px PNG icon</li>
-<li><code>scalable.svg</code> - scalable SVG icon</li>
+<li><code>scalable.svg</code> - scalable SVG icon with base size 512×512 px</li>
 </ul>
-<p>All PNG icons should be build from source SVG icons via a Makefile rule. While the file
-<code>scalable.svg</code> can be used to build icon sizes 32-256, smaller icons will need their own fine-tuned
-source SVG icons.</p>
+<p>All PNG icons must be build from source SVG icons via a Makefile rule. While the file
+<code>scalable.svg</code> can be used to build icon sizes 64-256, smaller icons will need their own fine-tuned
+source SVG icons: icons 16, 22 and 24 from a SVG image with base size 16 px and icons 32 and 48 from a SVG image
+with base size 32 px. See <a href="https://github.com/tiliado/nuvolaplayer/blob/master/web_apps/template/">template</a>
+for inspiration.</p>
 <div class="panel panel-danger"><p class="panel-heading">Beware of copyright infringement</p><div class="panel-body">
-<p>Common mistake is to take an official logo of a particular streaming service, resize it or crop
+<p>A common mistake is to take an official logo of a particular streaming service, resize it or crop
 it and then use it as icon for Nuvola Player. This approach has always led to violation of the
 first rule regarding to copyright and license and affected integration scripts were rejected
-until the file was removed</p>
+until the file was removed.</p>
 </div></div>
 <h2 id="git-github-guidelines">Git &amp; GitHub Guidelines</h2>
 <h4 id="commit-messages">Commit Messages</h4>
