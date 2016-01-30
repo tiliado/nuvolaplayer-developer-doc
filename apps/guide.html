@@ -257,6 +257,14 @@ service integration (e.g. <code>https://play.google.com/music/</code> for Google
 <p>This field is not required if you use custom function to handle home page request.
 See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p>
 </dd>
+<dt><code>requirements</code></dt>
+<dd>
+<p>If your streaming service requires <strong>Flash plugin</strong> or <strong>HTML5 Audio support</strong> for playback
+(very likely), you have to
+<a href="https://github.com/tiliado/nuvolaplayer/issues/158#issuecomment-177193663">set a proper format requirement flag</a>.
+Although Nuvola Player 3.0 currently doesn't check this flag and enables both Flash and HTML5 Audio by default,
+this is going to be changed in the next stable release <strong>Nuvola Player 3.2</strong>.</p>
+</dd>
 </dl>
 <p>This file can include also optional fields:</p>
 <dl>
