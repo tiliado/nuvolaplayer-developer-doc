@@ -129,11 +129,10 @@ insight to the NuvolaKit core. </p>
 </pre></div>
 </li>
 <li>
-<p>Create a copy of the template shipped with Nuvola Player 3.</p>
-<div class="codehilite"><pre>cd ~/projects/nuvola-player
-cp -r /usr/share/nuvolaplayer3/web_apps/template ./happy-songs
-# or
-cp -r /usr/local/share/nuvolaplayer3/web_apps/template ./happy-songs
+<p>Download <a href="https://github.com/tiliado/nuvola-app-template">a web app integration template</a>.</p>
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player
+wget https://github.com/tiliado/nuvola-app-template/archive/master.tar.gz -O - <span class="p">|</span> tar -xz
+mv nuvola-app-template-master happy-songs
 </pre></div>
 </li>
 <li>
