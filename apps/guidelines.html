@@ -83,10 +83,10 @@
 <li><a href="#license">License</a></li>
 <li><a href="#artwork">Artwork</a></li>
 <li><a href="#git-github-guidelines">Git &amp; GitHub Guidelines</a><ul>
+<li><a href="#releases">Releases</a></li>
 <li><a href="#commit-messages">Commit Messages</a></li>
 <li><a href="#pull-requests">Pull Requests</a></li>
 <li><a href="#merge-commits">Merge Commits</a></li>
-<li><a href="#releases">Releases</a></li>
 </ul>
 </li>
 <li><a href="#coding-style">Coding Style</a><ul>
@@ -202,6 +202,20 @@ first rule regarding to copyright and license and affected integration scripts w
 until the file was removed.</p>
 </div></div>
 <h2 id="git-github-guidelines">Git &amp; GitHub Guidelines</h2>
+<h4 id="releases">Releases</h4>
+<ul>
+<li><strong>Never increase version number</strong> in <code>metadata.json</code> in regular commits nor in pull requests,
+    but only in special release commits with a commit message <code>Release X.Y</code> and git tag <code>X.Y</code>
+    (not <code>vX.Y</code> nor <code>release-X.Y</code>, just <code>X.Y</code>). Moreover, <strong>you don't have to make release
+    commits at all</strong>, just jump to the next step.</li>
+<li>Create a Github issue "Release X.Y" and assing it to @fenryxo when ready for a new release.
+    He will decide whether the release should be made or a few other changes should be made before next
+    release. He will also create a tagged release commit and build new packages for the Nuvola Player
+    Package Repository.</li>
+<li>Don't hesitate to release often. Packages of service integration script are lightweight
+    with a typical build time a few seconds thanks to <a href="https://github.com/jordansissel/fpm">fpm</a>.
+    Users will love you if you release a fix as soon as possible.</li>
+</ul>
 <h4 id="commit-messages">Commit Messages</h4>
 <p>Commit messages should follow this template:</p>
 <div class="codehilite"><pre>Short (50 chars or less) summary of changes
@@ -322,13 +336,6 @@ forget to link to issues.
    keep entrance barrier for contributors as low as possible.</li>
 <li>Finally, <code>git push</code>.</li>
 <li><em>Optionally</em>, you can remove remote repository: <code>git remote remove gh-USER/BRANCH</code></li>
-</ul>
-<h4 id="releases">Releases</h4>
-<ul>
-<li>Create a Github issue "Make release X.Y" and assing it to @fenryxo when ready for a new release, but don't increase version fields in metadata.</li>
-<li>Don't hesitate to release often. Packages of service integration script are lightweight
-    with a typical build time a few seconds thanks to <a href="https://github.com/jordansissel/fpm">fpm</a>.</li>
-<li>Users will love you if you release a fix as soon as possible.</li>
 </ul>
 <h2 id="coding-style">Coding Style</h2>
 <p>Service integrations are maintained in separate repositories as more or less independent sub-projects.
