@@ -128,7 +128,8 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
    Full text of a license must be provided in file <code>LICENSE</code> or <code>LICENSE.txt</code>. If more than one
    license are used, add a distinguishing suffix, e.g. <code>LICENSE-BSD.txt</code>. You can look at
    <a href="https://github.com/tiliado/nuvola-app-template/blob/master/README.md">README.md template</a>
-   for inspiration.</p>
+   for inspiration. In addition, the <code>metadata.json</code> file must contain a list of licenses in the
+   <code>license</code> field, e.g. <code>"license": "2-Clause BSD, CC-BY-3.0"</code>.</p>
 </li>
 <li>
 <p>The field <code>maintainer_link</code> of <code>metadata.json</code> must contain URL of your
@@ -173,6 +174,7 @@ to the popular open-source licenses with strong communities:</p>
 <li><a href="http://opensource.org/licenses/MIT">MIT license</a></li>
 <li><a href="http://opensource.org/licenses/MPL-2.0">Mozilla Public License 2.0</a></li>
 </ul>
+<p>You must specify the license in <code>README.md</code> and in the <code>licence</code> field of <code>metadata.json</code>.</p>
 <h2 id="artwork">Artwork</h2>
 <p>Nuvola Player expects your integration to provide a set of icons in the <code>icons</code> directory. However,
 you don't have to care about it as service integration template already contains generic Nuvola

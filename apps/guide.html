@@ -204,7 +204,8 @@ Let's look at the example:</p>
     <span class="nt">"api_major"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
     <span class="nt">"api_minor"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="nt">"categories"</span><span class="p">:</span> <span class="s2">"AudioVideo;Audio;"</span><span class="p">,</span>
-    <span class="nt">"home_url"</span><span class="p">:</span> <span class="s2">"nuvola://home.html"</span>
+    <span class="nt">"home_url"</span><span class="p">:</span> <span class="s2">"nuvola://home.html"</span><span class="p">,</span>
+    <span class="nt">"license"</span><span class="p">:</span> <span class="s2">"2-Clause BSD, CC-BY-3.0"</span>
 <span class="p">}</span>
 </pre></div>
 <p>This file contains several <strong>mandatory fields</strong>:</p>
@@ -263,6 +264,10 @@ service integration (e.g. <code>https://play.google.com/music/</code> for Google
 <p>This field is not required if you use custom function to handle home page request.
 See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p>
 </dd>
+<dt><code>license</code></dt>
+<dd>
+<p>List of licenses that apply to your script, e.g. <code>"2-Clause BSD, CC-BY-3.0"</code>.</p>
+</dd>
 <dt><code>requirements</code></dt>
 <dd>
 <p>If your streaming service requires <strong>Flash plugin</strong> or <strong>HTML5 Audio support</strong> for playback
@@ -277,6 +282,13 @@ this is going to be changed in the next stable release <strong>Nuvola Player 3.2
 <dt><code>window_width</code>, <code>window_height</code></dt>
 <dd>
 <p>Suggested window width or height in pixels.</p>
+</dd>
+<dt><code>allow_insecure_content</code> (since Nuvola Player 3.1)</dt>
+<dd>
+<p>Whether the page served over the secure HTTPS protocol depends on insecure content served over the HTTP protocol.
+As a rule of thumb, set <code>allow_insecure_content</code> to <code>true</code> if you see console warnings similar to that of Pocket Casts:
+<code>Runner: **CONSOLE WARN [blocked]** The page at https://play.pocketcasts.com/web **was not allowed** to display
+insecure content from http://media.scpr.org/.</code> The default value is <code>false</code>.</p>
 </dd>
 </dl>
 <div class="panel panel-danger"><p class="panel-heading">Extra rules for metadata.json</p><div class="panel-body">
@@ -680,7 +692,8 @@ might be. Playback states are defined in an enumeration
     <span class="p">...</span>
 
     <span class="kd">var</span> <span class="nx">track</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">artLocation</span><span class="o">:</span> <span class="kc">null</span> <span class="c1">// always null</span>
+        <span class="nx">artLocation</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span> <span class="c1">// always null</span>
+        <span class="nx">rating</span><span class="o">:</span> <span class="kc">null</span> <span class="c1">// same</span>
     <span class="p">}</span>
 
     <span class="kd">var</span> <span class="nx">idMap</span> <span class="o">=</span> <span class="p">{</span><span class="nx">title</span><span class="o">:</span> <span class="s2">"track"</span><span class="p">,</span> <span class="nx">artist</span><span class="o">:</span> <span class="s2">"artist"</span><span class="p">,</span> <span class="nx">album</span><span class="o">:</span> <span class="s2">"album"</span><span class="p">}</span>

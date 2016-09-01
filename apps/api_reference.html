@@ -133,9 +133,14 @@
 </ul></li>
 <li><a href="#Nuvola.Core">Core</a>
 <ul><li><a href="#Nuvola.Core.$init">$init</a></li>
+<li><a href="#Nuvola.Core.getComponentInfo">getComponentInfo</a></li>
+<li><a href="#Nuvola.Core.isComponentLoaded">isComponentLoaded</a></li>
+<li><a href="#Nuvola.Core::ComponentLoaded">ComponentLoaded</a></li>
+<li><a href="#Nuvola.Core::ComponentUnloaded">ComponentUnloaded</a></li>
 <li><a href="#Nuvola.Core::HomePageRequest">HomePageRequest</a></li>
 <li><a href="#Nuvola.Core::InitAppRunner">InitAppRunner</a></li>
 <li><a href="#Nuvola.Core::InitWebWorker">InitWebWorker</a></li>
+<li><a href="#Nuvola.Core::InitWebWorkerHelper">InitWebWorkerHelper</a></li>
 <li><a href="#Nuvola.Core::InitializationForm">InitializationForm</a></li>
 <li><a href="#Nuvola.Core::LastPageRequest">LastPageRequest</a></li>
 <li><a href="#Nuvola.Core::NavigationRequest">NavigationRequest</a></li>
@@ -169,8 +174,10 @@
 <li><a href="#Nuvola.MediaPlayer.setCanGoPrev">setCanGoPrev</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanPause">setCanPause</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanPlay">setCanPlay</a></li>
+<li><a href="#Nuvola.MediaPlayer.setCanRate">setCanRate</a></li>
 <li><a href="#Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</a></li>
 <li><a href="#Nuvola.MediaPlayer.setTrack">setTrack</a></li>
+<li><a href="#Nuvola.MediaPlayer::RatingSet">RatingSet</a></li>
 </ul></li>
 <li><a href="#Nuvola.MenuBar">MenuBar</a>
 <ul><li><a href="#Nuvola.MenuBar.setMenu">setMenu</a></li>
@@ -195,6 +202,7 @@
 <li><a href="#Nuvola.WebApp._onHomePageRequest">_onHomePageRequest</a></li>
 <li><a href="#Nuvola.WebApp._onInitAppRunner">_onInitAppRunner</a></li>
 <li><a href="#Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</a></li>
+<li><a href="#Nuvola.WebApp._onInitWebWorkerHelper">_onInitWebWorkerHelper</a></li>
 <li><a href="#Nuvola.WebApp._onLastPageRequest">_onLastPageRequest</a></li>
 <li><a href="#Nuvola.WebApp._onNavigationRequest">_onNavigationRequest</a></li>
 <li><a href="#Nuvola.WebApp._onUriChanged">_onUriChanged</a></li>
@@ -728,6 +736,45 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li><small>method</small> <b id="Nuvola.Core.$init">$init</b>()<br />
 <p>Initializes new Core instance object</p></li>
 
+<li><small>method</small> <b id="Nuvola.Core.getComponentInfo">getComponentInfo</b>(id)<br />
+<p>Returns information about a component</p><p><b>Parameters</b></p>
+<ul>
+<li>id <b>ide</b> - of the component</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>Object component info</p></li>
+</ul>
+</li>
+
+<li><small>method</small> <b id="Nuvola.Core.isComponentLoaded">isComponentLoaded</b>(id)<br />
+<p>Returns whether a component is loaded</p><p><b>Parameters</b></p>
+<ul>
+<li>id <b>id</b> - of the component</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>Boolean true if the component is loaded</p></li>
+</ul>
+</li>
+
+<li><small>signal</small> <b id="Nuvola.Core::ComponentLoaded">ComponentLoaded</b>(emitter, name)<br />
+<p>Emitted when a component has been loaded.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>string <b>name</b> - the name of the component</li>
+</ul>
+</li>
+
+<li><small>signal</small> <b id="Nuvola.Core::ComponentUnloaded">ComponentUnloaded</b>(emitter, id, name)<br />
+<p>Emitted when a component has been unloaded.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>string <b>id</b> - the id of the component</li>
+<li>string <b>name</b> - the name of the component</li>
+</ul>
+</li>
+
 <li><small>signal</small> <b id="Nuvola.Core::HomePageRequest">HomePageRequest</b>(emitter, request)<br />
 <p>Emitted on request for home page URL.</p>
 <p>See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p><p><b>Parameters</b></p>
@@ -751,7 +798,15 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 
 <li><small>signal</small> <b id="Nuvola.Core::InitWebWorker">InitWebWorker</b>(emitter)<br />
 <p>InitWebWorker     initialize web worker process hook</p>
-<p>This signal is emitted just before a web page is loaded in the main frame of the web view.</p><p><b>Parameters</b></p>
+<p>This signal is emitted every time just before a web page is loaded in the main frame of the web view.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+</ul>
+</li>
+
+<li><small>signal</small> <b id="Nuvola.Core::InitWebWorkerHelper">InitWebWorkerHelper</b>(emitter)<br />
+<p>InitWebWorkerHelper     initialize web worker helper hook</p>
+<p>This signal is emitted only once just before a web page is loaded in the main frame of the web view.</p><p><b>Parameters</b></p>
 <ul>
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 </ul>
@@ -958,7 +1013,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </li>
 
 </ul></li>
-<li> <small>prototype</small> <b id="Nuvola.MediaPlayer">Nuvola.MediaPlayer</b> extends Object<br />
+<li> <small>prototype</small> <b id="Nuvola.MediaPlayer">Nuvola.MediaPlayer</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
 <p>Media player controller.</p><ul>
 
 <li><small>method</small> <b id="Nuvola.MediaPlayer.$init">$init</b>()<br />
@@ -1005,6 +1060,16 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
+<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanRate">setCanRate</b>(canRate)<br />
+<p>Set whether it is possible to rate tracks</p>
+<p>If rating is enabled, signal <a href="#Nuvola.MediaPlayer::RatingSet">MediaPlayer::RatingSet</a> is emitted.
+If the argument is same as in the previous call, this method does nothing.</p>
+<p>@since API 3.1</p><p><b>Parameters</b></p>
+<ul>
+<li>Boolean <b>canRate</b> - true if remote rating should be allowed</li>
+</ul>
+</li>
+
 <li><small>method</small> <b id="Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</b>(state)<br />
 <p>Set current playback state</p>
 <p>If the current state is same as the previous one, this method does nothing.</p><p><b>Parameters</b></p>
@@ -1021,6 +1086,17 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String|null <b>track.artist</b> - track artist</li>
 <li>String|null <b>track.album</b> - track album</li>
 <li>String|null <b>track.artLocation</b> - URL of album/track artwork</li>
+<li>double|null <b>track.rating</b> - track rating from <code>0.0</code> to <code>1.0</code>. <em>This item is ignored prior API 3.1.</em></li>
+</ul>
+</li>
+
+<li><small>signal</small> <b id="Nuvola.MediaPlayer::RatingSet">RatingSet</b>(emitter, rating)<br />
+<p>Emitted when a rating is set.</p>
+<p>Note that rating has to be enabled first with a method <a href="#Nuvola.MediaPlayer.setCanRate">MediaPlayer.setCanRate</a>.</p>
+<p>@since API 3.1</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.MediaPlayer">MediaPlayer</a> <b>emitter</b> - object that emitted the signal</li>
+<li>Number <b>rating</b> - Ratting from <code>0.0</code> to <code>1.0</code>.</li>
 </ul>
 </li>
 
@@ -1149,6 +1225,10 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
     <span class="p">...</span>
 <span class="p">}</span>
 </pre></div></li>
+
+<li><small>method</small> <b id="Nuvola.WebApp._onInitWebWorkerHelper">_onInitWebWorkerHelper</b>(emitter)<br />
+<p>Signal handler for <a href="#Nuvola.Core::InitWebWorkerHelper">Core::InitWebWorkerHelper</a>. Override this method to connect to
+<a href="#Nuvola.Core::ResourceRequest">Core::ResourceRequest</a> signal.</p></li>
 
 <li><small>method</small> <b id="Nuvola.WebApp._onLastPageRequest">_onLastPageRequest</b>(emitter, request)<br />
 <p>Signal handler for <a href="#Nuvola.Core::LastPageRequest">Core::LastPageRequest</a></p></li>
