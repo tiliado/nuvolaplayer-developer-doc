@@ -41,17 +41,14 @@
             <li class="dropdown">
               <a href="../apps.html" class="dropdown-toggle" data-toggle="dropdown">Service Integrations <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/porting.html">Porting to Nuvola Player 3</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
+                <li><a href="../apps.html">Introduction</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
-                <li><a href="../apps/distribute.html">Distribute Service Integration</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Advanced</li>
-                <li><a href="../apps/guide.html">Full Service Integration Guide</a></li>
                 <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a></li>
                 <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a></li>
                 <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
@@ -127,7 +124,7 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
    preferably the same license as Nuvola Player (BSD 2-Clause "Simplified" or "FreeBSD" license).
    Full text of a license must be provided in file <code>LICENSE</code> or <code>LICENSE.txt</code>. If more than one
    license are used, add a distinguishing suffix, e.g. <code>LICENSE-BSD.txt</code>. You can look at
-   <a href="https://github.com/tiliado/nuvola-app-template/blob/master/README.md">README.md template</a>
+   <a href="https://raw.githubusercontent.com/tiliado/nuvolasdk/master/nuvolasdk/data/template/README.md">README.md template</a>
    for inspiration. In addition, the <code>metadata.json</code> file must contain a list of licenses in the
    <code>license</code> field, e.g. <code>"license": "2-Clause BSD, CC-BY-3.0"</code>.</p>
 </li>
@@ -141,11 +138,11 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
 </li>
 <li>
 <p>You must use a consistent coding style of <code>integrate.json</code>, preferably the coding style of
-   Nuvola Player.</p>
+    Nuvola Player.</p>
 </li>
 <li>
 <p>You must use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">strict JavaScript mode</a> and <a href="http://markdalgleish.com/2011/03/self-executing-anonymous-functions/">self-executing anonymous function</a>.
-   (See <a href="../apps/tutorial.html">tutorial</a>.)</p>
+    (See <a href="../apps/tutorial.html">tutorial</a>.)</p>
 </li>
 <li>
 <p>You have to use Nuvola Player JavaScript API &gt;= 3.0.</p>
@@ -155,9 +152,19 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
 </li>
 <li>
 <p>Your repository must contain file <code>CONTRIBUTING.md</code> with instructions for contributors.
-   You can copy
-   <a href="https://github.com/tiliado/nuvola-app-template/blob/master/CONTRIBUTING.md">CONTRIBUTING.md template</a>
-   and adjust it to your needs.</p>
+    You can copy
+    <a href="https://raw.githubusercontent.com/tiliado/nuvolasdk/master/nuvolasdk/data/template/CONTRIBUTING.md">CONTRIBUTING.md template</a>
+    and adjust it to your needs.</p>
+</li>
+<li>
+<p>You have to create a <code>CHANGELOG.md</code> file with a limited subset of Markdown syntax (headings, links, bullet points).
+    <a href="https://raw.githubusercontent.com/tiliado/nuvolasdk/master/nuvolasdk/data/template/CHANGELOG.md">Example with an unreleased initial release</a>.
+    <a href="https://raw.githubusercontent.com/tiliado/nuvola-app-siriusxm/0d8432f18f6164b19b58b5b68b1ca4f3d260179d/CHANGELOG.md">Example with a few released releases</a>.</p>
+</li>
+<li>
+<p>You should test your script in Nuvola Player 3.0 first. When you are finished, feel free to submit your script
+    for a code review. You will then receive a Tiliado developer account to test you script with Nuvola Player 3.1.
+    (Access to Nuvola Player 3.1 is restricted to Tiliado developers and Nuvola Patrons.)</p>
 </li>
 </ol>
 <h2 id="license">License</h2>

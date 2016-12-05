@@ -41,17 +41,14 @@
             <li class="dropdown">
               <a href="../apps.html" class="dropdown-toggle" data-toggle="dropdown">Service Integrations <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/porting.html">Porting to Nuvola Player 3</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
+                <li><a href="../apps.html">Introduction</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
-                <li><a href="../apps/distribute.html">Distribute Service Integration</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Advanced</li>
-                <li><a href="../apps/guide.html">Full Service Integration Guide</a></li>
                 <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a></li>
                 <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a></li>
                 <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a></li>
@@ -80,9 +77,10 @@
       <div class="toc">
 <ul>
 <li><a href="#prepare-development-environment">Prepare development environment</a></li>
-<li><a href="#create-metadata-file">Create metadata file</a></li>
-<li><a href="#create-integration-script">Create integration script</a></li>
-<li><a href="#launch-nuvola-player">Launch Nuvola Player</a></li>
+<li><a href="#metadata-file">Metadata file</a></li>
+<li><a href="#integration-script">Integration script</a></li>
+<li><a href="#app-runner-and-web-worker">App Runner and Web Worker</a></li>
+<li><a href="#check-build-and-run-your-script">Check, Build and Run Your Script</a></li>
 <li><a href="#debugging-and-logging-messages">Debugging and logging messages</a></li>
 <li><a href="#playback-state-and-track-details">Playback state and track details</a><ul>
 <li><a href="#playback-state">Playback state</a></li>
@@ -90,6 +88,7 @@
 </ul>
 </li>
 <li><a href="#player-actions">Player Actions</a></li>
+<li><a href="#push-your-work-upstream">Push your work upstream</a></li>
 <li><a href="#what-to-do-next">What to do next</a></li>
 </ul>
 </div>
@@ -116,12 +115,15 @@
 <p>This tutorial briefly describes creation of <strong>a new service integration for Nuvola Player 3 from
 scratch</strong>. The goal is to write an integration script for <em>fake Happy Songs  service</em> shipped with
 Nuvola Player and to prepare you to create your own service integration.
-I'm looking forward to a code review ;-)
-There is also more detailed <a href="../apps/guide.html">Service Integrations Guide</a> that provides
-insight to the NuvolaKit core. </p>
+I'm looking forward to a code review ;-)</p>
 <h2 id="prepare-development-environment">Prepare development environment</h2>
 <ol>
-<li>Install Nuvola Player 3</li>
+<li>Install Nuvola Player 3.</li>
+<li>
+<p>Install <a href="https://github.com/tiliado/nuvolasdk">Nuvola SDK</a>.</p>
+<div class="codehilite"><pre>sudo pip3 install -U nuvolasdk
+</pre></div>
+</li>
 <li>
 <p>Create a project directory <code>~/projects/nuvola-player</code> (or any other name, but don't forget to
     adjust paths in this tutorial).</p>
@@ -129,40 +131,44 @@ insight to the NuvolaKit core. </p>
 </pre></div>
 </li>
 <li>
-<p>Download <a href="https://github.com/tiliado/nuvola-app-template">a web app integration template</a>.</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player
-wget https://github.com/tiliado/nuvola-app-template/archive/master.tar.gz -O - <span class="p">|</span> tar -xz
-mv nuvola-app-template-master happy-songs
+<p>Create a new project with "nuvola://home.html" as a home URL.</p>
+<div class="codehilite"><pre><span class="nv">$ </span><span class="nb">cd</span> ~/projects/nuvola-player
+<span class="nv">$ </span>nuvolasdk new-project --name <span class="s2">"Happy Songs"</span> --url <span class="s2">"nuvola://home.html"</span>
+...
+Finished!
+
+./nuvola-app-happy-songs
+total 52
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">244</span> Dec  <span class="m">4</span> 18:39 .
+drwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">44</span> Dec  <span class="m">4</span> 18:39 ..
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">103</span> Dec  <span class="m">4</span> 18:39 CHANGELOG.md
+-rwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">65</span> Dec  <span class="m">4</span> 18:39 configure
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">3649</span> Dec  <span class="m">4</span> 18:39 CONTRIBUTING.md
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">144</span> Dec  <span class="m">4</span> 18:39 .git
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo    <span class="m">91</span> Dec  <span class="m">4</span> 18:39 .gitignore
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">2701</span> Dec  <span class="m">4</span> 18:39 integrate.js
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1246</span> Dec  <span class="m">3</span> 18:57 LICENSE-BSD.txt
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo <span class="m">18424</span> Dec  <span class="m">3</span> 18:57 LICENSE-CC-BY.txt
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">541</span> Dec  <span class="m">4</span> 18:39 metadata.in.json
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1079</span> Dec  <span class="m">4</span> 18:39 README.md
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">60</span> Dec  <span class="m">3</span> 18:57 src
 </pre></div>
 </li>
 <li>
-<p>Create new integration files and open them in your preferred plan-text editor (Gedit,
-    for example).</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
-touch metadata.json integrate.js
-gedit metadata.json integrate.js &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
+<p>Copy a dumb example of a streaming website.</p>
+<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/nuvola-app-happy-songs
+cp <span class="s2">"</span><span class="k">$(</span>nuvolasdk data-dir<span class="k">)</span><span class="s2">/examples/home.html"</span> .
 </pre></div>
 </li>
 <li>
-<p>Initialize a new <a href="http://git-scm.com/">Git</a> repository for your service integration.</p>
-<p>You can skip this step if you don't know <a href="http://git-scm.com/">Git version control system</a>. However, if you
-would like to have your service integration maintained as a part of the Nuvola Player project
-and available in the Nuvola Player repository, you will increase maintenance burden of the
-project, because somebody (<a href="http://fenryxo.cz"><em>me</em></a>) will have to create Git repository from tar.gz archive of your
-service integration anyway.</p>
 <p>If you are not familiar with the <a href="http://git-scm.com/">Git version control system</a>,
-you can check <a href="https://try.github.io/levels/1/challenges/1">Git tutorial</a>
-and <a href="http://git-scm.com/book">Pro Git Book</a>.</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
-git init .
-git add metadata.json integrate.js
-git commit -m <span class="s2">"Initial commit"</span>
-</pre></div>
+    check <a href="https://try.github.io/levels/1/challenges/1">Git tutorial</a>
+    or <a href="http://git-scm.com/book">Pro Git Book</a>.</p>
 </li>
 </ol>
-<h2 id="create-metadata-file">Create metadata file</h2>
+<h2 id="metadata-file">Metadata file</h2>
 <p><strong>Metadata file contains basic information about your service integrations.</strong> It uses
-<a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.json</code>.
+<a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.in.json</code>.
 Let's look at the example:</p>
 <div class="codehilite"><pre><span class="p">{</span>
     <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"happy_songs"</span><span class="p">,</span>
@@ -175,8 +181,14 @@ Let's look at the example:</p>
     <span class="nt">"api_minor"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="nt">"categories"</span><span class="p">:</span> <span class="s2">"AudioVideo;Audio;"</span><span class="p">,</span>
     <span class="nt">"home_url"</span><span class="p">:</span> <span class="s2">"nuvola://home.html"</span><span class="p">,</span>
-    <span class="nt">"license"</span><span class="p">:</span> <span class="s2">"2-Clause BSD, CC-BY-3.0"</span>
-<span class="p">}</span>
+    <span class="nt">"license"</span><span class="p">:</span> <span class="s2">"2-Clause BSD, CC-BY-3.0"</span><span class="p">,</span>
+    <span class="nt">"build"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"icons"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">"src/icon.svg SCALABLE 64 128 256"</span><span class="p">,</span> 
+            <span class="s2">"src/icon-xs.svg 16 22 24"</span><span class="p">,</span> 
+            <span class="s2">"src/icon-sm.svg 32 48"</span>
+            <span class="p">]</span>
+    <span class="p">}</span>
 </pre></div>
 <p>This file contains several mandatory fields:</p>
 <dl>
@@ -228,7 +240,7 @@ Nuvola Player services should be in <code>"AudioVideo;Audio;"</code>.</p>
 </dd>
 <dt><code>home_url</code></dt>
 <dd>
-<p>Home page of your service. The template contains fake service home page <code>home.html</code>, which
+<p>Home page of your service. The dump example of a streaming website contains file <code>home.html</code>, which
 has a special address <code>nuvola://home.html</code>. You will use a real homepage later in your own
 service integration (e.g. <code>https://play.google.com/music/</code> for Google Play Music).</p>
 <p>This field is not required if you use custom function to handle home page request.
@@ -246,6 +258,11 @@ See <a href="../apps/variable-home-page-url.html">Web apps with a variable home 
 Although Nuvola Player 3.0 currently doesn't check this flag and enables both Flash and HTML5 Audio by default,
 this is going to be changed in the next stable release <strong>Nuvola Player 3.2</strong>.</p>
 </dd>
+<dt><code>build</code></dt>
+<dd>
+<p>Instructions for the build system of Nuvola SDK. It contains a list of <code>icons</code> and their sizes to generate and
+an optional list of <code>extra_data</code> containing filenames to include during installation.</p>
+</dd>
 </dl>
 <p>This file can include also optional fields:</p>
 <dl>
@@ -261,21 +278,14 @@ As a rule of thumb, set <code>allow_insecure_content</code> to <code>true</code>
 insecure content from http://media.scpr.org/.</code> The default value is <code>false</code>.</p>
 </dd>
 </dl>
-<div class="panel panel-danger"><p class="panel-heading">Extra rules for metadata.json</p><div class="panel-body">
+<div class="panel panel-danger"><p class="panel-heading">Extra rules for metadata.in.json</p><div class="panel-body">
 <p>If you want to have your integration script maintained and distributed as a part of the Nuvola
 Player project, you have to follow rules in <a href="../apps/guidelines.html">Service Integrations Guidelines</a>.</p>
 </div></div>
-<div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<p>Type into terminal following commands (adjust if necessary):</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
-git add metadata.json
-git commit -m <span class="s2">"Add initial metadata for service"</span>
-</pre></div>
-</div></div>
-<h2 id="create-integration-script">Create integration script</h2>
+<h2 id="integration-script">Integration script</h2>
 <p><strong>The integration script is the fundamental part of the service integration.</strong> It's written in
 JavaScript and called <code>integrate.js</code>. This script is called once at start-up of the web app to
-perform initialization of the main process (covered in <a href="../apps/guide.html">the guide</a>) and again
+perform initialization of the main process and again
 in the web page rendering process every-time a web page is loaded in the web view. Let's look at the
 next sample integration script that doesn't actually do much, but will be used as a base for further
 modifications.</p>
@@ -366,7 +376,7 @@ modifications.</p>
 85
 86
 87</pre></div></td><td class="code"><div class="codehilite"><pre><span class="cm">/*</span>
-<span class="cm"> * Copyright 2015 Your name &lt;your e-mail&gt;</span>
+<span class="cm"> * Copyright 2017 Your name &lt;your e-mail&gt;</span>
 <span class="cm"> *</span>
 <span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
 <span class="cm"> * modification, are permitted provided that the following conditions are met: </span>
@@ -505,26 +515,55 @@ actions and call update() method.</p>
 <p>Convenience method to create and register new instance of your web app integration.</p>
 </dd>
 </dl>
-<div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<p>Type into terminal following commands (adjust if necessary):</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
-git add integrate.js
-git commit -m <span class="s2">"Add skeleton of integration script"</span>
+<h2 id="app-runner-and-web-worker">App Runner and Web Worker</h2>
+<p>Nuvola Player uses two processes for each service (web app):</p>
+<ul>
+<li>
+<p><strong>App Runner process</strong> that manages user interface, desktop integration components and
+    a life-cycle of the WebKitGtk WebView. On start-up, Nuvola Player executes once the integration
+    script in the App Runner process to perform initialization of the web app. Note that the script
+    is executed in a <strong>bare JavaScript environment</strong>, which means there are no <code>window</code>, <code>document</code>
+    or other common object provided by a web browser engine. Therefore, make sure you don't use any of these
+    objects in your top-level code.</p>
+<p>In <strong>the previous example</strong>, there is not any handler for the
+<a href="./api_reference.html#Nuvola.Core::InitAppRunner">Nuvola.Core::InitAppRunner signal</a>.
+It usually is used only for extra features such as
+<a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>,
+<a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a>
+or <a href="../apps/custom-actions.html">Custom Actions</a>.</p>
+</li>
+<li>
+<p><strong>Web Worker process</strong> is created by WebKitGtk WebView and it's the place where the web
+    interface of a web app lives, i.e. where the website is loaded. Nuvola Player executes the
+    integration script in the Web Worker process everytime a web page is loaded in it to integrate
+    the web page. The script is executed in a complete WebKit JavaScript environment with all bells
+    and whistles.</p>
+</li>
+</ul>
+<h2 id="check-build-and-run-your-script">Check, Build and Run Your Script</h2>
+<p>First of all, make sure you have <a href="https://github.com/tiliado/nuvolasdk#build-a-project-using-nuvola-sdk">installed all dependencies</a>.
+Then run <code>nuvolasdk check-project</code> to check there are no common errors.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>nuvolasdk check-project
+Checking the project...
+No errors have been found.
 </pre></div>
-</div></div>
-<h2 id="launch-nuvola-player">Launch Nuvola Player</h2>
-<p>Run Nuvola Player 3 from terminal with following command and you will see a list with only one
+<p>Finally, execute following commands:</p>
+<ul>
+<li><code>./configure</code> to generate <code>Makefile</code> and <code>metadata.json</code> from <code>metadata.in.json</code></li>
+<li><code>make all</code> to build the project</li>
+</ul>
+<p>After the project have been built, you can run Nuvola Player 3 from terminal with following command and you will see a list with only one
 service Happy Songs, because we told Nuvola Player to load service integrations only from directory
 <code>~/projects/nuvola-player</code>.</p>
 <div class="codehilite"><pre><span class="nv">$ </span>nuvolaplayer3 -D -A ~/projects/nuvola-player
 ...
-<span class="o">[</span>Master:DEBUG    Nuvola<span class="o">]</span> WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-player/happy-songs, version 1.0
+<span class="o">[</span>Master:DEBUG    Nuvola<span class="o">]</span> WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-player/nuvola-app-happy-songs, version 1.0
 ...
 </pre></div>
 <div class="panel panel-danger"><p class="panel-heading">Make sure all Nuvola Player instances have been closed</p><div class="panel-body">
 <p>If you see following warning in terminal, there is a running instance of Nuvola Player
 that must be closed. Otherwise, the <code>-A</code> parameter is ignored.</p>
-<div class="codehilite"><pre>[Master:INFO     Nuvola] master.vala:135: Nuvola Player 3 Beta instance is already running
+<div class="codehilite"><pre>[Master:INFO     Nuvola] master.vala:135: Nuvola Player 3 instance is already running
 and will be activated.
 [Master:WARNING  Nuvola] master.vala:137: Some command line parameters (-D, -v, -A, -L) are
 ignored because they apply only to a new instance. You might want to close all Nuvola Player
@@ -657,13 +696,6 @@ might be. Playback states are defined in an enumeration
 <span class="p">}</span>
 </pre></div>
 <p><img alt="Track details" src="../images/guide/track_details.png"/></p>
-<div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<p>Type into terminal following commands (adjust if necessary):</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
-git add integrate.js
-git commit -m <span class="s2">"Extract metadata and playback state"</span>
-</pre></div>
-</div></div>
 <h2 id="player-actions">Player Actions</h2>
 <p>The second responsibility of a service integration is to <strong>manage media player actions</strong>:</p>
 <ol>
@@ -765,28 +797,39 @@ simulate clicking.</p>
 <div class="panel panel-danger"><p class="panel-heading">Always test playback actions</p><div class="panel-body">
 <p>You should click action buttons in the developer's sidebar to be sure they are working as expected.</p>
 </div></div>
-<div class="panel panel-info"><p class="panel-heading">If you use Git, commit changes</p><div class="panel-body">
-<p>Type into terminal following commands (adjust if necessary):</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/happy-songs
-git add integrate.js
-git commit -m <span class="s2">"Add player actions handling"</span>
-</pre></div>
-</div></div>
 <div class="panel panel-info"><p class="panel-heading">Custom actions</p><div class="panel-body">
 <p>Service integrations can also create <a href="../apps/custom-actions.html">custom Actions</a> like thumbs
 up/down or star rating.</p>
 </div></div>
-<h2 id="what-to-do-next">What to do next</h2>
+<h2 id="push-your-work-upstream">Push your work upstream</h2>
 <p>If you would like to have your service integration <strong>maintained as a part of Nuvola
-Player project</strong> and distributed in Nuvola Player repository, you have to follow
-<a href="../apps/guidelines.html">Service Integration Guidelines</a>. Once you have <strong>finished your
-service integration</strong>, the next step is to <a href="../apps/distribute.html">distribute</a> it.</p>
+Player project</strong> and distributed in Nuvola Player repository, follow these steps:</p>
+<ul>
+<li>Make sure your script follows the <a href="../apps/guidelines.html">Service Integration Guidelines</a>.</li>
+<li>Make sure your <code>integrate.js</code> contain proper copyright information 
+    "Copyright 2014 Your name &lt;your e-mail&gt;".</li>
+<li>The test service used in tutorial and guide contains 2-Clause BSD license. If you have severe
+    reasons to choose a different license, update license text in both <code>integrate.js</code> and
+    <code>LICENSE</code> files.</li>
+<li>Create an empty remote repository named "nuvola-app-{app-id}" on GitHub.
+     See <a href="http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1">GitHub For Beginners: Don't Get Scared, Get Started</a> for help.</li>
+<li>
+<p>Push content of your local repository to the remote repository.</p>
+<div class="codehilite"><pre>git remote add origin git@github.com:fenryxo/nuvola-app-test.git
+git push -u origin master
+</pre></div>
+</li>
+<li>
+<p>Create new issue in your repository titled "Push to Nuvola Player project"</p>
+</li>
+<li>Create new issue at <a href="https://github.com/tiliado/nuvolaplayer/issues/new">Nuvola Player repository</a>
+    with subject "Code review: You Service Name integration" and post a link the the issue created
+    above.</li>
+</ul>
+<h2 id="what-to-do-next">What to do next</h2>
 <p>Supposing you have followed this tutorial, you have enough knowledge to create your own service
 integration. You are encouraged to take a look at articles in advanced section to spice up your work:</p>
 <ul>
-<li><a href="../apps/guide.html">Full Service Integration Guide</a>: This guide describes creation of a new service
-    integration for Nuvola Player 3 from scratch in a much detail, provides <strong>insight to the Nuvola
-    Player Core</strong> and explain some design decisions.</li>
 <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a>:
     Decide which urls are opened in a default web browser instead of Nuvola Player.</li>
 <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a>:
