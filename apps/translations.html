@@ -124,20 +124,20 @@ i. e. it cannot be translated differently depending on a message context.</p>
 <ul>
 <li>
 <p>Use function <a href="./api_reference.html#Nuvola.Translate.gettext">Translate.gettext</a>.</p>
-<div class="codehilite"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">(</span><span class="s2">"Bye World!"</span><span class="p">));</span>
+<div class="codehilite"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">(</span><span class="s2">"Bye World!"</span><span class="p">));</span>
 </pre></div>
 </li>
 <li>
 <p>It's common to create a short alias <code>_</code>. (Note that other aliases won't be recognized by
     a translation extraction tool.)</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello world!"</span><span class="p">));</span>
 </pre></div>
 </li>
 <li>
 <p>Note that you have to provide a string literal, not variable nor expression, because the
     translation extraction tool doesn't expand variables.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s2">"Hello world!"</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s2">"Hello world!"</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">greeting</span><span class="p">));</span> <span class="c1">// Wrong!</span>
 
 <span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Hello world!"</span><span class="p">);</span> <span class="c1">// Right</span>
@@ -146,7 +146,7 @@ i. e. it cannot be translated differently depending on a message context.</p>
 </li>
 <li>
 <p>If you need to compose message with variables, use <a href="./api_reference.html#Nuvola.format">Nuvola.format</a>.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello "</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">"!"</span><span class="p">));</span> <span class="c1">// Wrong!</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span> <span class="c1">// Right</span>
 <span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
@@ -156,7 +156,7 @@ i. e. it cannot be translated differently depending on a message context.</p>
 <li>
 <p>You can optionally add a comment for translators after tree slashes. It has to be on a line
     preceding the translated string though.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"John"</span><span class="p">;</span>
 <span class="c1">/// {1} is a placeholder for user name</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span>
 </pre></div>
@@ -170,14 +170,14 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <ul>
 <li>
 <p>Use function <a href="./api_reference.html#Nuvola.Translate.pgettext">Translate.pgettext</a>.</p>
-<div class="codehilite"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
+<div class="codehilite"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">(</span><span class="s2">"Checkbox label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
 </pre></div>
 </li>
 <li>
 <p>It's common to create a short alias <code>C_</code>. (Note that other aliases won't be recognized by
     a translation extraction tool.)</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Checkbox label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
 </pre></div>
@@ -185,7 +185,7 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <li>
 <p>You can optionally add a comment for translators after tree slashes. It has to be on a line
     preceding the translated string though.</p>
-<div class="codehilite"><pre><span class="c1">/// My comment</span>
+<div class="codehilite"><pre><span></span><span class="c1">/// My comment</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">"Action label"</span><span class="p">,</span> <span class="s2">"Show notification"</span><span class="p">));</span>
 
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span>
@@ -201,7 +201,7 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <ul>
 <li>
 <p>Use function <a href="./api_reference.html#Nuvola.Translate.ngettext">Translate.ngettext</a>.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">(</span>
     <span class="s2">"There is {1} egg in the fridge."</span><span class="p">,</span>
     <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
@@ -215,7 +215,7 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <li>
 <p>It's common to create an  alias <code>ngettext</code>. (Note that other aliases won't be recognized by
     a translation extraction tool.)</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
     <span class="s2">"There is {1} egg in the fridge."</span><span class="p">,</span>
@@ -226,7 +226,7 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 </li>
 <li>
 <p>It's possible to replace placeholder in the singular form with <code>one</code>.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
     <span class="s2">"There is one egg in the fridge."</span><span class="p">,</span>
     <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
     <span class="nx">eggs</span><span class="p">);</span>
@@ -236,7 +236,7 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <li>
 <p>You can optionally add a comment for translators after tree slashes. It has to be on a line
     preceding the singular string though.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
     <span class="c1">/// {1} is a placeholder for a number</span>
     <span class="s2">"There is one egg in the fridge."</span><span class="p">,</span>
     <span class="s2">"There are {1} eggs in the fridge."</span><span class="p">,</span>
@@ -249,10 +249,10 @@ labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <p>Translatable strings will be eventually extracted by <code>xgettext</code> tool from the <code>gettext</code> package.
 Make sure all strings you have intended to mark for translations do appear in generated translation
 template including translation comments.</p>
-<div class="codehilite"><pre>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
+<div class="codehilite"><pre><span></span>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
 </pre></div>
 <h3 id="example">Example</h3>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
@@ -289,12 +289,12 @@ template including translation comments.</p>
     <span class="nx">eggs</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
 </pre></div>
-<div class="codehilite"><pre>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
+<div class="codehilite"><pre><span></span>xgettext --from-code<span class="o">=</span>utf-8 -kC_:1c,2 -c/ -o- integrate.js
 </pre></div>
-<div class="codehilite"><pre><span class="err">#</span> <span class="nt">SOME</span> <span class="nt">DESCRIPTIVE</span> <span class="nt">TITLE</span><span class="o">.</span>
+<div class="codehilite"><pre><span></span><span class="err">#</span> <span class="nt">SOME</span> <span class="nt">DESCRIPTIVE</span> <span class="nt">TITLE</span><span class="o">.</span>
 <span class="err">#</span> <span class="nt">Copyright</span> <span class="o">(</span><span class="nt">C</span><span class="o">)</span> <span class="nt">YEAR</span> <span class="nt">THE</span> <span class="nt">PACKAGE</span><span class="err">'</span><span class="nt">S</span> <span class="nt">COPYRIGHT</span> <span class="nt">HOLDER</span>
 <span class="err">#</span> <span class="nt">This</span> <span class="nt">file</span> <span class="nt">is</span> <span class="nt">distributed</span> <span class="nt">under</span> <span class="nt">the</span> <span class="nt">same</span> <span class="nt">license</span> <span class="nt">as</span> <span class="nt">the</span> <span class="nt">PACKAGE</span> <span class="nt">package</span><span class="o">.</span>
-<span class="err">#</span> <span class="nt">FIRST</span> <span class="nt">AUTHOR</span> <span class="o">&lt;</span><span class="nt">EMAIL</span><span class="k">@ADDRESS</span><span class="o">&gt;,</span> <span class="nt">YEAR</span><span class="o">.</span>
+<span class="err">#</span> <span class="nt">FIRST</span> <span class="nt">AUTHOR</span> <span class="o">&lt;</span><span class="nt">EMAIL</span><span class="p">@</span><span class="k">ADDRESS</span><span class="o">&gt;,</span> <span class="nt">YEAR</span><span class="o">.</span>
 <span class="err">#</span>
 <span class="err">#</span><span class="o">,</span> <span class="nt">fuzzy</span>
 <span class="nt">msgid</span> <span class="s2">""</span>
@@ -311,35 +311,35 @@ template including translation comments.</p>
 <span class="s2">"Content-Transfer-Encoding: 8bit\n"</span>
 <span class="s2">"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"</span>
 
-<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:131</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">131</span>
 <span class="nt">msgid</span> <span class="s2">"Hello world!"</span>
 <span class="nt">msgstr</span> <span class="s2">""</span>
 
 <span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="nt">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">user</span> <span class="nt">name</span>
-<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:136</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:137</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">136</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">137</span>
 <span class="nt">msgid</span> <span class="s2">"Hello {1}!"</span>
 <span class="nt">msgstr</span> <span class="s2">""</span>
 
 <span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="nt">My</span> <span class="nt">comment</span>
-<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:140</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">140</span>
 <span class="nt">msgctxt</span> <span class="s2">"Action label"</span>
 <span class="nt">msgid</span> <span class="s2">"Show notification"</span>
 <span class="nt">msgstr</span> <span class="s2">""</span>
 
 <span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="nt">My</span> <span class="nt">comment</span>
-<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:144</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">144</span>
 <span class="nt">msgctxt</span> <span class="s2">"Checkbox label"</span>
 <span class="nt">msgid</span> <span class="s2">"Show notification"</span>
 <span class="nt">msgstr</span> <span class="s2">""</span>
 
-<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:149</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">149</span>
 <span class="nt">msgid</span> <span class="s2">"There is {1} egg in the fridge."</span>
 <span class="nt">msgid_plural</span> <span class="s2">"There are {1} eggs in the fridge."</span>
 <span class="nt">msgstr</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="s2">""</span>
 <span class="nt">msgstr</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="s2">""</span>
 
-<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="m">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">a</span> <span class="nt">number</span>
-<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="nc">.js</span><span class="nd">:158</span>
+<span class="err">#</span><span class="o">.</span> <span class="o">/</span> <span class="p">{</span><span class="err">1</span><span class="p">}</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">placeholder</span> <span class="nt">for</span> <span class="nt">a</span> <span class="nt">number</span>
+<span class="err">#</span><span class="o">:</span> <span class="nt">integrate</span><span class="p">.</span><span class="nc">js</span><span class="p">:</span><span class="nd">158</span>
 <span class="nt">msgid</span> <span class="s2">"There is one egg in the fridge."</span>
 <span class="nt">msgid_plural</span> <span class="s2">"There are {1} eggs in the fridge."</span>
 <span class="nt">msgstr</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="s2">""</span>

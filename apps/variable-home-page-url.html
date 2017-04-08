@@ -148,7 +148,7 @@ the preferred national variant.</p>
 (constants by convention) will be used later. Note that 
 <a href="../apps/translations.html">translation function</a> alias <code>C_</code> is used mark short translatable
 strings with context information.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
 <span class="p">{</span>
@@ -183,7 +183,7 @@ strings with context information.</p>
 entry for each value of <code>COUNTRY_VARIANT</code> key. The empty string as a default value ensures the
 first radio entry is selected by default. Note that 
 <a href="../apps/translations.html">translation function</a> alias <code>_</code> is used mark translatable strings.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 <span class="c1">// Translations</span>
 <span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
@@ -215,7 +215,7 @@ first radio entry is selected by default. Note that
 <p>Since we don't need any extra configuration, the
 <a href="../apps/initialization-and-preferences-forms.html">preferences form</a> is same as the initialization
 form, so we reuse <code>WebApp.appendPreferences()</code> method.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
@@ -235,7 +235,7 @@ form, so we reuse <code>WebApp.appendPreferences()</code> method.</p>
 <h3 id="home-page-request-handler">Home Page Request Handler</h3>
 <p>Since we don't use the <code>home_url</code> field of <code>metadata.json</code>, we have to override the default
 handler for <a href="./api_reference.html#Nuvola.Core%3A%3AHomePageRequest">Nuvola.Core::HomePageRequest</a> signal.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
 <span class="p">{</span>
@@ -258,7 +258,7 @@ how to specify address of his instance.</p>
 <li><code>HOST</code> - server hostname</li>
 <li><code>PORT</code> - server port</li>
 </ul>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
 <span class="p">{</span>
@@ -292,7 +292,7 @@ entries (one for each value of <code>ADDRESS</code> key) and two text entries fo
 Note that the text entries are disabled (insensitive) when <code>ADDRESS</code> entry is set to
 <code>ADDRESS_DEFAULT</code>. Try it out ;-) Note that 
 <a href="../apps/translations.html">translation function</a> alias <code>_</code> is used mark translatable strings.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 <span class="c1">// Translations</span>
 <span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
 <span class="p">...</span>
@@ -329,7 +329,7 @@ Note that the text entries are disabled (insensitive) when <code>ADDRESS</code> 
 <p>Since we don't need any extra configuration, the
 <a href="../apps/initialization-and-preferences-forms.html">preferences form</a> is same as the initialization
 form, so we reuse <code>WebApp.appendPreferences()</code> method.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
@@ -349,7 +349,7 @@ form, so we reuse <code>WebApp.appendPreferences()</code> method.</p>
 <h3 id="home-page-request-handler_1">Home Page Request Handler</h3>
 <p>Since we don't use the <code>home_url</code> field of <code>metadata.json</code>, we have to override the default
 handler for <a href="./api_reference.html#Nuvola.Core%3A%3AHomePageRequest">Nuvola.Core::HomePageRequest</a> signal.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
 <span class="p">{</span>

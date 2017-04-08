@@ -121,42 +121,42 @@ I'm looking forward to a code review ;-)</p>
 <li>Install Nuvola Player 3.</li>
 <li>
 <p>Install <a href="https://github.com/tiliado/nuvolasdk">Nuvola SDK</a>.</p>
-<div class="codehilite"><pre>sudo pip3 install -U nuvolasdk
+<div class="codehilite"><pre><span></span>sudo pip3 install -U nuvolasdk
 </pre></div>
 </li>
 <li>
 <p>Create a project directory <code>~/projects/nuvola-player</code> (or any other name, but don't forget to
     adjust paths in this tutorial).</p>
-<div class="codehilite"><pre>mkdir -p ~/projects/nuvola-player
+<div class="codehilite"><pre><span></span>mkdir -p ~/projects/nuvola-player
 </pre></div>
 </li>
 <li>
 <p>Create a new project with "nuvola://home.html" as a home URL.</p>
-<div class="codehilite"><pre><span class="nv">$ </span><span class="nb">cd</span> ~/projects/nuvola-player
-<span class="nv">$ </span>nuvolasdk new-project --name <span class="s2">"Happy Songs"</span> --url <span class="s2">"nuvola://home.html"</span>
+<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> ~/projects/nuvola-player
+$ nuvolasdk new-project --name <span class="s2">"Happy Songs"</span> --url <span class="s2">"nuvola://home.html"</span>
 ...
 Finished!
 
 ./nuvola-app-happy-songs
-total 52
-drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">244</span> Dec  <span class="m">4</span> 18:39 .
-drwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">44</span> Dec  <span class="m">4</span> 18:39 ..
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">103</span> Dec  <span class="m">4</span> 18:39 CHANGELOG.md
--rwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">65</span> Dec  <span class="m">4</span> 18:39 configure
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">3649</span> Dec  <span class="m">4</span> 18:39 CONTRIBUTING.md
-drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">144</span> Dec  <span class="m">4</span> 18:39 .git
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo    <span class="m">91</span> Dec  <span class="m">4</span> 18:39 .gitignore
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">2701</span> Dec  <span class="m">4</span> 18:39 integrate.js
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1246</span> Dec  <span class="m">3</span> 18:57 LICENSE-BSD.txt
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo <span class="m">18424</span> Dec  <span class="m">3</span> 18:57 LICENSE-CC-BY.txt
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">541</span> Dec  <span class="m">4</span> 18:39 metadata.in.json
--rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1079</span> Dec  <span class="m">4</span> 18:39 README.md
-drwxr-sr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">60</span> Dec  <span class="m">3</span> 18:57 src
+total <span class="m">52</span>
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">244</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 .
+drwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">44</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 ..
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">103</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 CHANGELOG.md
+-rwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">65</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 configure
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">3649</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 CONTRIBUTING.md
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">144</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 .git
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo    <span class="m">91</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 .gitignore
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">2701</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 integrate.js
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1246</span> Dec  <span class="m">3</span> <span class="m">18</span>:57 LICENSE-BSD.txt
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo <span class="m">18424</span> Dec  <span class="m">3</span> <span class="m">18</span>:57 LICENSE-CC-BY.txt
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">541</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 metadata.in.json
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1079</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 README.md
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">60</span> Dec  <span class="m">3</span> <span class="m">18</span>:57 src
 </pre></div>
 </li>
 <li>
 <p>Copy a dumb example of a streaming website.</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/projects/nuvola-player/nuvola-app-happy-songs
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> ~/projects/nuvola-player/nuvola-app-happy-songs
 cp <span class="s2">"</span><span class="k">$(</span>nuvolasdk data-dir<span class="k">)</span><span class="s2">/examples/home.html"</span> .
 </pre></div>
 </li>
@@ -170,7 +170,7 @@ cp <span class="s2">"</span><span class="k">$(</span>nuvolasdk data-dir<span cla
 <p><strong>Metadata file contains basic information about your service integrations.</strong> It uses
 <a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.in.json</code>.
 Let's look at the example:</p>
-<div class="codehilite"><pre><span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"happy_songs"</span><span class="p">,</span>
     <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Happy Songs"</span><span class="p">,</span>
     <span class="nt">"maintainer_name"</span><span class="p">:</span> <span class="s2">"Jiří Janoušek"</span><span class="p">,</span>
@@ -375,7 +375,7 @@ modifications.</p>
 84
 85
 86
-87</pre></div></td><td class="code"><div class="codehilite"><pre><span class="cm">/*</span>
+87</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cm">/*</span>
 <span class="cm"> * Copyright 2017 Your name &lt;your e-mail&gt;</span>
 <span class="cm"> *</span>
 <span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
@@ -543,7 +543,7 @@ or <a href="../apps/custom-actions.html">Custom Actions</a>.</p>
 <h2 id="check-build-and-run-your-script">Check, Build and Run Your Script</h2>
 <p>First of all, make sure you have <a href="https://github.com/tiliado/nuvolasdk#build-a-project-using-nuvola-sdk">installed all dependencies</a>.
 Then run <code>nuvolasdk check-project</code> to check there are no common errors.</p>
-<div class="codehilite"><pre><span class="nv">$ </span>nuvolasdk check-project
+<div class="codehilite"><pre><span></span>$ nuvolasdk check-project
 Checking the project...
 No errors have been found.
 </pre></div>
@@ -555,15 +555,15 @@ No errors have been found.
 <p>After the project have been built, you can run Nuvola Player 3 from terminal with following command and you will see a list with only one
 service Happy Songs, because we told Nuvola Player to load service integrations only from directory
 <code>~/projects/nuvola-player</code>.</p>
-<div class="codehilite"><pre><span class="nv">$ </span>nuvolaplayer3 -D -A ~/projects/nuvola-player
+<div class="codehilite"><pre><span></span>$ nuvolaplayer3 -D -A ~/projects/nuvola-player
 ...
-<span class="o">[</span>Master:DEBUG    Nuvola<span class="o">]</span> WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-player/nuvola-app-happy-songs, version 1.0
+<span class="o">[</span>Master:DEBUG    Nuvola<span class="o">]</span> WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-player/nuvola-app-happy-songs, version <span class="m">1</span>.0
 ...
 </pre></div>
 <div class="panel panel-danger"><p class="panel-heading">Make sure all Nuvola Player instances have been closed</p><div class="panel-body">
 <p>If you see following warning in terminal, there is a running instance of Nuvola Player
 that must be closed. Otherwise, the <code>-A</code> parameter is ignored.</p>
-<div class="codehilite"><pre>[Master:INFO     Nuvola] master.vala:135: Nuvola Player 3 instance is already running
+<div class="codehilite"><pre><span></span>[Master:INFO     Nuvola] master.vala:135: Nuvola Player 3 instance is already running
 and will be activated.
 [Master:WARNING  Nuvola] master.vala:137: Some command line parameters (-D, -v, -A, -L) are
 ignored because they apply only to a new instance. You might want to close all Nuvola Player
@@ -579,7 +579,7 @@ sidebar), then enable <strong>WebKit Web Inspector</strong> (right-click the web
 <p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
 <p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
 <p>You can also launch your service integration with id <code>happy_songs</code> directly.</p>
-<div class="codehilite"><pre>nuvolaplayer3 -D -A ~/projects/nuvola-player -a happy_songs
+<div class="codehilite"><pre><span></span>nuvolaplayer3 -D -A ~/projects/nuvola-player -a happy_songs
 </pre></div>
 <h2 id="debugging-and-logging-messages">Debugging and logging messages</h2>
 <p>You might want to print some debugging messages to console during development. There are two types
@@ -630,7 +630,7 @@ state and track details:</p>
 might be. Playback states are defined in an enumeration
 <a href="./api_reference.html#Nuvola.PlaybackState">Nuvola.PlaybackState</a> and set by method
 <a href="./api_reference.html#Nuvola.MediaPlayer.setPlaybackState">player.setPlaybackState()</a>.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">PlaybackState</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlaybackState</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">PlaybackState</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlaybackState</span><span class="p">;</span>
 
 <span class="p">...</span>
 
@@ -667,7 +667,7 @@ might be. Playback states are defined in an enumeration
 <p><img alt="Playback state" src="../images/guide/playback_state.png"/></p>
 <h3 id="track-details">Track details</h3>
 <p>Similarly, we can obtain track details and pass them to method <a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">player.setTrack()</a></p>
-<div class="codehilite"><pre><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="p">...</span>
 
@@ -706,7 +706,7 @@ might be. Playback states are defined in an enumeration
 <a href="./api_reference.html#Nuvola.MediaPlayer.setCanPlay">player.setCanPlay()</a>,
 <a href="./api_reference.html#Nuvola.MediaPlayer.setCanGoPrev">player.setCanGoPrev()</a> and
 <a href="./api_reference.html#Nuvola.MediaPlayer.setCanGoNext">player.setCanGoNext()</a>:</p>
-<div class="codehilite"><pre><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="p">...</span>
 
@@ -760,7 +760,7 @@ might be. Playback states are defined in an enumeration
 it is necessary to connect to <a href="./api_reference.html#Nuvola.Actions%3A%3AActionActivated">Actions::ActionActivated signal</a>.
 You can use a convenient function <a href="./api_reference.html#Nuvola.clickOnElement">Nuvola.clickOnElement()</a> to
 simulate clicking.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">PlayerAction</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerAction</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">PlayerAction</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerAction</span><span class="p">;</span>
 
 <span class="p">...</span>
 
@@ -815,7 +815,7 @@ Player project</strong> and distributed in Nuvola Player repository, follow thes
      See <a href="http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1">GitHub For Beginners: Don't Get Scared, Get Started</a> for help.</li>
 <li>
 <p>Push content of your local repository to the remote repository.</p>
-<div class="codehilite"><pre>git remote add origin git@github.com:fenryxo/nuvola-app-test.git
+<div class="codehilite"><pre><span></span>git remote add origin git@github.com:fenryxo/nuvola-app-test.git
 git push -u origin master
 </pre></div>
 </li>

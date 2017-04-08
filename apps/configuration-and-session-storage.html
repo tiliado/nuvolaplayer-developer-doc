@@ -118,7 +118,7 @@ configuration. An initialized Nuvola.ConfigStorage object is available as
 <a href="./api_reference.html#Nuvola.config">Nuvola.config</a>. Here follows usual work-flow.</p>
 <h3 id="define-configuration-key-names">Define configuration key names</h3>
 <p>Define "constants" with names of configuration key.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
 <span class="p">{</span>
@@ -134,7 +134,7 @@ configuration. An initialized Nuvola.ConfigStorage object is available as
 <p><a href="./api_reference.html#Nuvola.KeyValueStorage.setDefault">Set default values</a> in
 <a href="./api_reference.html#Nuvola.WebApp._onInitAppRunner">WebApp._onInitAppRunner</a> signal handler. This code is run
 only once at start-up.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
@@ -159,7 +159,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 <p>Get/set values anywhere in your integration script with
 <a href="./api_reference.html#Nuvola.KeyValueStorage.get">Nuvola.config.get</a> or
 <a href="./api_reference.html#Nuvola.KeyValueStorage.set">Nuvola.config.set</a>.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
@@ -185,7 +185,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 <span class="p">}</span>
 </pre></div>
 <p>If you open JavaScript console in WebKit Web Inspector, you see following output:</p>
-<div class="codehilite"><pre># The first run
+<div class="codehilite"><pre><span></span># The first run
 Current value app.host = '' (integrate.js, line 76)
 Current value app.port = '' (integrate.js, line 77)
 New value app.host = 'localhost' (integrate.js, line 82)
@@ -211,7 +211,7 @@ initialized <a href="./api_reference.html#Nuvola.SessionStorage">Nuvola.SessionS
 <a href="./api_reference.html#Nuvola.session">Nuvola.session</a>. Here follows usual work-flow.</p>
 <h3 id="define-configuration-key-names_1">Define configuration key names</h3>
 <p>Define constants with names of session keys.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
 <span class="p">{</span>
@@ -227,7 +227,7 @@ initialized <a href="./api_reference.html#Nuvola.SessionStorage">Nuvola.SessionS
 <p><a href="./api_reference.html#Nuvola.KeyValueStorage.setDefault">Set default values</a> in
 <a href="./api_reference.html#Nuvola.WebApp._onInitAppRunner">WebApp._onInitAppRunner</a> signal handler. This code is run
 only once at start-up.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
@@ -252,7 +252,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 <p>Get/set values anywhere in your integration script with
 <a href="./api_reference.html#Nuvola.KeyValueStorage.get">Nuvola.session.get</a> or
 <a href="./api_reference.html#Nuvola.KeyValueStorage.set">Nuvola.session.set</a>.</p>
-<div class="codehilite"><pre><span class="p">...</span>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
@@ -278,7 +278,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 <span class="p">}</span>
 </pre></div>
 <p>If you open JavaScript console in WebKit Web Inspector, you see following output:</p>
-<div class="codehilite"><pre># When a new instance loads
+<div class="codehilite"><pre><span></span># When a new instance loads
 Current value app.host = '' (integrate.js, line 76)
 Current value app.port = '' (integrate.js, line 77)
 New value app.host = 'localhost' (integrate.js, line 82)

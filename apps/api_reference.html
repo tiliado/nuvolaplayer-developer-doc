@@ -329,7 +329,7 @@ The app runner process has bare global object.</p></li>
 <ul>
 <li><p>new prototype object extending <a href="#Nuvola.WebApp">WebApp</a></p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 </pre></div></li>
 
 <li><small>function</small> <b id="Nuvola.$object">Nuvola.$object</b>(proto, init_args)<br />
@@ -345,7 +345,7 @@ from a class in class-based inheritance. Instance object names are in <code>lowe
 <ul>
 <li><p>new initialized object</p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">house</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Building</span><span class="p">,</span> <span class="s2">&quot;King Street 1024, London&quot;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">house</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Building</span><span class="p">,</span> <span class="s2">&quot;King Street 1024, London&quot;</span><span class="p">);</span>
 <span class="nx">house</span><span class="p">.</span><span class="nx">printAddress</span><span class="p">();</span>
 
 <span class="kd">var</span> <span class="nx">candyShop</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Shop</span><span class="p">,</span> <span class="s2">&quot;King Street 1024, London&quot;</span><span class="p">,</span> <span class="s2">&quot;candies&quot;</span><span class="p">);</span>
@@ -366,7 +366,7 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <ul>
 <li><p>new prototype object</p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">Building</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$prototype</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">Building</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$prototype</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 
 <span class="nx">Building</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span>
 <span class="p">{</span>
@@ -411,7 +411,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 <ul>
 <li><p>String</p></li>
 </ul>
-<div class="codehilite"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
+<div class="codehilite"><pre><span></span><span class="nx">alert</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
 <span class="c1">// &quot;My name is Bond. James Bond!&quot;</span>
 
 <span class="c1">// You can create an alias</span>
@@ -515,7 +515,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>String|null <b>keybinding</b> - in-app keyboard shortcut, e.g. <code>&lt;ctrl&gt;P</code></li>
 <li>Boolean|null <b>state</b> - <code>null</code> for simple actions, <code>true</code>/<code>false</code> for toggle actions (on/off)</li>
 </ul>
-<div class="codehilite"><pre><span class="c1">// Add new simple action ``play`` with icon ``media-playback-start``</span>
+<div class="codehilite"><pre><span></span><span class="c1">// Add new simple action ``play`` with icon ``media-playback-start``</span>
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;play&quot;</span><span class="p">,</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;media-playback-start&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
 
 <span class="c1">// Add new toggle action ``thumbs-up`` with initial state ``true`` (on)</span>
@@ -532,7 +532,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>variant <b>stateId</b> - initial state of the action. must be one of states specified in <code>options</code> array</li>
 <li>Array <b>options</b> - array of options definition in form <code>[stateId, label, mnemo_label, icon, keybinding]</code>. <code>stateId</code> is unique identifier (Number or String), other parameters are described in <code>addAction</code> method.</li>
 </ul>
-<div class="codehilite"><pre><span class="c1">// define rating options - 5 states with state id 0-5 representing 0-5 stars</span>
+<div class="codehilite"><pre><span></span><span class="c1">// define rating options - 5 states with state id 0-5 representing 0-5 stars</span>
 <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1">// stateId, label, mnemo_label, icon, keybinding</span>
     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Rating: 0 stars&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
@@ -555,7 +555,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>String <b>name</b> - action name</li>
 <li>optional Variant <b>parameter</b> - parameter to the action</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">navigateBack</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">makeElement</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">navigateBack</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">makeElement</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">);</span>
 <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span>
 <span class="nx">elm</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">);</span>
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">bindButton</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">BrowserAction</span><span class="p">.</span><span class="nx">GO_BACK</span><span class="p">);</span>
@@ -570,7 +570,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <ul>
 <li><p>current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Thumbs up is toggled &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">thumbsUp</span> <span class="o">?</span> <span class="s2">&quot;on&quot;</span> <span class="o">:</span> <span class="s2">&quot;off&quot;</span><span class="p">));</span>
 
 <span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">);</span>
@@ -606,7 +606,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li>String <b>name</b> - action name</li>
 <li>variant <b>state</b> - current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</li>
 </ul>
-<div class="codehilite"><pre><span class="c1">// toggle thumbs-up off</span>
+<div class="codehilite"><pre><span></span><span class="c1">// toggle thumbs-up off</span>
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
 
 <span class="c1">// Set 5 stars</span>
@@ -653,7 +653,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li><a href="#Nuvola.Actions">Actions</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String <b>name</b> - action name</li>
 </ul>
-<div class="codehilite"><pre><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;ActionActivated&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
@@ -671,7 +671,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li>String <b>name</b> - action name</li>
 <li>Boolean <b>enabled</b> - true if the action is enabled</li>
 </ul>
-<div class="codehilite"><pre><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;ActionEnabledChanged&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
@@ -779,7 +779,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String <b>request.url</b> - property to assign home page url to</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://tiliado.eu&quot;</span><span class="p">;</span>
 <span class="p">}</span>
@@ -824,7 +824,7 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String|null <b>result.url</b> - property to assign the last visited URL to</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onLastPageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onLastPageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;last_uri&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="kc">null</span><span class="p">;</span>
 <span class="p">}</span>
@@ -838,7 +838,7 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Boolean <b>request.newWindow</b> - whether to open request in a new window, you can overwrite this field</li>
 <li>Boolean <b>request.approved</b> - whether the navigation is approved, set to <code>false</code> when the <code>request.url</code> should be opened in user's default web browser</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onNavigationRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onNavigationRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="nx">isAddressAllowed</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
 <span class="p">}</span>
@@ -860,7 +860,7 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>bool <b>result.approved</b> - Whether application can quit. If false, application will continue running in background.</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onQuitRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onQuitRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
 <span class="p">{</span>
      <span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;myapp.run_in_background&quot;</span><span class="p">))</span>
          <span class="nx">result</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
@@ -874,7 +874,7 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>String <b>request.url</b> - URL of the resource (can be overwritten)</li>
 <li>Boolean <b>request.approved</b> - whether the resource loading is approved</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onResourceRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onResourceRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;webcomponents.js&quot;</span><span class="p">,</span> <span class="s2">&quot;webcomponents2.js&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -886,7 +886,7 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>string <b>uri</b> - URI of the new page</li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_onUriChanged</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">uri</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onUriChanged</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">uri</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;last_uri&quot;</span><span class="p">,</span> <span class="nx">uri</span><span class="p">);</span>
 <span class="p">}</span>
@@ -943,7 +943,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
 </ul>
-<div class="codehilite"><pre><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
@@ -1206,7 +1206,7 @@ If the argument is same as in the previous call, this method does nothing.</p>
 
 <li><small>method</small> <b id="Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitWebWorker">Core::InitWebWorker</a>. Override this method to integrate the web page.</p>
-<div class="codehilite"><pre><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
 
@@ -1238,7 +1238,7 @@ If the argument is same as in the previous call, this method does nothing.</p>
 
 <li><small>method</small> <b id="Nuvola.WebApp.start">start</b>()<br />
 <p>Convenience function to create new WebApp object linked to Nuvola API.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
 <span class="p">...</span>
 
@@ -1271,7 +1271,7 @@ translatable strings.</p>
 <ul>
 <li><p>String        translated string</p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
 <span class="c1">/// You can use tree slashes to add comment for translators.</span>
 <span class="c1">/// It has to be on a line preceding the translated string though.</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">));</span> <span class="c1">// Right</span>
@@ -1305,7 +1305,7 @@ translatable strings.</p>
 <ul>
 <li><p>String           translated string</p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
     <span class="s2">&quot;There is {1} egg in the fridge.&quot;</span><span class="p">,</span>
@@ -1342,7 +1342,7 @@ translatable strings.</p>
 <ul>
 <li><p>String           translated string</p></li>
 </ul>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
 <span class="c1">/// You can use tree slashes to add comment for translators.</span>
 <span class="c1">/// It has to be on a line preceding the translated string though.</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">&quot;Navigation&quot;</span><span class="p">,</span> <span class="s2">&quot;Back&quot;</span><span class="p">));</span>
@@ -1360,7 +1360,7 @@ translatable strings.</p>
 <ul>
 <li>String <b>name</b> - signal name, should be in CamelCase</li>
 </ul>
-<div class="codehilite"><pre><span class="nx">BookStore</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<div class="codehilite"><pre><span></span><span class="nx">BookStore</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="cm">/**</span>
 <span class="cm">     * Emitted when a book is added.</span>
@@ -1384,7 +1384,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <ul>
 <li><p>Error if signal doesn't exist</p></li>
 </ul>
-<div class="codehilite"><pre><span class="nx">Logger</span><span class="p">.</span><span class="nx">_onBookAdded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">book</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nx">Logger</span><span class="p">.</span><span class="nx">_onBookAdded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">book</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;New book: &quot;</span> <span class="o">+</span> <span class="nx">book</span><span class="p">.</span><span class="nx">title</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -1419,7 +1419,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <ul>
 <li><p>Error if signal doesn't exist</p></li>
 </ul>
-<div class="codehilite"><pre><span class="nx">BookStore</span><span class="p">.</span><span class="nx">addBook</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">book</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="nx">BookStore</span><span class="p">.</span><span class="nx">addBook</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">book</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">book</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s2">&quot;book-added&quot;</span><span class="p">,</span> <span class="nx">book</span><span class="p">)</span>

@@ -110,7 +110,7 @@ If this field is not empty, it is compiled as a <a href="https://developer.mozil
 <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a> then allows
 navigation only to URLs that match that regular expression, other URLs are opened in a default web
 browser.</p>
-<div class="codehilite"><pre><span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="p">...</span>
     <span class="s2">"allowed_uri"</span><span class="o">:</span> <span class="s2">"^https?://(play\\.google\\.com/)"</span>
 <span class="p">}</span>
@@ -119,7 +119,7 @@ browser.</p>
 <p>Since the default URL filter is a JavaScript function, you can override it to match your needs.
 The method <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a>
 is a handler for <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest signal</a>.</p>
-<div class="codehilite"><pre><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
 <span class="p">...</span>
 
@@ -148,7 +148,7 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 </div></div>
 <h2 id="debugging-url-filter">Debugging URL Filter</h2>
 <p>If you run Nuvola Player with <code>-D</code> or <code>--debug</code> flag, you will see URL filtering in action:</p>
-<div class="codehilite"><pre>[Runner:DEBUG    Nuvola] webengine.vala:443: Navigation, current window:
+<div class="codehilite"><pre><span></span>[Runner:DEBUG    Nuvola] webengine.vala:443: Navigation, current window:
 uri = https://checkout.google.com/inapp/frontend/passive?&amp;usid=0&amp;plid=0,
 result = true, frame = (null), type = WEBKIT_NAVIGATION_TYPE_OTHER
 
