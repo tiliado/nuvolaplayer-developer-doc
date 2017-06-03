@@ -81,6 +81,11 @@
 <li><a href="#integration-script">Integration script</a></li>
 <li><a href="#app-runner-and-web-worker">App Runner and Web Worker</a></li>
 <li><a href="#check-build-and-run-your-script">Check, Build and Run Your Script</a></li>
+<li><a href="#web-compatibility-issues">Web Compatibility Issues</a><ul>
+<li><a href="#web-technologies">Web Technologies</a></li>
+<li><a href="#user-agent-quirks">User Agent Quirks</a></li>
+</ul>
+</li>
 <li><a href="#debugging-and-logging-messages">Debugging and logging messages</a></li>
 <li><a href="#playback-state-and-track-details">Playback state and track details</a><ul>
 <li><a href="#playback-state">Playback state</a></li>
@@ -112,27 +117,28 @@
   </div>
   <div class="col-sm-12 col-md-10 col-lg-9">
     
-<p>This tutorial briefly describes creation of <strong>a new service integration for Nuvola Player 3 from
+<p>This tutorial briefly describes creation of <strong>a new web app script for Nuvola Apps Runtime from
 scratch</strong>. The goal is to write an integration script for <em>fake Happy Songs  service</em> shipped with
-Nuvola Player and to prepare you to create your own service integration.
+Nuvola SDK and to prepare you to create your own service integration.
 I'm looking forward to a code review ;-)</p>
 <h2 id="prepare-development-environment">Prepare development environment</h2>
 <ol>
-<li>Install Nuvola Player 3.</li>
 <li>
-<p>Install <a href="https://github.com/tiliado/nuvolasdk">Nuvola SDK</a>.</p>
-<div class="codehilite"><pre><span></span>sudo pip3 install -U nuvolasdk
+<p>Install <a href="https://github.com/tiliado/nuvolaruntime/wiki/Nuvola-App-Developer-Kit">Nuvola App Developer Kit (ADK)</a>.
+    This is a flatpak runtime that contains Nuvola Apps Runtime, SDK and dependencies.</p>
+</li>
+<li>
+<p>Create a project directory <code>~/projects/nuvola-apps</code> (or any other name, but don't forget to
+    adjust paths in this tutorial).</p>
+<div class="codehilite"><pre><span></span>mkdir -p ~/projects/nuvola-apps
 </pre></div>
 </li>
 <li>
-<p>Create a project directory <code>~/projects/nuvola-player</code> (or any other name, but don't forget to
-    adjust paths in this tutorial).</p>
-<div class="codehilite"><pre><span></span>mkdir -p ~/projects/nuvola-player
-</pre></div>
+<p><a href="https://github.com/tiliado/nuvolaruntime/wiki/Nuvola-App-Developer-Kit#running-and-set-up">Launch and set up Nuvola ADK</a></p>
 </li>
 <li>
 <p>Create a new project with "nuvola://home.html" as a home URL.</p>
-<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> ~/projects/nuvola-player
+<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> ~/projects/nuvola-apps
 $ nuvolasdk new-project --name <span class="s2">"Happy Songs"</span> --url <span class="s2">"nuvola://home.html"</span>
 ...
 Finished!
@@ -156,7 +162,7 @@ drwxr-sr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">60</span>
 </li>
 <li>
 <p>Copy a dumb example of a streaming website.</p>
-<div class="codehilite"><pre><span></span><span class="nb">cd</span> ~/projects/nuvola-player/nuvola-app-happy-songs
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> ~/projects/nuvola-apps/nuvola-app-happy-songs
 cp <span class="s2">"</span><span class="k">$(</span>nuvolasdk data-dir<span class="k">)</span><span class="s2">/examples/home.html"</span> .
 </pre></div>
 </li>
@@ -180,6 +186,7 @@ Let's look at the example:</p>
     <span class="nt">"api_major"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
     <span class="nt">"api_minor"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="nt">"categories"</span><span class="p">:</span> <span class="s2">"AudioVideo;Audio;"</span><span class="p">,</span>
+    <span class="nt">"requirements"</span><span class="p">:</span> <span class="s2">"Feature[Flash] Codec[MP3]"</span><span class="p">,</span>
     <span class="nt">"home_url"</span><span class="p">:</span> <span class="s2">"nuvola://home.html"</span><span class="p">,</span>
     <span class="nt">"license"</span><span class="p">:</span> <span class="s2">"2-Clause BSD, CC-BY-3.0"</span><span class="p">,</span>
     <span class="nt">"build"</span><span class="p">:</span> <span class="p">{</span>
@@ -195,9 +202,7 @@ Let's look at the example:</p>
 <dt><code>id</code></dt>
 <dd>
 <p>Identifier of the service. It can contain only letters <code>a-z</code>, digits <code>0-9</code> and underscore <code>_</code> to
-separate words, e.g. <code>google_play_music</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.
-(Nuvola Player 2 required the id must be same as the directory name of the service
-integration, but Nuvola Player 3 doesn't have this limitation.)</p>
+separate words, e.g. <code>google_play_music</code> for Google Play Music, <code>8tracks</code> for 8tracks.com.</p>
 </dd>
 <dt><code>name</code></dt>
 <dd>
@@ -226,17 +231,18 @@ address prefixed by <code>mailto:</code>.</p>
 </dd>
 <dt><code>api_major</code> and <code>api_minor</code></dt>
 <dd>
-<p>A required version of JavaScript API, currently <code>3.0</code>. You should update API version only
-if your script doesn't work with older API. For example, if Nuvola Player adds a new feature
-into API 3.X that is so essential for your script that it cannot function properly without it,
-you will increase API requirement to 3.X. However, all Nuvola Player versions with API less
-then 3.1 won't be able to load your script any more.</p>
+<p>A required version of Nuvola Runtime API. It's <code>3.0</code> for Nuvola 3.0, <code>3.1</code> for Nuvola 3.1 and 4.4,
+<code>4.5</code> for Nuvola 4.5 and <code>4.x</code> for Nuvola 4.x (x &gt;= 5). You should update API version only
+if your script doesn't work with older API. For example, if Nuvola Runtime adds a new feature
+into API 4.X that is so essential for your script that it cannot function properly without it,
+you will increase API requirement to 4.X. However, all Nuvola versions with API less
+then 4.x won't be able to load your script any more.</p>
 </dd>
 <dt><code>categories</code></dt>
 <dd>
 <p><a href="http://standards.freedesktop.org/menu-spec/latest/apa.html">Application categories</a> suitable
 for the web app. It is used to place a desktop launcher to proper category in applications menu.
-Nuvola Player services should be in <code>"AudioVideo;Audio;"</code>.</p>
+Media player services should be in <code>"AudioVideo;Audio;"</code>.</p>
 </dd>
 <dt><code>home_url</code></dt>
 <dd>
@@ -253,10 +259,7 @@ See <a href="../apps/variable-home-page-url.html">Web apps with a variable home 
 <dt><code>requirements</code></dt>
 <dd>
 <p>If your streaming service requires <strong>Flash plugin</strong> or <strong>HTML5 Audio support</strong> for playback
-(very likely), you have to
-<a href="https://github.com/tiliado/nuvolaplayer/issues/158#issuecomment-177193663">set a proper format requirement flag</a>.
-Although Nuvola Player 3.0 currently doesn't check this flag and enables both Flash and HTML5 Audio by default,
-this is going to be changed in the next stable release <strong>Nuvola Player 3.2</strong>.</p>
+(very likely), you need to <a href="#web-technologies">add respective web app requirement flags for Nuvola 4.x+</a>.</p>
 </dd>
 <dt><code>build</code></dt>
 <dd>
@@ -270,17 +273,21 @@ an optional list of <code>extra_data</code> containing filenames to include duri
 <dd>
 <p>Suggested window width or height in pixels.</p>
 </dd>
-<dt><code>allow_insecure_content</code> (since Nuvola Player 3.1)</dt>
+<dt><code>allow_insecure_content</code> (since Nuvola 3.1)</dt>
 <dd>
 <p>Whether the page served over the secure HTTPS protocol depends on insecure content served over the HTTP protocol.
 As a rule of thumb, set <code>allow_insecure_content</code> to <code>true</code> if you see console warnings similar to that of Pocket Casts:
 <code>Runner: **CONSOLE WARN [blocked]** The page at https://play.pocketcasts.com/web **was not allowed** to display
 insecure content from http://media.scpr.org/.</code> The default value is <code>false</code>.</p>
 </dd>
+<dt><code>user_agent</code> (since Nuvola 4.4)</dt>
+<dd>It can sometimes happen that a web page provides a different code depending on which web browser is used.
+Nuvola uses the user agent of WebKitGTK web rendering engine by default. However, if the web app you are
+writing script for doesn't work with it, you can <a href="#user-agent-quirks">disguise Nuvola as a different browser</a>.</dd>
 </dl>
 <div class="panel panel-danger"><p class="panel-heading">Extra rules for metadata.in.json</p><div class="panel-body">
 <p>If you want to have your integration script maintained and distributed as a part of the Nuvola
-Player project, you have to follow rules in <a href="../apps/guidelines.html">Service Integrations Guidelines</a>.</p>
+Apps project, you have to follow rules in <a href="../apps/guidelines.html">Service Integrations Guidelines</a>.</p>
 </div></div>
 <h2 id="integration-script">Integration script</h2>
 <p><strong>The integration script is the fundamental part of the service integration.</strong> It's written in
@@ -468,7 +475,7 @@ modifications.</p>
 <dt>Lines 2-22</dt>
 <dd>
 <p>Copyright and license information. While you can choose any license for your work, it's
-recommended to use the license of Nuvola Player as shown in the example.</p>
+recommended to use the license of Nuvola Apps Runtime as shown in the example.</p>
 </dd>
 <dt>Line 25</dt>
 <dd>
@@ -516,11 +523,11 @@ actions and call update() method.</p>
 </dd>
 </dl>
 <h2 id="app-runner-and-web-worker">App Runner and Web Worker</h2>
-<p>Nuvola Player uses two processes for each service (web app):</p>
+<p>Nuvola Apps Runtime uses two processes for each service (web app):</p>
 <ul>
 <li>
 <p><strong>App Runner process</strong> that manages user interface, desktop integration components and
-    a life-cycle of the WebKitGtk WebView. On start-up, Nuvola Player executes once the integration
+    a life-cycle of the WebKitGtk WebView. On start-up, Nuvola Runtime executes once the integration
     script in the App Runner process to perform initialization of the web app. Note that the script
     is executed in a <strong>bare JavaScript environment</strong>, which means there are no <code>window</code>, <code>document</code>
     or other common object provided by a web browser engine. Therefore, make sure you don't use any of these
@@ -534,7 +541,7 @@ or <a href="../apps/custom-actions.html">Custom Actions</a>.</p>
 </li>
 <li>
 <p><strong>Web Worker process</strong> is created by WebKitGtk WebView and it's the place where the web
-    interface of a web app lives, i.e. where the website is loaded. Nuvola Player executes the
+    interface of a web app lives, i.e. where the website is loaded. Nuvola Runtime executes the
     integration script in the Web Worker process everytime a web page is loaded in it to integrate
     the web page. The script is executed in a complete WebKit JavaScript environment with all bells
     and whistles.</p>
@@ -552,21 +559,21 @@ No errors have been found.
 <li><code>./configure</code> to generate <code>Makefile</code> and <code>metadata.json</code> from <code>metadata.in.json</code></li>
 <li><code>make all</code> to build the project</li>
 </ul>
-<p>After the project have been built, you can run Nuvola Player 3 from terminal with following command and you will see a list with only one
-service Happy Songs, because we told Nuvola Player to load service integrations only from directory
-<code>~/projects/nuvola-player</code>.</p>
-<div class="codehilite"><pre><span></span>$ nuvolaplayer3 -D -A ~/projects/nuvola-player
+<p>After the project have been built, you can run Nuvola Runtime from terminal with following command and you will see a list with only one
+service Happy Songs, because we told Nuvola to load service integrations only from directory
+<code>~/projects/nuvola-apps</code>.</p>
+<div class="codehilite"><pre><span></span>$ nuvola -D -A ~/projects/nuvola-apps
 ...
-<span class="o">[</span>Master:DEBUG    Nuvola<span class="o">]</span> WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-player/nuvola-app-happy-songs, version <span class="m">1</span>.0
+<span class="o">[</span>Master:DEBUG    Nuvola<span class="o">]</span> WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-aps/nuvola-app-happy-songs, version <span class="m">1</span>.0
 ...
 </pre></div>
-<div class="panel panel-danger"><p class="panel-heading">Make sure all Nuvola Player instances have been closed</p><div class="panel-body">
-<p>If you see following warning in terminal, there is a running instance of Nuvola Player
+<div class="panel panel-danger"><p class="panel-heading">Make sure all Nuvola Apps instances have been closed</p><div class="panel-body">
+<p>If you see following warning in terminal, there is a running instance of Nuvola Apps
 that must be closed. Otherwise, the <code>-A</code> parameter is ignored.</p>
-<div class="codehilite"><pre><span></span>[Master:INFO     Nuvola] master.vala:135: Nuvola Player 3 instance is already running
+<div class="codehilite"><pre><span></span>[Master:INFO     Nuvola] master.vala:135: Nuvola App instance is already running
 and will be activated.
 [Master:WARNING  Nuvola] master.vala:137: Some command line parameters (-D, -v, -A, -L) are
-ignored because they apply only to a new instance. You might want to close all Nuvola Player
+ignored because they apply only to a new instance. You might want to close all Nuvola Apps
 instances and run it again with your parameters.
 </pre></div>
 </div></div>
@@ -579,15 +586,53 @@ sidebar), then enable <strong>WebKit Web Inspector</strong> (right-click the web
 <p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
 <p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
 <p>You can also launch your service integration with id <code>happy_songs</code> directly.</p>
-<div class="codehilite"><pre><span></span>nuvolaplayer3 -D -A ~/projects/nuvola-player -a happy_songs
+<div class="codehilite"><pre><span></span>nuvola -D -A ~/projects/nuvola-apps -a happy_songs
 </pre></div>
+<h2 id="web-compatibility-issues">Web Compatibility Issues</h2>
+<h3 id="web-technologies">Web Technologies</h3>
+<p>A particular web app may require certain technologies to function properly.
+At present, Nuvola enables both Flash plugin and GStreamer HTML5 Audio by default.
+However, this will change for Nuvola 4.x in the future and you should not count on it.</p>
+<p><strong>Web app requirements</strong> in Nuvola Apps Runtime 4.x are specified as the <code>requirements</code> property
+in <code>metadata.in.json</code>. It can contain a space separated list of following requirements:</p>
+<ul>
+<li><code>Codec[MP3]</code>: The web app can play audio with HTML5 audio technology and requires a MP3 codec.</li>
+<li><code>Feature[Flash]</code>: The web app requires Adobe Flash plugin. Use only if your app cannot use 
+    HTML5 Audio.</li>
+<li><code>WebKitGTK[X.Y.Z]</code>: The web app doesn't work properly in WebKitGTK &lt; X.Y.Z. While the genuine flatpak
+    builds of Nuvola always contain the latest stable release of WebKitGTK, this may not be true for
+    unofficial third-party builds.</li>
+<li><code>Feature[MSE]</code>: The web app requires Media Source extension for HTML5 Audio playback. <em>Experimental,
+    not available in stable flatpak builds.</em></li>
+<li><code>Codec[H264]</code>: The web app requires h264 codec for HTML5 Audio playback. <em>Experimental,
+    not available in stable flatpak builds.</em></li>
+</ul>
+<h3 id="user-agent-quirks">User Agent Quirks</h3>
+<p>It can sometimes happen that a web page provides a different code depending on which web browser is used.
+Nuvola uses the user agent of WebKitGTK web rendering engine by default. However, if the web app you are
+writing script for doesn't work with it, you can disguise Nuvola as a different browser (this is known as
+user agent quirks) by setting the <code>user_agent</code> attribute in <code>metadata.in.json</code>. There are several predefined
+values (in order of preference):</p>
+<ul>
+<li><code>WEBKITGTK</code> or <code>WEBKITGTK nn</code>: The default user agent of WebKitGTK library. If no version number <code>nn</code> is provided,
+    the latest known version is used.</li>
+<li><code>SAFARI</code> or <code>SAFARI nn</code>: The user agent of the Safari web browser, which also uses WebKit engine.
+     If no version number <code>nn</code> is provided, the latest known version is used.</li>
+<li><code>CHROME</code> or <code>CHROME nn</code>: The user agent of the Google Chrome web browser, which uses the Blink engine
+    originally based on WebKit. If no version number <code>nn</code> is provided, the latest known version is used.</li>
+<li><code>FIREFOX</code> or <code>FIREFOX nn</code>: The user agent of the Firefox web browser, which uses the Gecko engine
+    originally based on WebKit. If no version number <code>nn</code> is provided, the latest known version is used.</li>
+</ul>
+<p>Alternatively, you can provide a complete user agent string, e.g. <code>Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246</code> for Microsoft Edge
+web browser.</p>
 <h2 id="debugging-and-logging-messages">Debugging and logging messages</h2>
 <p>You might want to print some debugging messages to console during development. There are two types
-of them in Nuvola Player:</p>
+of them in Nuvola Apps Runtime:</p>
 <ul>
 <li><strong>JavaScript console</strong> is shown in the WebKit Web Inspector.</li>
 <li><strong>Terminal console</strong> is the black window with white text. Debugging messages are only printed
-    if you have launched Nuvola Player with <code>-D</code> or <code>--debug</code> flag.</li>
+    if you have launched Nuvola Apps Runtime with <code>-D</code> or <code>--debug</code> flag.</li>
 </ul>
 <p>The are two ways how to print debugging messages:</p>
 <ul>
@@ -598,7 +643,7 @@ of them in Nuvola Player:</p>
     fallback and a warning is issued.</li>
 </ul>
 <p>You might be wondering <strong>why the Window object isn't always available as the global JavaScript
-object</strong>. That's because Nuvola Player executes a lot of JavaScript code in a pure JavaScript
+object</strong>. That's because Nuvola Runtime executes a lot of JavaScript code in a pure JavaScript
 environment outside the web view. However, the <a href="./api_reference.html#Core%3A%3AInitWebWorker">Core::InitWebWorker signal</a>
 and your <code>WebApp._onInitWebWorker</code> and <code>WebApp._onActionActivated</code> signal handlers are
 invoked in the web view with the global window object, so feel free to use <code>console.log()</code>.</p>
@@ -803,11 +848,11 @@ up/down or star rating.</p>
 </div></div>
 <h2 id="push-your-work-upstream">Push your work upstream</h2>
 <p>If you would like to have your service integration <strong>maintained as a part of Nuvola
-Player project</strong> and distributed in Nuvola Player repository, follow these steps:</p>
+Apps project</strong> and distributed in Nuvola Player repository, follow these steps:</p>
 <ul>
 <li>Make sure your script follows the <a href="../apps/guidelines.html">Service Integration Guidelines</a>.</li>
 <li>Make sure your <code>integrate.js</code> contain proper copyright information 
-    "Copyright 2014 Your name &lt;your e-mail&gt;".</li>
+    "Copyright 2017 Your name &lt;your e-mail&gt;".</li>
 <li>The test service used in tutorial and guide contains 2-Clause BSD license. If you have severe
     reasons to choose a different license, update license text in both <code>integrate.js</code> and
     <code>LICENSE</code> files.</li>
@@ -820,9 +865,9 @@ git push -u origin master
 </pre></div>
 </li>
 <li>
-<p>Create new issue in your repository titled "Push to Nuvola Player project"</p>
+<p>Create new issue in your repository titled "Push to Nuvola Apps project"</p>
 </li>
-<li>Create new issue at <a href="https://github.com/tiliado/nuvolaplayer/issues/new">Nuvola Player repository</a>
+<li>Create new issue at <a href="https://github.com/tiliado/nuvolapruntime/issues/new">Nuvola Apps Runtime repository</a>
     with subject "Code review: You Service Name integration" and post a link the the issue created
     above.</li>
 </ul>
@@ -831,9 +876,9 @@ git push -u origin master
 integration. You are encouraged to take a look at articles in advanced section to spice up your work:</p>
 <ul>
 <li><a href="../apps/url-filtering.html">URL Filtering (URL Sandbox)</a>:
-    Decide which urls are opened in a default web browser instead of Nuvola Player.</li>
+    Decide which urls are opened in a default web browser instead of Nuvola Apps.</li>
 <li><a href="../apps/configuration-and-session-storage.html">Configuration and session storage</a>:
-    Nuvola Player 3 allows service integrations to store both a persistent configuration and a temporary session information.</li>
+    Nuvola Runtime allows service integrations to store both a persistent configuration and a temporary session information.</li>
 <li><a href="../apps/initialization-and-preferences-forms.html">Initialization and Preferences Forms</a>:
     These forms are useful when you need to get user input.</li>
 <li><a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>:

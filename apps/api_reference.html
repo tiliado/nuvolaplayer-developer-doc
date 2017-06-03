@@ -131,7 +131,9 @@
 <li><a href="#Nuvola.Core">Core</a>
 <ul><li><a href="#Nuvola.Core.$init">$init</a></li>
 <li><a href="#Nuvola.Core.getComponentInfo">getComponentInfo</a></li>
+<li><a href="#Nuvola.Core.isComponentActive">isComponentActive</a></li>
 <li><a href="#Nuvola.Core.isComponentLoaded">isComponentLoaded</a></li>
+<li><a href="#Nuvola.Core.toggleComponentActive">toggleComponentActive</a></li>
 <li><a href="#Nuvola.Core::ComponentLoaded">ComponentLoaded</a></li>
 <li><a href="#Nuvola.Core::ComponentUnloaded">ComponentUnloaded</a></li>
 <li><a href="#Nuvola.Core::HomePageRequest">HomePageRequest</a></li>
@@ -141,6 +143,7 @@
 <li><a href="#Nuvola.Core::InitializationForm">InitializationForm</a></li>
 <li><a href="#Nuvola.Core::LastPageRequest">LastPageRequest</a></li>
 <li><a href="#Nuvola.Core::NavigationRequest">NavigationRequest</a></li>
+<li><a href="#Nuvola.Core::PageSettings">PageSettings</a></li>
 <li><a href="#Nuvola.Core::PreferencesForm">PreferencesForm</a></li>
 <li><a href="#Nuvola.Core::QuitRequest">QuitRequest</a></li>
 <li><a href="#Nuvola.Core::ResourceRequest">ResourceRequest</a></li>
@@ -744,6 +747,17 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
+<li><small>method</small> <b id="Nuvola.Core.isComponentActive">isComponentActive</b>(id)<br />
+<p>Returns whether a component is loaded and active</p><p><b>Parameters</b></p>
+<ul>
+<li>id <b>id</b> - of the component</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>Boolean true if the component is active</p></li>
+</ul>
+</li>
+
 <li><small>method</small> <b id="Nuvola.Core.isComponentLoaded">isComponentLoaded</b>(id)<br />
 <p>Returns whether a component is loaded</p><p><b>Parameters</b></p>
 <ul>
@@ -752,6 +766,19 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <p><b>Returns</b></p>
 <ul>
 <li><p>Boolean true if the component is loaded</p></li>
+</ul>
+</li>
+
+<li><small>method</small> <b id="Nuvola.Core.toggleComponentActive">toggleComponentActive</b>(id, active)<br />
+<p>Activates or deactivates a component</p>
+<p>The component must be loaded.</p><p><b>Parameters</b></p>
+<ul>
+<li>id <b>id</b> - of the component</li>
+<li>Boolean <b>active</b> - whether to activate or deactivate the component</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>Boolean true if the component has been activated or deactivated</p></li>
 </ul>
 </li>
 
@@ -841,6 +868,25 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onNavigationRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="nx">isAddressAllowed</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div></li>
+
+<li><small>signal</small> <b id="Nuvola.Core::PageSettings">PageSettings</b>(emitter, request)<br />
+<p>Emitted on request for web page settings.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
+<li>String <b>request.url</b> - URL of the new page</li>
+<li>Boolean <b>request.newWindow</b> - whether to open request in a new window, you can overwrite this field</li>
+<li>Boolean <b>request.javascript</b> - whether javascript should be enabled</li>
+<li>String <b>request.userAgent</b> - whether to override user agent string</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onPageSettings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">userAgent</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;https://accounts.google.com/&quot;</span><span class="p">)</span>
+        <span class="o">||</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;https://accounts.youtube.com/&quot;</span><span class="p">)</span>
+        <span class="o">?</span> <span class="s2">&quot;WEBKIT&quot;</span> <span class="o">:</span> <span class="kc">null</span>
+    <span class="p">);</span>
 <span class="p">}</span>
 </pre></div></li>
 
