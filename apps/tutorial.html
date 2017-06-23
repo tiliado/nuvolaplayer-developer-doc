@@ -46,6 +46,7 @@
                 <li><a href="../apps.html">Introduction</a></li>
                 <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
+                <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Advanced</li>
@@ -87,12 +88,11 @@
 </ul>
 </li>
 <li><a href="#debugging-and-logging-messages">Debugging and logging messages</a></li>
-<li><a href="#playback-state-and-track-details">Playback state and track details</a><ul>
-<li><a href="#playback-state">Playback state</a></li>
-<li><a href="#track-details">Track details</a></li>
+<li><a href="#integrate-web-app">Integrate Web App</a><ul>
+<li><a href="#media-player-integration">Media Player Integration</a></li>
+<li><a href="#other-web-apps">Other web apps</a></li>
 </ul>
 </li>
-<li><a href="#player-actions">Player Actions</a></li>
 <li><a href="#push-your-work-upstream">Push your work upstream</a></li>
 <li><a href="#what-to-do-next">What to do next</a></li>
 </ul>
@@ -647,10 +647,10 @@ object</strong>. That's because Nuvola Runtime executes a lot of JavaScript code
 environment outside the web view. However, the <a href="./api_reference.html#Core%3A%3AInitWebWorker">Core::InitWebWorker signal</a>
 and your <code>WebApp._onInitWebWorker</code> and <code>WebApp._onActionActivated</code> signal handlers are
 invoked in the web view with the global window object, so feel free to use <code>console.log()</code>.</p>
-<h2 id="playback-state-and-track-details">Playback state and track details</h2>
-<p>The first task of your service integration is to <strong>extract playback state and track details from the
-web page</strong> and provide them to the media player component. There are two ways how to extract playback
-state and track details:</p>
+<h2 id="integrate-web-app">Integrate Web App</h2>
+<p>After everything has been set up and the web page works correctly, we finally proceed to the main task: web app
+integration. That means you script is supposed to extract data from a web page and pass them to Nuvola Apps Runtime
+by calling <a href="./api_reference.html#">NuvolaKit JavaScript API</a>. There are two ways to extract data from a web page:</p>
 <ol>
 <li>Use <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">Document Object Model</a> to get information from the HTML code of the web page.</li>
 <li>Use JavaScript API provided by the web page if there is any.</li>
@@ -670,182 +670,12 @@ state and track details:</p>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/document.querySelectorAll">document.querySelectorAll</a> -
     look-up all elements that match provided <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/Selectors">CSS selector</a></li>
 </ul>
-<h3 id="playback-state">Playback state</h3>
-<p>Looking at the code of a web page shown in the picture bellow, the code to extract playback state
-might be. Playback states are defined in an enumeration
-<a href="./api_reference.html#Nuvola.PlaybackState">Nuvola.PlaybackState</a> and set by method
-<a href="./api_reference.html#Nuvola.MediaPlayer.setPlaybackState">player.setPlaybackState()</a>.</p>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">PlaybackState</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlaybackState</span><span class="p">;</span>
-
-<span class="p">...</span>
-
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-
-    <span class="k">try</span>
-    <span class="p">{</span>
-        <span class="k">switch</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"status"</span><span class="p">).</span><span class="nx">innerText</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="k">case</span> <span class="s2">"Playing"</span><span class="o">:</span>
-                <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">PLAYING</span><span class="p">;</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="k">case</span> <span class="s2">"Paused"</span><span class="o">:</span>
-                <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">PAUSED</span><span class="p">;</span>
-                <span class="k">break</span><span class="p">;</span>
-            <span class="k">default</span><span class="o">:</span>
-                <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">UNKNOWN</span><span class="p">;</span>
-                <span class="k">break</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// Always expect errors, e.g. document.getElementById("status") might be null</span>
-        <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">UNKNOWN</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="nx">player</span><span class="p">.</span><span class="nx">setPlaybackState</span><span class="p">(</span><span class="nx">state</span><span class="p">);</span>
-
-    <span class="p">...</span>
-<span class="p">}</span>
-</pre></div>
-<p><img alt="Playback state" src="../images/guide/playback_state.png"/></p>
-<h3 id="track-details">Track details</h3>
-<p>Similarly, we can obtain track details and pass them to method <a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">player.setTrack()</a></p>
-<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-
-    <span class="kd">var</span> <span class="nx">track</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="nx">artLocation</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span> <span class="c1">// always null</span>
-        <span class="nx">rating</span><span class="o">:</span> <span class="kc">null</span> <span class="c1">// same</span>
-    <span class="p">}</span>
-
-    <span class="kd">var</span> <span class="nx">idMap</span> <span class="o">=</span> <span class="p">{</span><span class="nx">title</span><span class="o">:</span> <span class="s2">"track"</span><span class="p">,</span> <span class="nx">artist</span><span class="o">:</span> <span class="s2">"artist"</span><span class="p">,</span> <span class="nx">album</span><span class="o">:</span> <span class="s2">"album"</span><span class="p">}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">idMap</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">try</span>
-        <span class="p">{</span>
-            <span class="nx">track</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">idMap</span><span class="p">[</span><span class="nx">key</span><span class="p">]).</span><span class="nx">innerText</span> <span class="o">||</span> <span class="kc">null</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-        <span class="p">{</span>
-            <span class="c1">// Always expect errors, e.g. document.getElementById() might return null</span>
-            <span class="nx">track</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">player</span><span class="p">.</span><span class="nx">setTrack</span><span class="p">(</span><span class="nx">track</span><span class="p">);</span>
-
-    <span class="p">...</span>
-<span class="p">}</span>
-</pre></div>
-<p><img alt="Track details" src="../images/guide/track_details.png"/></p>
-<h2 id="player-actions">Player Actions</h2>
-<p>The second responsibility of a service integration is to <strong>manage media player actions</strong>:</p>
-<ol>
-<li>Set which actions are enabled.</li>
-<li>Invoke the actions when they are activated.</li>
-</ol>
-<p>The first part is done via calls <a href="./api_reference.html#Nuvola.MediaPlayer.setCanPause">player.setCanPause()</a>,
-<a href="./api_reference.html#Nuvola.MediaPlayer.setCanPlay">player.setCanPlay()</a>,
-<a href="./api_reference.html#Nuvola.MediaPlayer.setCanGoPrev">player.setCanGoPrev()</a> and
-<a href="./api_reference.html#Nuvola.MediaPlayer.setCanGoNext">player.setCanGoNext()</a>:</p>
-<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-
-    <span class="kd">var</span> <span class="nx">enabled</span><span class="p">;</span>
-    <span class="k">try</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span> <span class="o">=</span> <span class="o">!</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"prev"</span><span class="p">).</span><span class="nx">disabled</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="nx">player</span><span class="p">.</span><span class="nx">setCanGoPrev</span><span class="p">(</span><span class="nx">enabled</span><span class="p">);</span>
-
-    <span class="k">try</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span>  <span class="o">=</span> <span class="o">!</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"next"</span><span class="p">).</span><span class="nx">disabled</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="nx">player</span><span class="p">.</span><span class="nx">setCanGoNext</span><span class="p">(</span><span class="nx">enabled</span><span class="p">);</span>
-
-    <span class="kd">var</span> <span class="nx">playPause</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"pp"</span><span class="p">);</span>
-    <span class="k">try</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span>  <span class="o">=</span> <span class="nx">playPause</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">==</span> <span class="s2">"Play"</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="nx">player</span><span class="p">.</span><span class="nx">setCanPlay</span><span class="p">(</span><span class="nx">enabled</span><span class="p">);</span>
-
-    <span class="k">try</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span>  <span class="o">=</span> <span class="nx">playPause</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">==</span> <span class="s2">"Pause"</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="nx">player</span><span class="p">.</span><span class="nx">setCanPause</span><span class="p">(</span><span class="nx">enabled</span><span class="p">);</span>
-
-    <span class="p">...</span>
-<span class="p">}</span>
-</pre></div>
-<p><img alt="Playback actions" src="../images/guide/playback_actions.png"/></p>
-<p>To handle playback actions defined in an enumeration <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction</a>,
-it is necessary to connect to <a href="./api_reference.html#Nuvola.Actions%3A%3AActionActivated">Actions::ActionActivated signal</a>.
-You can use a convenient function <a href="./api_reference.html#Nuvola.clickOnElement">Nuvola.clickOnElement()</a> to
-simulate clicking.</p>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">PlayerAction</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerAction</span><span class="p">;</span>
-
-<span class="p">...</span>
-
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="c1">// Connect handler for signal ActionActivated</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"ActionActivated"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-
-    <span class="c1">// Start update routine</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
-<span class="p">}</span>
-
-<span class="p">...</span>
-
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">switch</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span>
-    <span class="p">{</span>
-    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">TOGGLE_PLAY</span><span class="o">:</span>
-    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PLAY</span><span class="o">:</span>
-    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PAUSE</span><span class="o">:</span>
-    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">STOP</span><span class="o">:</span>
-        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"pp"</span><span class="p">));</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PREV_SONG</span><span class="o">:</span>
-        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"prev"</span><span class="p">));</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">NEXT_SONG</span><span class="o">:</span>
-        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"next"</span><span class="p">));</span>
-        <span class="k">break</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<div class="panel panel-danger"><p class="panel-heading">Always test playback actions</p><div class="panel-body">
-<p>You should click action buttons in the developer's sidebar to be sure they are working as expected.</p>
-</div></div>
-<div class="panel panel-info"><p class="panel-heading">Custom actions</p><div class="panel-body">
-<p>Service integrations can also create <a href="../apps/custom-actions.html">custom Actions</a> like thumbs
-up/down or star rating.</p>
-</div></div>
+<h3 id="media-player-integration">Media Player Integration</h3>
+<p>Historically, Nuvola Apps Runtime (previously known as Nuvola Player) has a great support for media players and
+offers <a href="./mediaplayer.html">a high level API for Media Player Integration</a>.</p>
+<h3 id="other-web-apps">Other web apps</h3>
+<p>Other web apps can use <a href="./api_reference.html#">NuvolaKit JavaScript API</a> directly as there is no high level API for other kinds of web
+apps yet.</p>
 <h2 id="push-your-work-upstream">Push your work upstream</h2>
 <p>If you would like to have your service integration <strong>maintained as a part of Nuvola
 Apps project</strong> and distributed in Nuvola Player repository, follow these steps:</p>

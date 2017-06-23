@@ -49,6 +49,7 @@
                 <li><a href="../apps.html">Introduction</a></li>
                 <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
+                <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Advanced</li>
@@ -93,12 +94,15 @@
 <li><a href="#Nuvola.$WebApp">$WebApp</a></li>
 <li><a href="#Nuvola.$object">$object</a></li>
 <li><a href="#Nuvola.$prototype">$prototype</a></li>
+<li><a href="#Nuvola.checkVersion">checkVersion</a></li>
 <li><a href="#Nuvola.clickOnElement">clickOnElement</a></li>
+<li><a href="#Nuvola.encodeVersion">encodeVersion</a></li>
 <li><a href="#Nuvola.format">format</a></li>
 <li><a href="#Nuvola.log">log</a></li>
 <li><a href="#Nuvola.makeElement">makeElement</a></li>
 <li><a href="#Nuvola.makeText">makeText</a></li>
 <li><a href="#Nuvola.objectDiff">objectDiff</a></li>
+<li><a href="#Nuvola.parseTimeUsec">parseTimeUsec</a></li>
 <li><a href="#Nuvola.triggerMouseEvent">triggerMouseEvent</a></li>
 <li><a href="#Nuvola.warn">warn</a></li>
 </ul><h4>Prototypes</h4>
@@ -170,13 +174,17 @@
 <li><a href="#Nuvola.MediaPlayer">MediaPlayer</a>
 <ul><li><a href="#Nuvola.MediaPlayer.$init">$init</a></li>
 <li><a href="#Nuvola.MediaPlayer.addExtraActions">addExtraActions</a></li>
+<li><a href="#Nuvola.MediaPlayer.setCanChangeVolume">setCanChangeVolume</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanGoNext">setCanGoNext</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanGoPrev">setCanGoPrev</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanPause">setCanPause</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanPlay">setCanPlay</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanRate">setCanRate</a></li>
+<li><a href="#Nuvola.MediaPlayer.setCanSeek">setCanSeek</a></li>
 <li><a href="#Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</a></li>
 <li><a href="#Nuvola.MediaPlayer.setTrack">setTrack</a></li>
+<li><a href="#Nuvola.MediaPlayer.setTrackPosition">setTrackPosition</a></li>
+<li><a href="#Nuvola.MediaPlayer.updateVolume">updateVolume</a></li>
 <li><a href="#Nuvola.MediaPlayer::RatingSet">RatingSet</a></li>
 </ul></li>
 <li><a href="#Nuvola.MenuBar">MenuBar</a>
@@ -395,10 +403,45 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>function</small> <b id="Nuvola.clickOnElement">Nuvola.clickOnElement</b>(elm)<br />
-<p>Simulates click on element</p><p><b>Parameters</b></p>
+<li><small>function</small> <b id="Nuvola.checkVersion">Nuvola.checkVersion</b>(major, minor, micro)<br />
+<p>Check sufficient Nuvola's version</p>
+<p>@since API 4.5</p><p><b>Parameters</b></p>
+<ul>
+<li>Number <b>major</b> - major version</li>
+<li>Number <b>minor</b> - minor version</li>
+<li>Number <b>micro</b> - micro version</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>true if Nuvola's version is greater than or equal to the required version</p></li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span> <span class="o">&amp;&amp;</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="c1">// Safe to use API &gt;= 4.5</span>
+<span class="p">}</span>
+</pre></div></li>
+
+<li><small>function</small> <b id="Nuvola.clickOnElement">Nuvola.clickOnElement</b>(elm, x, y)<br />
+<p>Simulates click on element</p>
+<p>@since API 4.5: x, y coordinates were added.</p><p><b>Parameters</b></p>
 <ul>
 <li>HTMLElement <b>elm</b> - Element object</li>
+<li>Number <b>x</b> - Relative x position within the element 0.0..1.0 (default 0.5)</li>
+<li>Number <b>y</b> - Relative y position within the element 0.0..1.0 (default 0.5)</li>
+</ul>
+</li>
+
+<li><small>function</small> <b id="Nuvola.encodeVersion">Nuvola.encodeVersion</b>(major, minor, micro)<br />
+<p>Encode version info as a single number</p>
+<p>@since API 4.5</p><p><b>Parameters</b></p>
+<ul>
+<li>Number <b>major</b> - major version</li>
+<li>Number <b>minor</b> - minor version</li>
+<li>Number <b>micro</b> - micro version</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>encoded version number</p></li>
 </ul>
 </li>
 
@@ -467,11 +510,25 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</b>(elm, name)<br />
-<p>Triggers mouse event on element</p><p><b>Parameters</b></p>
+<li><small>function</small> <b id="Nuvola.parseTimeUsec">Nuvola.parseTimeUsec</b>(time)<br />
+<p>Parse time as number of microseconds</p><p><b>Parameters</b></p>
+<ul>
+<li>String <b>time</b> - time expression `HH:MM:SS'</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>the time in microseconds</p></li>
+</ul>
+</li>
+
+<li><small>function</small> <b id="Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</b>(elm, name, x, y)<br />
+<p>Triggers mouse event on element</p>
+<p>@since API 4.5: x, y coordinates were added.</p><p><b>Parameters</b></p>
 <ul>
 <li>HTMLElement <b>elm</b> - Element object</li>
 <li>String <b>name</b> - Event name</li>
+<li>Number <b>x</b> - Relative x position within the element 0.0..1.0 (default 0.5)</li>
+<li>Number <b>y</b> - Relative y position within the element 0.0..1.0 (default 0.5)</li>
 </ul>
 </li>
 
@@ -650,18 +707,19 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>signal</small> <b id="Nuvola.Actions::ActionActivated">ActionActivated</b>(emitter, name)<br />
+<li><small>signal</small> <b id="Nuvola.Actions::ActionActivated">ActionActivated</b>(emitter, name, param)<br />
 <p>Emitted when an action is activated.</p><p><b>Parameters</b></p>
 <ul>
 <li><a href="#Nuvola.Actions">Actions</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String <b>name</b> - action name</li>
+<li>Variant <b>param</b> - action parameter, usually null</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;ActionActivated&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="nx">MyObject</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
+<span class="nx">MyObject</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Action activated: &quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
 <span class="p">}</span>
@@ -1071,6 +1129,15 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
+<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanChangeVolume">setCanChangeVolume</b>(canChangeVolume)<br />
+<p>Set whether it is possible to change volume</p>
+<p>If the argument is same as in the previous call, this method does nothing.</p>
+<p>@since API 4.5</p><p><b>Parameters</b></p>
+<ul>
+<li>Boolean <b>canChangeVolume</b> - true if remote volume setting should be allowed</li>
+</ul>
+</li>
+
 <li><small>method</small> <b id="Nuvola.MediaPlayer.setCanGoNext">setCanGoNext</b>(canGoNext)<br />
 <p>Set whether it is possible to go to the next track</p>
 <p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Parameters</b></p>
@@ -1113,6 +1180,15 @@ If the argument is same as in the previous call, this method does nothing.</p>
 </ul>
 </li>
 
+<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanSeek">setCanSeek</b>(canSeek)<br />
+<p>Set whether it is possible to seek to a specific position of the track</p>
+<p>If the argument is same as in the previous call, this method does nothing.</p>
+<p>@since API 4.5</p><p><b>Parameters</b></p>
+<ul>
+<li>Boolean <b>canSeek</b> - true if remote seeking should be allowed</li>
+</ul>
+</li>
+
 <li><small>method</small> <b id="Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</b>(state)<br />
 <p>Set current playback state</p>
 <p>If the current state is same as the previous one, this method does nothing.</p><p><b>Parameters</b></p>
@@ -1130,6 +1206,25 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <li>String|null <b>track.album</b> - track album</li>
 <li>String|null <b>track.artLocation</b> - URL of album/track artwork</li>
 <li>double|null <b>track.rating</b> - track rating from <code>0.0</code> to <code>1.0</code>. <em>This item is ignored prior API 3.1.</em></li>
+<li>double|null <b>track.length</b> - track length as a string (<code>HH:MM:SS.xxx</code>, e.g. <code>1:25.54</code>) or number of microseconds. <em>This item is ignored prior API 4.5.</em></li>
+</ul>
+</li>
+
+<li><small>method</small> <b id="Nuvola.MediaPlayer.setTrackPosition">setTrackPosition</b>(position)<br />
+<p>Set current playback position</p>
+<p>If the current position is the same as the previous one, this method does nothing.</p>
+<p>@since API 4.5</p><p><b>Parameters</b></p>
+<ul>
+<li>String|Number <b>position</b> - the current track position as a string (<code>HH:MM:SS.xxx</code>, e.g. <code>1:25.54</code>) or number of microseconds.</li>
+</ul>
+</li>
+
+<li><small>method</small> <b id="Nuvola.MediaPlayer.updateVolume">updateVolume</b>(volume)<br />
+<p>Update current volume</p>
+<p>If the current volume is the same as the previous one, this method does nothing.</p>
+<p>@since API 4.5</p><p><b>Parameters</b></p>
+<ul>
+<li>Number <b>volume</b> - the current volume from 0.0 to 1.0.</li>
 </ul>
 </li>
 
@@ -1502,11 +1597,13 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <li><small>enumeration</small> <b id="Nuvola.PlayerAction">Nuvola.PlayerAction</b><br />
 <p>Base media player <a href="#Nuvola.Actions">actions</a></p><ul>
 
+<li><b id="Nuvola.PlayerAction.CHANGE_VOLUME">CHANGE_VOLUME</b> - Change volume</li>
 <li><b id="Nuvola.PlayerAction.NEXT_SONG">NEXT_SONG</b> - Skip to previous track</li>
 <li><b id="Nuvola.PlayerAction.PAUSE">PAUSE</b> - Pause playback</li>
 <li><b id="Nuvola.PlayerAction.PLAY">PLAY</b> - Start playback</li>
 <li><b id="Nuvola.PlayerAction.PLAYBACK_NOTIFICATION">PLAYBACK_NOTIFICATION</b> - Show playback notification</li>
 <li><b id="Nuvola.PlayerAction.PREV_SONG">PREV_SONG</b> - Skip to next track</li>
+<li><b id="Nuvola.PlayerAction.SEEK">SEEK</b> - Seek to a new position</li>
 <li><b id="Nuvola.PlayerAction.STOP">STOP</b> - Stop playback</li>
 <li><b id="Nuvola.PlayerAction.TOGGLE_PLAY">TOGGLE_PLAY</b> - Toggle playback (play/pause)</li>
 </ul></li>
