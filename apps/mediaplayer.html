@@ -428,12 +428,15 @@ up/down or star rating.</p>
 <h3 id="progress-bar">Progress bar</h3>
 <p>Since <strong>Nuvola 4.5</strong>, it is also possible to integrate progress bar. If you wish to make your script compatible with
 older versions, use respective <a href="./api_reference.html#Nuvola.checkVersion">Nuvola.checkVersion</a> condition as shown in examples bellow.</p>
-<p>In order to extract track length and position, use these two API calls:</p>
+<p>In order to extract track length and position, use these API calls:</p>
 <ul>
 <li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack</a> supports <code>track.length</code> property, which holds track
     length either as a string "mm:ss" or number of microseconds. This property is ignored in Nuvola &lt; 4.5.</li>
 <li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrackPosition">MediaPlayer.setTrackPosition</a> is used to update track position.
     This method is not available in Nuvola &lt; 4.5 and results in error.</li>
+<li><a href="./api_reference.html#Nuvola.parseTimeUsec">Nuvola.parseTimeUsec</a> (in Nuvola &gt;= 4.5) can be used to convert track length string (e.g. "2:35")
+    into the number of microseconds. <a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack</a> does that automatically
+    for the <code>track.length</code> property.</li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
 <span class="p">{</span>
