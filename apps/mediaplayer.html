@@ -84,6 +84,7 @@
 <li><a href="#playback-state">Playback state</a></li>
 <li><a href="#track-details">Track details</a></li>
 <li><a href="#media-player-actions">Media Player Actions</a></li>
+<li><a href="#track-rating">Track Rating</a></li>
 <li><a href="#progress-bar">Progress bar</a></li>
 <li><a href="#volume-management">Volume management</a></li>
 </ul>
@@ -425,6 +426,101 @@ simulate clicking.</p>
 <p>Service integrations can also create <a href="../apps/custom-actions.html">custom Actions</a> like thumbs
 up/down or star rating.</p>
 </div></div>
+<h3 id="track-rating">Track Rating</h3>
+<p>Since <strong>Nuvola 3.1</strong>, it is also possible to integrate track rating. If you wish to make your script compatible with
+older versions, use respective <a href="./api_reference.html#Nuvola.checkVersion">Nuvola.checkVersion</a> condition as shown in examples bellow.</p>
+<p>In order to provide users with the current rating state, use these API calls:</p>
+<ul>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack()</a> method accepts <code>track.rating</code> property, which holds
+    track rating as a number in range from <code>0.0</code> to <code>1.0</code> as in 
+    <a href="https://www.freedesktop.org/wiki/Specifications/mpris-spec/metadata/#index22h4">the MPRIS/xesam specification</a>.
+    This property is ignored in Nuvola &lt; 3.1.</li>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer.setCanRate">MediaPlayer.setCanRate()</a> controls whether
+    it is allowed to change rating remotely or not. This method is not available in Nuvola &lt; 3.1 and results in error.</li>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer%3A%3ARatingSet">MediaPlayer::RatingSet</a> is emitted when rating is changed remotely.
+    This signal is not available in Nuvola &lt; 3.1 and results in error.</li>
+</ul>
+<p>It's up to you to decide <strong>how to map the double value to the rating system of your web app</strong>.
+Here are some suggestions:</p>
+<ul>
+<li><strong>Percentage rating</strong> is the simplest case mapping the range <code>0.0-1.0</code> to percentage 0%-100%.</li>
+<li><strong>Five-star rating</strong> may calculate the number of stars as <code>stars = rating / 5.0</code>.</li>
+<li><strong>Thumb up/down rating</strong> is a bit tricky. You can use rating <code>0.2</code> for thumb down and <code>1.0</code> for thumb up in the
+    <code>track.rating</code> property and interpret rating &lt;= <code>0.41</code> (0-2 stars) as thumb down and rating &gt;= <code>0.79</code> (4-5 stars)
+    as thumb up in the <code>RatingSet</code> signal handler.</li>
+</ul>
+<p>In this example, a track can be rated as <em>good</em> (thumb up) or <em>bad</em> (thumb down).</p>
+<div class="codehilite"><pre><span></span><span class="p">...</span>
+
+<span class="c1">// Page is ready for magic</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Connect handler for signal ActionActivated</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"ActionActivated"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+
+    <span class="c1">// Connect rating handler if supported</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span> <span class="o">&amp;&amp;</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1">// @API 3.1</span>
+        <span class="nx">player</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"RatingSet"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+
+    <span class="c1">// Start update routine</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Extract data from the web page</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">track</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+
+    <span class="p">...</span>
+
+    <span class="c1">// Parse rating</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"rating"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">||</span> <span class="kc">null</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="k">case</span> <span class="s2">"good"</span><span class="o">:</span>
+        <span class="nx">track</span><span class="p">.</span><span class="nx">rating</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span> <span class="c1">// five stars</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s2">"bad"</span><span class="o">:</span>
+        <span class="nx">track</span><span class="p">.</span><span class="nx">rating</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">;</span> <span class="c1">// one star</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="nx">track</span><span class="p">.</span><span class="nx">rating</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span> <span class="c1">// zero star</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">player</span><span class="p">.</span><span class="nx">setTrack</span><span class="p">(</span><span class="nx">track</span><span class="p">);</span>
+
+    <span class="p">...</span>
+
+    <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">UNKNOWN</span><span class="p">;</span>
+    <span class="nx">state</span> <span class="o">=</span> <span class="p">...</span>
+
+    <span class="nx">player</span><span class="p">.</span><span class="nx">setPlaybackState</span><span class="p">(</span><span class="nx">state</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span> <span class="o">&amp;&amp;</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span><span class="p">(</span><span class="mf">3.1</span><span class="p">))</span>  <span class="c1">// @API 3.1</span>
+        <span class="nx">player</span><span class="p">.</span><span class="nx">setCanRate</span><span class="p">(</span><span class="nx">state</span> <span class="o">!==</span> <span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">UNKNOWN</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+
+<span class="c1">// Handler for rating</span>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onRatingSet</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">rating</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Rating set: {1}"</span><span class="p">,</span> <span class="nx">rating</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"rating"</span><span class="p">).</span><span class="nx">innerText</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1">// 0-2 stars</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"rating"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">current</span> <span class="o">===</span> <span class="s2">"bad"</span> <span class="o">?</span> <span class="s2">"-"</span> <span class="o">:</span> <span class="s2">"bad"</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&gt;=</span> <span class="mf">0.8</span><span class="p">)</span> <span class="c1">// 4-5 stars</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"rating"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">current</span> <span class="o">===</span> <span class="s2">"good"</span> <span class="o">?</span> <span class="s2">"-"</span> <span class="o">:</span> <span class="s2">"good"</span><span class="p">;</span>
+    <span class="k">else</span> <span class="c1">// three stars</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">"Invalid rating: "</span> <span class="o">+</span> <span class="nx">rating</span> <span class="o">+</span> <span class="s2">".\n\n"</span> 
+        <span class="o">+</span> <span class="s2">"Have you clicked the three-star button? It isn't supported."</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="p">...</span>
+</pre></div>
+<p><img alt="Track Rating" src="../images/guide/track_rating.png"/></p>
 <h3 id="progress-bar">Progress bar</h3>
 <p>Since <strong>Nuvola 4.5</strong>, it is also possible to integrate progress bar. If you wish to make your script compatible with
 older versions, use respective <a href="./api_reference.html#Nuvola.checkVersion">Nuvola.checkVersion</a> condition as shown in examples bellow.</p>
