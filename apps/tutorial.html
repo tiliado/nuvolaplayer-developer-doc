@@ -183,8 +183,8 @@ Let's look at the example:</p>
     <span class="nt">"maintainer_link"</span><span class="p">:</span> <span class="s2">"https://github.com/fenryxo"</span><span class="p">,</span>
     <span class="nt">"version_major"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="nt">"version_minor"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nt">"api_major"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="nt">"api_minor"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">"api_major"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">"api_minor"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
     <span class="nt">"categories"</span><span class="p">:</span> <span class="s2">"AudioVideo;Audio;"</span><span class="p">,</span>
     <span class="nt">"requirements"</span><span class="p">:</span> <span class="s2">"Feature[Flash] Codec[MP3]"</span><span class="p">,</span>
     <span class="nt">"home_url"</span><span class="p">:</span> <span class="s2">"nuvola://home.html"</span><span class="p">,</span>
@@ -231,8 +231,7 @@ address prefixed by <code>mailto:</code>.</p>
 </dd>
 <dt><code>api_major</code> and <code>api_minor</code></dt>
 <dd>
-<p>A required version of Nuvola Runtime API. It's <code>3.0</code> for Nuvola 3.0, <code>3.1</code> for Nuvola 3.1 and 4.4,
-<code>4.5</code> for Nuvola 4.5 and <code>4.x</code> for Nuvola 4.x (x &gt;= 5). You should update API version only
+<p>A required version of Nuvola Runtime API. You should use API &gt;= 4.6. You should update API version only
 if your script doesn't work with older API. For example, if Nuvola Runtime adds a new feature
 into API 4.X that is so essential for your script that it cannot function properly without it,
 you will increase API requirement to 4.X. However, all Nuvola versions with API less
@@ -602,10 +601,8 @@ in <code>metadata.in.json</code>. It can contain a space separated list of follo
 <li><code>WebKitGTK[X.Y.Z]</code>: The web app doesn't work properly in WebKitGTK &lt; X.Y.Z. While the genuine flatpak
     builds of Nuvola always contain the latest stable release of WebKitGTK, this may not be true for
     unofficial third-party builds.</li>
-<li><code>Feature[MSE]</code>: The web app requires Media Source extension for HTML5 Audio playback. <em>Experimental,
-    not available in stable flatpak builds.</em></li>
-<li><code>Codec[H264]</code>: The web app requires h264 codec for HTML5 Audio playback. <em>Experimental,
-    not available in stable flatpak builds.</em></li>
+<li><code>Feature[MSE]</code>: The web app requires Media Source extension for HTML5 Audio playback.</li>
+<li><code>Codec[H264]</code>: The web app requires h264 codec for HTML5 Audio playback.</li>
 </ul>
 <h3 id="user-agent-quirks">User Agent Quirks</h3>
 <p>It can sometimes happen that a web page provides a different code depending on which web browser is used.
