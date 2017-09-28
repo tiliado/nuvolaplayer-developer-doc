@@ -112,9 +112,6 @@
 <li><a href="#Nuvola.Actions.activate">activate</a></li>
 <li><a href="#Nuvola.Actions.addAction">addAction</a></li>
 <li><a href="#Nuvola.Actions.addRadioAction">addRadioAction</a></li>
-<li><a href="#Nuvola.Actions.bindButton">bindButton</a></li>
-<li><a href="#Nuvola.Actions.getState">getState</a></li>
-<li><a href="#Nuvola.Actions.isEnabled">isEnabled</a></li>
 <li><a href="#Nuvola.Actions.setEnabled">setEnabled</a></li>
 <li><a href="#Nuvola.Actions.setState">setState</a></li>
 <li><a href="#Nuvola.Actions.updateEnabledFlag">updateEnabledFlag</a></li>
@@ -134,10 +131,6 @@
 </ul></li>
 <li><a href="#Nuvola.Core">Core</a>
 <ul><li><a href="#Nuvola.Core.$init">$init</a></li>
-<li><a href="#Nuvola.Core.getComponentInfo">getComponentInfo</a></li>
-<li><a href="#Nuvola.Core.isComponentActive">isComponentActive</a></li>
-<li><a href="#Nuvola.Core.isComponentLoaded">isComponentLoaded</a></li>
-<li><a href="#Nuvola.Core.toggleComponentActive">toggleComponentActive</a></li>
 <li><a href="#Nuvola.Core::ComponentLoaded">ComponentLoaded</a></li>
 <li><a href="#Nuvola.Core::ComponentUnloaded">ComponentUnloaded</a></li>
 <li><a href="#Nuvola.Core::HomePageRequest">HomePageRequest</a></li>
@@ -199,7 +192,6 @@
 </ul></li>
 <li><a href="#Nuvola.Notifications">Notifications</a>
 <ul><li><a href="#Nuvola.Notifications.getNamedNotification">getNamedNotification</a></li>
-<li><a href="#Nuvola.Notifications.isPersistenceSupported">isPersistenceSupported</a></li>
 <li><a href="#Nuvola.Notifications.showNotification">showNotification</a></li>
 </ul></li>
 <li><a href="#Nuvola.SessionStorage">SessionStorage</a>
@@ -607,47 +599,6 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;rating&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.bindButton">bindButton</b>(button, name, parameter)<br />
-<p>Bind HTML button to an action</p>
-<p>The button.disabled and action.enabled properties are synchronized and action is activated when button is clicked.</p><p><b>Parameters</b></p>
-<ul>
-<li>HTMLButton <b>button</b> - HTML button element</li>
-<li>String <b>name</b> - action name</li>
-<li>optional Variant <b>parameter</b> - parameter to the action</li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">navigateBack</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">makeElement</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span>
-<span class="nx">elm</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">);</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">bindButton</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">BrowserAction</span><span class="p">.</span><span class="nx">GO_BACK</span><span class="p">);</span>
-</pre></div></li>
-
-<li><small>method</small> <b id="Nuvola.Actions.getState">getState</b>(name)<br />
-<p>Get current state of toggle or radio actions.</p><p><b>Parameters</b></p>
-<ul>
-<li>String <b>name</b> - action name</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</p></li>
-</ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Thumbs up is toggled &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">thumbsUp</span> <span class="o">?</span> <span class="s2">&quot;on&quot;</span> <span class="o">:</span> <span class="s2">&quot;off&quot;</span><span class="p">));</span>
-
-<span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Number of stars: &quot;</span> <span class="o">+</span> <span class="nx">stars</span><span class="p">);</span>
-</pre></div></li>
-
-<li><small>method</small> <b id="Nuvola.Actions.isEnabled">isEnabled</b>(name)<br />
-<p>Checks whether action is enabled</p><p><b>Parameters</b></p>
-<ul>
-<li>String <b>name</b> - action name</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>true is action is enabled, false otherwise</p></li>
-</ul>
-</li>
-
 <li><small>method</small> <b id="Nuvola.Actions.setEnabled">setEnabled</b>(name, enabled)<br />
 <p>Sets whether action is enabled</p>
 <p><strong>Note:</strong> consider use of method <a href="#Nuvola.Actions.updateEnabledFlag">Actions.updateEnabledFlag</a> that is more effective, because it performs
@@ -793,52 +744,6 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 
 <li><small>method</small> <b id="Nuvola.Core.$init">$init</b>()<br />
 <p>Initializes new Core instance object</p></li>
-
-<li><small>method</small> <b id="Nuvola.Core.getComponentInfo">getComponentInfo</b>(id)<br />
-<p>Returns information about a component</p><p><b>Parameters</b></p>
-<ul>
-<li>id <b>ide</b> - of the component</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>Object component info</p></li>
-</ul>
-</li>
-
-<li><small>method</small> <b id="Nuvola.Core.isComponentActive">isComponentActive</b>(id)<br />
-<p>Returns whether a component is loaded and active</p><p><b>Parameters</b></p>
-<ul>
-<li>id <b>id</b> - of the component</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>Boolean true if the component is active</p></li>
-</ul>
-</li>
-
-<li><small>method</small> <b id="Nuvola.Core.isComponentLoaded">isComponentLoaded</b>(id)<br />
-<p>Returns whether a component is loaded</p><p><b>Parameters</b></p>
-<ul>
-<li>id <b>id</b> - of the component</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>Boolean true if the component is loaded</p></li>
-</ul>
-</li>
-
-<li><small>method</small> <b id="Nuvola.Core.toggleComponentActive">toggleComponentActive</b>(id, active)<br />
-<p>Activates or deactivates a component</p>
-<p>The component must be loaded.</p><p><b>Parameters</b></p>
-<ul>
-<li>id <b>id</b> - of the component</li>
-<li>Boolean <b>active</b> - whether to activate or deactivate the component</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>Boolean true if the component has been activated or deactivated</p></li>
-</ul>
-</li>
 
 <li><small>signal</small> <b id="Nuvola.Core::ComponentLoaded">ComponentLoaded</b>(emitter, name)<br />
 <p>Emitted when a component has been loaded.</p><p><b>Parameters</b></p>
@@ -1302,13 +1207,6 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <li>String <b>name</b> - notification name (identifier)</li>
 <li>Boolean <b>resident</b> - mark the notification as resident by default</li>
 <li>optional String <b>category</b> - category of a notification</li>
-</ul>
-</li>
-
-<li><small>method</small> <b id="Nuvola.Notifications.isPersistenceSupported">isPersistenceSupported</b>()<br />
-<p>Check whether persistence is supported</p><p><b>Returns</b></p>
-<ul>
-<li><p>Boolean true if persistence is supported</p></li>
 </ul>
 </li>
 
