@@ -346,7 +346,7 @@ The app runner process has bare global object.</p></li>
 
 </ul><h3>Functions</h3>
 <ul>
-<li><small>function</small> <b id="Nuvola.$WebApp">Nuvola.$WebApp</b>()<br />
+<li><small> function</small> <b id="Nuvola.$WebApp">Nuvola.$WebApp</b>()<br />
 <p>Convenience function to create new prototype object extending <a href="#Nuvola.WebApp">WebApp</a> prototype.</p><p><b>Returns</b></p>
 <ul>
 <li><p>new prototype object extending <a href="#Nuvola.WebApp">WebApp</a></p></li>
@@ -354,7 +354,7 @@ The app runner process has bare global object.</p></li>
 <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 </pre></div></li>
 
-<li><small>function</small> <b id="Nuvola.$object">Nuvola.$object</b>(proto, init_args)<br />
+<li><small> function</small> <b id="Nuvola.$object">Nuvola.$object</b>(proto, init_args)<br />
 <p>Creates new initialized object from prototype.</p>
 <p>Creates new object that will have <code>proto</code> as its prototype and will be initialized by calling
 <code>$init</code> method with provided arguments <code>args</code>. This is similar to creating an instance object
@@ -375,7 +375,7 @@ from a class in class-based inheritance. Instance object names are in <code>lowe
 <span class="nx">candyShop</span><span class="p">.</span><span class="nx">printGoods</span><span class="p">();</span>
 </pre></div></li>
 
-<li><small>function</small> <b id="Nuvola.$prototype">Nuvola.$prototype</b>(proto, mixins)<br />
+<li><small> function</small> <b id="Nuvola.$prototype">Nuvola.$prototype</b>(proto, mixins)<br />
 <p>Creates new object from prototype and mixins.</p>
 <p>Creates new object that will have <code>proto</code> as its prototype and will be extended with properties
 from all specified <code>mixins</code>. This is similar to creating a subclass in class-based inheritance.
@@ -414,9 +414,9 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>function</small> <b id="Nuvola.checkVersion">Nuvola.checkVersion</b>(major, minor, micro)<br />
-<p>Check sufficient Nuvola's version</p>
-<p>@since API 4.5</p><p><b>Parameters</b></p>
+<li><small> function</small> <b id="Nuvola.checkVersion">Nuvola.checkVersion</b>(major, minor, micro)<br />
+<p>Check sufficient Nuvola's version</p><p><b>Available since</b> API 4.5</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Number <b>major</b> - major version</li>
 <li>Number <b>minor</b> - minor version</li>
@@ -432,9 +432,9 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>function</small> <b id="Nuvola.clickOnElement">Nuvola.clickOnElement</b>(elm, x, y)<br />
-<p>Simulates click on element</p>
-<p>@since API 4.5: x, y coordinates were added.</p><p><b>Parameters</b></p>
+<li><small> function</small> <b id="Nuvola.clickOnElement">Nuvola.clickOnElement</b>(elm, x, y)<br />
+<p>Simulates click on element</p><p><b>Available since</b> API 4.5: x, y coordinates were added.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>HTMLElement <b>elm</b> - Element object</li>
 <li>Number <b>x</b> - Relative x position within the element 0.0..1.0 (default 0.5)</li>
@@ -442,9 +442,9 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.encodeVersion">Nuvola.encodeVersion</b>(major, minor, micro)<br />
-<p>Encode version info as a single number</p>
-<p>@since API 4.5</p><p><b>Parameters</b></p>
+<li><small> function</small> <b id="Nuvola.encodeVersion">Nuvola.encodeVersion</b>(major, minor, micro)<br />
+<p>Encode version info as a single number</p><p><b>Available since</b> API 4.5</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Number <b>major</b> - major version</li>
 <li>Number <b>minor</b> - minor version</li>
@@ -456,7 +456,7 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.format">Nuvola.format</b>()<br />
+<li><small> function</small> <b id="Nuvola.format">Nuvola.format</b>()<br />
 <p>Replaces placeholders in a template string with provided data.</p>
 <p>Placeholders are in form of <code>{n}</code> where <code>n</code> is index of data argument starting at 1.
 Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</code> for <code>}</code>.</p><p><b>Parameters</b></p>
@@ -476,7 +476,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 <span class="nx">alert</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
 </pre></div></li>
 
-<li><small>function</small> <b id="Nuvola.log">Nuvola.log</b>(template)<br />
+<li><small> function</small> <b id="Nuvola.log">Nuvola.log</b>(template)<br />
 <p>Log message to terminal</p>
 <p>Note: This function doesn't print to JavaScript console of WebKit Web Inspector, but to real console/terminal.</p><p><b>Parameters</b></p>
 <ul>
@@ -485,15 +485,15 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.logException">Nuvola.logException</b>(e)<br />
-<p>Log exception to terminal</p>
-<p>@since Nuvola 4.8</p><p><b>Parameters</b></p>
+<li><small> function</small> <b id="Nuvola.logException">Nuvola.logException</b>(e)<br />
+<p>Log exception to terminal</p><p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Exception <b>e</b> - The exception to log.</li>
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.makeElement">Nuvola.makeElement</b>(name, attributes, text)<br />
+<li><small> function</small> <b id="Nuvola.makeElement">Nuvola.makeElement</b>(name, attributes, text)<br />
 <p>Creates HTML element</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - element name</li>
@@ -506,7 +506,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.makeText">Nuvola.makeText</b>(text)<br />
+<li><small> function</small> <b id="Nuvola.makeText">Nuvola.makeText</b>(text)<br />
 <p>Creates HTML text node</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>text</b> - text of the node</li>
@@ -517,7 +517,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.objectDiff">Nuvola.objectDiff</b>(object1, object2)<br />
+<li><small> function</small> <b id="Nuvola.objectDiff">Nuvola.objectDiff</b>(object1, object2)<br />
 <p>Compares own properties of two objects</p><p><b>Parameters</b></p>
 <ul>
 <li>Object <b>object1</b> - the first object to compare</li>
@@ -529,7 +529,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.parseTimeUsec">Nuvola.parseTimeUsec</b>(time)<br />
+<li><small> function</small> <b id="Nuvola.parseTimeUsec">Nuvola.parseTimeUsec</b>(time)<br />
 <p>Parse time as number of microseconds</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>time</b> - time expression `HH:MM:SS'</li>
@@ -540,9 +540,9 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</b>(elm, name, x, y)<br />
-<p>Triggers mouse event on element</p>
-<p>@since API 4.5: x, y coordinates were added.</p><p><b>Parameters</b></p>
+<li><small> function</small> <b id="Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</b>(elm, name, x, y)<br />
+<p>Triggers mouse event on element</p><p><b>Available since</b> API 4.5: x, y coordinates were added.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>HTMLElement <b>elm</b> - Element object</li>
 <li>String <b>name</b> - Event name</li>
@@ -551,7 +551,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
-<li><small>function</small> <b id="Nuvola.warn">Nuvola.warn</b>(template)<br />
+<li><small> function</small> <b id="Nuvola.warn">Nuvola.warn</b>(template)<br />
 <p>Log warning to terminal</p>
 <p>Note: This function doesn't print to JavaScript console of WebKit Web Inspector, but to real console/terminal.</p><p><b>Parameters</b></p>
 <ul>
@@ -570,10 +570,10 @@ Quicklist, or invoked by keyboard shortcut, remote control, etc.</p>
 some are created by JavaScript API objects (e. g. <a href="#Nuvola.PlayerAction">media player actions</a>) and
 web app integration scripts can create custom actions with <a href="#Nuvola.Actions.addAction">Actions.addAction</a> or <a href="#Nuvola.Actions.addRadioAction">Actions.addRadioAction</a>.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Actions.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.Actions.$init">$init</b>()<br />
 <p>Initializes new Actions object</p></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.activate">activate</b>(name, parameter)<br />
+<li><small> method</small> <b id="Nuvola.Actions.activate">activate</b>(name, parameter)<br />
 <p>Activate (invoke) action</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - action name</li>
@@ -581,7 +581,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Actions.addAction">addAction</b>(group, scope, name, label, mnemo_label, icon, keybinding, state)<br />
+<li><small> method</small> <b id="Nuvola.Actions.addAction">addAction</b>(group, scope, name, label, mnemo_label, icon, keybinding, state)<br />
 <p>Adds new simple or toggle action.</p>
 <p>when action is activated, signal ActionActivated is emitted.</p><p><b>Parameters</b></p>
 <ul>
@@ -601,7 +601,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;thumbs-up&quot;</span><span class="p">,</span> <span class="s2">&quot;Thumbs up&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.addRadioAction">addRadioAction</b>(group, scope, name, stateId, options)<br />
+<li><small> method</small> <b id="Nuvola.Actions.addRadioAction">addRadioAction</b>(group, scope, name, stateId, options)<br />
 <p>Adds new radio action (action with multiple states/option like old radios)</p>
 <p>when action is activated, signal ActionActivated is emitted.</p><p><b>Parameters</b></p>
 <ul>
@@ -626,7 +626,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;rating&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.bindButton">bindButton</b>(button, name, parameter)<br />
+<li><small> method</small> <b id="Nuvola.Actions.bindButton">bindButton</b>(button, name, parameter)<br />
 <p>Bind HTML button to an action</p>
 <p>The button.disabled and action.enabled properties are synchronized and action is activated when button is clicked.</p><p><b>Parameters</b></p>
 <ul>
@@ -640,9 +640,9 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">bindButton</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">BrowserAction</span><span class="p">.</span><span class="nx">GO_BACK</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.getState">getState</b>(name)<br />
-<p>Get current state of toggle or radio actions.</p>
-<p>@deprecated since Nuvola 4.8. Use async variant instead.</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.Actions.getState">getState</b>(name)<br />
+<p>Get current state of toggle or radio actions.</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - action name</li>
 </ul>
@@ -657,10 +657,10 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Number of stars: &quot;</span> <span class="o">+</span> <span class="nx">stars</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.getStateAsync">getStateAsync</b>(name)<br />
-<p>Get current state of toggle or radio actions.</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small>async  method</small> <b id="Nuvola.Actions.getStateAsync">getStateAsync</b>(name)<br />
+<p>Get current state of toggle or radio actions.</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - action name</li>
 </ul>
@@ -677,21 +677,9 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <span class="p">});</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.isEnabled">isEnabled</b>(name)<br />
-<p>Checks whether action is enabled</p><p><b>Parameters</b></p>
-<ul>
-<li>String <b>name</b> - action name</li>
-</ul>
-<p><b>Returns</b></p>
-<ul>
-<li><p>true is action is enabled, false otherwise</p></li>
-</ul>
-<p>@deprecated since Nuvola 4.8. Use async variant instead.</p></li>
-
-<li><small>method</small> <b id="Nuvola.Actions.isEnabledAsync">isEnabledAsync</b>(name)<br />
-<p>Checks whether action is enabled</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.Actions.isEnabled">isEnabled</b>(name)<br />
+<p>Checks whether action is enabled</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - action name</li>
 </ul>
@@ -701,7 +689,20 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Actions.setEnabled">setEnabled</b>(name, enabled)<br />
+<li><small>async  method</small> <b id="Nuvola.Actions.isEnabledAsync">isEnabledAsync</b>(name)<br />
+<p>Checks whether action is enabled</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>String <b>name</b> - action name</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>true is action is enabled, false otherwise</p></li>
+</ul>
+</li>
+
+<li><small> method</small> <b id="Nuvola.Actions.setEnabled">setEnabled</b>(name, enabled)<br />
 <p>Sets whether action is enabled</p>
 <p><strong>Note:</strong> consider use of method <a href="#Nuvola.Actions.updateEnabledFlag">Actions.updateEnabledFlag</a> that is more effective, because it performs
 caching of enabled flags and updates them only if necessary.</p><p><b>Parameters</b></p>
@@ -711,7 +712,7 @@ caching of enabled flags and updates them only if necessary.</p><p><b>Parameters
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Actions.setState">setState</b>(name, state)<br />
+<li><small> method</small> <b id="Nuvola.Actions.setState">setState</b>(name, state)<br />
 <p>Set current state of toggle or radio actions.</p>
 <p><strong>Note:</strong> consider use of method <a href="#Nuvola.Actions.updateState">Actions.updateState</a> that is more effective, because it performs caching of
 states and updates them only if necessary.</p><p><b>Parameters</b></p>
@@ -726,7 +727,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Actions.updateEnabledFlag">updateEnabledFlag</b>(name, enabled)<br />
+<li><small> method</small> <b id="Nuvola.Actions.updateEnabledFlag">updateEnabledFlag</b>(name, enabled)<br />
 <p>Update action enabled flag</p>
 <p>This method uses cache of action enabled flags to update them only if necessary.</p><p><b>Parameters</b></p>
 <ul>
@@ -735,7 +736,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Actions.updateEnabledFlags">updateEnabledFlags</b>(enabledFlags)<br />
+<li><small> method</small> <b id="Nuvola.Actions.updateEnabledFlags">updateEnabledFlags</b>(enabledFlags)<br />
 <p>Bulk update of action enabled flags</p>
 <p>This method uses cache of action enabled flags to update them only if necessary.</p><p><b>Parameters</b></p>
 <ul>
@@ -743,7 +744,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Actions.updateState">updateState</b>(name, state)<br />
+<li><small> method</small> <b id="Nuvola.Actions.updateState">updateState</b>(name, state)<br />
 <p>Update of action state</p>
 <p>This method uses cache of action states to update them only if necessary.</p><p><b>Parameters</b></p>
 <ul>
@@ -752,7 +753,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Actions.updateStates">updateStates</b>(states)<br />
+<li><small> method</small> <b id="Nuvola.Actions.updateStates">updateStates</b>(states)<br />
 <p>Bulk update of action states</p>
 <p>This method uses cache of action states to update them only if necessary.</p><p><b>Parameters</b></p>
 <ul>
@@ -800,10 +801,10 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li> <small>prototype</small> <b id="Nuvola.Browser">Nuvola.Browser</b> extends Object<br />
 <p>Prototype object for web browser management</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Browser.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.Browser.$init">$init</b>()<br />
 <p>Initializes new Browser object</p></li>
 
-<li><small>method</small> <b id="Nuvola.Browser.downloadFileAsync">downloadFileAsync</b>(uri, basename, callback, data)<br />
+<li><small> method</small> <b id="Nuvola.Browser.downloadFileAsync">downloadFileAsync</b>(uri, basename, callback, data)<br />
 <p>Request download of a file</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>uri</b> - file to download</li>
@@ -829,7 +830,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <p>Prototype object to access persistent configuration</p>
 <p>Note: Use <a href="#Nuvola.SessionStorage">SessionStorage</a> for temporary data.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.ConfigStorage.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.ConfigStorage.$init">$init</b>()<br />
 <p>Initializes new ConfigStorage object</p></li>
 
 <li><small>signal</small> <b id="Nuvola.ConfigStorage::ConfigChanged">ConfigChanged</b>(emitter, key)<br />
@@ -844,12 +845,12 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li> <small>prototype</small> <b id="Nuvola.Core">Nuvola.Core</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
 <p>Prototype object to manage Nuvola Player Core</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Core.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.Core.$init">$init</b>()<br />
 <p>Initializes new Core instance object</p></li>
 
-<li><small>method</small> <b id="Nuvola.Core.getComponentInfo">getComponentInfo</b>(id)<br />
-<p>Returns information about a component</p>
-<p>@deprecated since Nuvola 4.8. Use async variant instead.</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.Core.getComponentInfo">getComponentInfo</b>(id)<br />
+<p>Returns information about a component</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>id <b>id</b> - of the component</li>
 </ul>
@@ -859,10 +860,10 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Core.getComponentInfoAsync">getComponentInfoAsync</b>(id)<br />
-<p>Returns information about a component</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small>async  method</small> <b id="Nuvola.Core.getComponentInfoAsync">getComponentInfoAsync</b>(id)<br />
+<p>Returns information about a component</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>id <b>id</b> - of the component</li>
 </ul>
@@ -872,9 +873,9 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Core.isComponentActive">isComponentActive</b>(id)<br />
-<p>Returns whether a component is loaded and active</p>
-<p>@deprecated since Nuvola 4.8. Use async variant instead.</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.Core.isComponentActive">isComponentActive</b>(id)<br />
+<p>Returns whether a component is loaded and active</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>id <b>id</b> - of the component</li>
 </ul>
@@ -884,10 +885,10 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Core.isComponentActiveAsync">isComponentActiveAsync</b>(id)<br />
-<p>Returns whether a component is loaded and active</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small>async  method</small> <b id="Nuvola.Core.isComponentActiveAsync">isComponentActiveAsync</b>(id)<br />
+<p>Returns whether a component is loaded and active</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>id <b>id</b> - of the component</li>
 </ul>
@@ -897,9 +898,9 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Core.isComponentLoaded">isComponentLoaded</b>(id)<br />
-<p>Returns whether a component is loaded</p>
-<p>@deprecated since Nuvola 4.8. Use async variant instead.</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.Core.isComponentLoaded">isComponentLoaded</b>(id)<br />
+<p>Returns whether a component is loaded</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>id <b>id</b> - of the component</li>
 </ul>
@@ -909,10 +910,10 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Core.isComponentLoadedAsync">isComponentLoadedAsync</b>(id)<br />
-<p>Returns whether a component is loaded</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small>async  method</small> <b id="Nuvola.Core.isComponentLoadedAsync">isComponentLoadedAsync</b>(id)<br />
+<p>Returns whether a component is loaded</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>id <b>id</b> - of the component</li>
 </ul>
@@ -922,7 +923,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Core.toggleComponentActive">toggleComponentActive</b>(id, active)<br />
+<li><small> method</small> <b id="Nuvola.Core.toggleComponentActive">toggleComponentActive</b>(id, active)<br />
 <p>Activates or deactivates a component</p>
 <p>The component must be loaded.</p><p><b>Parameters</b></p>
 <ul>
@@ -1095,18 +1096,19 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li> <small>prototype</small> <b id="Nuvola.KeyValueStorage">Nuvola.KeyValueStorage</b> extends Object<br />
 <p>Prototype object to hold key-value mapping</p><ul>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.$init">$init</b>(index)<br />
+<li><small> method</small> <b id="Nuvola.KeyValueStorage.$init">$init</b>(index)<br />
 <p>Initializes new key-value storage</p><p><b>Parameters</b></p>
 <ul>
 <li>Number <b>index</b> - index in storage pool</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.get">get</b>(key)<br />
+<li><small> method</small> <b id="Nuvola.KeyValueStorage.get">get</b>(key)<br />
 <p>Get value by key name</p>
 <p>Note that behavior on a key without an assigned value nor <a href="#Nuvola.KeyValueStorage.setDefault">the default value</a>
 is undefined - it may return <em>anything</em> or throw and error. (The current implementation returns string <code>"&lt;UNDEFINED&gt;"</code>
-as it helps to identify unwanted manipulation with <code>undefined</code> value type.)</p><p><b>Parameters</b></p>
+as it helps to identify unwanted manipulation with <code>undefined</code> value type.)</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - key name</li>
 </ul>
@@ -1116,13 +1118,13 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.getAsync">getAsync</b>(key)<br />
+<li><small>async  method</small> <b id="Nuvola.KeyValueStorage.getAsync">getAsync</b>(key)<br />
 <p>Get value by key name</p>
 <p>Note that behavior on a key without an assigned value nor <a href="#Nuvola.KeyValueStorage.setDefault">the default value</a>
 is undefined - it may return <em>anything</em> or throw and error. (The current implementation returns string <code>"&lt;UNDEFINED&gt;"</code>
-as it helps to identify unwanted manipulation with <code>undefined</code> value type.)</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+as it helps to identify unwanted manipulation with <code>undefined</code> value type.)</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - key name</li>
 </ul>
@@ -1132,8 +1134,9 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.hasKey">hasKey</b>(key)<br />
-<p>Check whether the storage has given key</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.KeyValueStorage.hasKey">hasKey</b>(key)<br />
+<p>Check whether the storage has given key</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - storage key name</li>
 </ul>
@@ -1143,10 +1146,10 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.hasKeyAsync">hasKeyAsync</b>(key)<br />
-<p>Check whether the storage has given key</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small>async  method</small> <b id="Nuvola.KeyValueStorage.hasKeyAsync">hasKeyAsync</b>(key)<br />
+<p>Check whether the storage has given key</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - storage key name</li>
 </ul>
@@ -1156,27 +1159,29 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.set">set</b>(key, value)<br />
-<p>Set value for given key</p><p><b>Parameters</b></p>
+<li><small> method</small> <b id="Nuvola.KeyValueStorage.set">set</b>(key, value)<br />
+<p>Set value for given key</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - key name</li>
 <li>Variant <b>value</b> - value of given key</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.setAsync">setAsync</b>(key, value)<br />
-<p>Set value for given key</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<li><small>async  method</small> <b id="Nuvola.KeyValueStorage.setAsync">setAsync</b>(key, value)<br />
+<p>Set value for given key</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - key name</li>
 <li>Variant <b>value</b> - value of given key</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.setDefault">setDefault</b>(key, value)<br />
+<li><small> method</small> <b id="Nuvola.KeyValueStorage.setDefault">setDefault</b>(key, value)<br />
 <p>Set default value for given key</p>
-<p>This function should be called only once per key, for example in <a href="#Nuvola.Core::InitAppRunner">Core::InitAppRunner</a> handler.</p><p><b>Parameters</b></p>
+<p>This function should be called only once per key, for example in <a href="#Nuvola.Core::InitAppRunner">Core::InitAppRunner</a> handler.</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
@@ -1191,11 +1196,11 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.KeyValueStorage.setDefaultAsync">setDefaultAsync</b>(key, value)<br />
+<li><small>async  method</small> <b id="Nuvola.KeyValueStorage.setDefaultAsync">setDefaultAsync</b>(key, value)<br />
 <p>Set default value for given key</p>
-<p>This function should be called only once per key, for example in <a href="#Nuvola.Core::InitAppRunner">Core::InitAppRunner</a> handler.</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Parameters</b></p>
+<p>This function should be called only once per key, for example in <a href="#Nuvola.Core::InitAppRunner">Core::InitAppRunner</a> handler.</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
@@ -1214,24 +1219,24 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li> <small>prototype</small> <b id="Nuvola.Launcher">Nuvola.Launcher</b> extends Object<br />
 <p>Manages launcher component (Unity dock item, tray icon, ...)</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Launcher.addAction">addAction</b>(action)<br />
+<li><small> method</small> <b id="Nuvola.Launcher.addAction">addAction</b>(action)<br />
 <p>Add action to launcher's menu.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>action</b> - action name</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Launcher.removeAction">removeAction</b>(action)<br />
+<li><small> method</small> <b id="Nuvola.Launcher.removeAction">removeAction</b>(action)<br />
 <p>Remove action from launcher's menu.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>action</b> - action name</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Launcher.removeActions">removeActions</b>()<br />
+<li><small> method</small> <b id="Nuvola.Launcher.removeActions">removeActions</b>()<br />
 <p>Removes all launcher menu actions.</p></li>
 
-<li><small>method</small> <b id="Nuvola.Launcher.setActions">setActions</b>(actions)<br />
+<li><small> method</small> <b id="Nuvola.Launcher.setActions">setActions</b>(actions)<br />
 <p>Set launcher menu actions.</p>
 <p>This functionality has two implementations:</p>
 <ul>
@@ -1243,7 +1248,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Launcher.setTooltip">setTooltip</b>(tooltip)<br />
+<li><small> method</small> <b id="Nuvola.Launcher.setTooltip">setTooltip</b>(tooltip)<br />
 <p>Set launcher tooltip.</p>
 <p>This functionality is currently implemented only by the tray icon.</p><p><b>Parameters</b></p>
 <ul>
@@ -1255,7 +1260,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li> <small>prototype</small> <b id="Nuvola.MediaKeys">Nuvola.MediaKeys</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
 <p>Prototype object integrating media keys handling</p><ul>
 
-<li><small>method</small> <b id="Nuvola.MediaKeys.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.MediaKeys.$init">$init</b>()<br />
 <p>Initializes new MediaKeys object.</p></li>
 
 <li><small>signal</small> <b id="Nuvola.MediaKeys::MediaKeyPressed">MediaKeyPressed</b>(emitter, key)<br />
@@ -1270,10 +1275,10 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li> <small>prototype</small> <b id="Nuvola.MediaPlayer">Nuvola.MediaPlayer</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
 <p>Media player controller.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.$init">$init</b>()<br />
 <p>Initializes media player</p></li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.addExtraActions">addExtraActions</b>(actions)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.addExtraActions">addExtraActions</b>(actions)<br />
 <p>Add actions for media player capabilities</p>
 <p>For example: star rating, thumbs up/down, like/love/unlike.</p>
 <p>Actions that have been already added are ignored.</p><p><b>Parameters</b></p>
@@ -1282,16 +1287,16 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanChangeVolume">setCanChangeVolume</b>(canChangeVolume)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanChangeVolume">setCanChangeVolume</b>(canChangeVolume)<br />
 <p>Set whether it is possible to change volume</p>
-<p>If the argument is same as in the previous call, this method does nothing.</p>
-<p>@since API 4.5</p><p><b>Parameters</b></p>
+<p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> API 4.5</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Boolean <b>canChangeVolume</b> - true if remote volume setting should be allowed</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanGoNext">setCanGoNext</b>(canGoNext)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanGoNext">setCanGoNext</b>(canGoNext)<br />
 <p>Set whether it is possible to go to the next track</p>
 <p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
@@ -1299,7 +1304,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanGoPrev">setCanGoPrev</b>(canGoPrev)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanGoPrev">setCanGoPrev</b>(canGoPrev)<br />
 <p>Set whether it is possible to go to the previous track</p>
 <p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
@@ -1307,7 +1312,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanPause">setCanPause</b>(canPause)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanPause">setCanPause</b>(canPause)<br />
 <p>Set whether it is possible to pause playback</p>
 <p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
@@ -1315,7 +1320,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanPlay">setCanPlay</b>(canPlay)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanPlay">setCanPlay</b>(canPlay)<br />
 <p>Set whether it is possible to start playback</p>
 <p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
@@ -1323,26 +1328,26 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanRate">setCanRate</b>(canRate)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanRate">setCanRate</b>(canRate)<br />
 <p>Set whether it is possible to rate tracks</p>
 <p>If rating is enabled, signal <a href="#Nuvola.MediaPlayer::RatingSet">MediaPlayer::RatingSet</a> is emitted.
-If the argument is same as in the previous call, this method does nothing.</p>
-<p>@since API 3.1</p><p><b>Parameters</b></p>
+If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> API 3.1</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Boolean <b>canRate</b> - true if remote rating should be allowed</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setCanSeek">setCanSeek</b>(canSeek)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanSeek">setCanSeek</b>(canSeek)<br />
 <p>Set whether it is possible to seek to a specific position of the track</p>
-<p>If the argument is same as in the previous call, this method does nothing.</p>
-<p>@since API 4.5</p><p><b>Parameters</b></p>
+<p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> API 4.5</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Boolean <b>canSeek</b> - true if remote seeking should be allowed</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</b>(state)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</b>(state)<br />
 <p>Set current playback state</p>
 <p>If the current state is same as the previous one, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
@@ -1350,7 +1355,7 @@ If the argument is same as in the previous call, this method does nothing.</p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setTrack">setTrack</b>(track)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setTrack">setTrack</b>(track)<br />
 <p>Set info about currently playing track.</p>
 <p>If track info is same as in the previous call, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
@@ -1363,19 +1368,19 @@ If the argument is same as in the previous call, this method does nothing.</p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.setTrackPosition">setTrackPosition</b>(position)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setTrackPosition">setTrackPosition</b>(position)<br />
 <p>Set current playback position</p>
-<p>If the current position is the same as the previous one, this method does nothing.</p>
-<p>@since API 4.5</p><p><b>Parameters</b></p>
+<p>If the current position is the same as the previous one, this method does nothing.</p><p><b>Available since</b> API 4.5</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>String|Number <b>position</b> - the current track position as a string (<code>HH:MM:SS.xxx</code>, e.g. <code>1:25.54</code>) or number of microseconds.</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.MediaPlayer.updateVolume">updateVolume</b>(volume)<br />
+<li><small> method</small> <b id="Nuvola.MediaPlayer.updateVolume">updateVolume</b>(volume)<br />
 <p>Update current volume</p>
-<p>If the current volume is the same as the previous one, this method does nothing.</p>
-<p>@since API 4.5</p><p><b>Parameters</b></p>
+<p>If the current volume is the same as the previous one, this method does nothing.</p><p><b>Available since</b> API 4.5</p>
+<p><b>Parameters</b></p>
 <ul>
 <li>Number <b>volume</b> - the current volume from 0.0 to 1.0.</li>
 </ul>
@@ -1383,8 +1388,8 @@ If the argument is same as in the previous call, this method does nothing.</p>
 
 <li><small>signal</small> <b id="Nuvola.MediaPlayer::RatingSet">RatingSet</b>(emitter, rating)<br />
 <p>Emitted when a rating is set.</p>
-<p>Note that rating has to be enabled first with a method <a href="#Nuvola.MediaPlayer.setCanRate">MediaPlayer.setCanRate</a>.</p>
-<p>@since API 3.1</p><p><b>Parameters</b></p>
+<p>Note that rating has to be enabled first with a method <a href="#Nuvola.MediaPlayer.setCanRate">MediaPlayer.setCanRate</a>.</p><p><b>Available since</b> API 3.1</p>
+<p><b>Parameters</b></p>
 <ul>
 <li><a href="#Nuvola.MediaPlayer">MediaPlayer</a> <b>emitter</b> - object that emitted the signal</li>
 <li>Number <b>rating</b> - Ratting from <code>0.0</code> to <code>1.0</code>.</li>
@@ -1395,7 +1400,7 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <li> <small>prototype</small> <b id="Nuvola.MenuBar">Nuvola.MenuBar</b> extends Object<br />
 <p>Prototype object for Menubar management</p><ul>
 
-<li><small>method</small> <b id="Nuvola.MenuBar.setMenu">setMenu</b>(id, label, actions)<br />
+<li><small> method</small> <b id="Nuvola.MenuBar.setMenu">setMenu</b>(id, label, actions)<br />
 <p>Adds new menu to the menubar or replaces existing menu with the same id</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>id</b> - menu identifier</li>
@@ -1408,7 +1413,7 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <li> <small>prototype</small> <b id="Nuvola.Notification">Nuvola.Notification</b> extends Object<br />
 <p>Desktop notification.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Notification.$init">$init</b>(name, resident, category)<br />
+<li><small> method</small> <b id="Nuvola.Notification.$init">$init</b>(name, resident, category)<br />
 <p>Creates new named notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - notification name (identifier)</li>
@@ -1417,24 +1422,24 @@ If the argument is same as in the previous call, this method does nothing.</p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Notification.removeActions">removeActions</b>()<br />
+<li><small> method</small> <b id="Nuvola.Notification.removeActions">removeActions</b>()<br />
 <p>Remove all actions available as buttons in notification.</p></li>
 
-<li><small>method</small> <b id="Nuvola.Notification.setActions">setActions</b>(actions)<br />
+<li><small> method</small> <b id="Nuvola.Notification.setActions">setActions</b>(actions)<br />
 <p>Set actions available as buttons in notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>String[] <b>actions</b> - array of action names</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Notification.show">show</b>(force)<br />
+<li><small> method</small> <b id="Nuvola.Notification.show">show</b>(force)<br />
 <p>Shows notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>force <b>ensure</b> - notification is shown if true, otherwise show it when suitable</li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Notification.update">update</b>(title, text, iconName, iconPath, resident)<br />
+<li><small> method</small> <b id="Nuvola.Notification.update">update</b>(title, text, iconName, iconPath, resident)<br />
 <p>Update properties of a notification</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>title</b> - short title</li>
@@ -1449,7 +1454,7 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <li> <small>prototype</small> <b id="Nuvola.Notifications">Nuvola.Notifications</b> extends Object<br />
 <p>Manages desktop notifications.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Notifications.getNamedNotification">getNamedNotification</b>(name, resident, category)<br />
+<li><small> method</small> <b id="Nuvola.Notifications.getNamedNotification">getNamedNotification</b>(name, resident, category)<br />
 <p>Convenience method to creates new named notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - notification name (identifier)</li>
@@ -1458,24 +1463,24 @@ If the argument is same as in the previous call, this method does nothing.</p>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Notifications.isPersistenceSupported">isPersistenceSupported</b>()<br />
-<p>Check whether persistence is supported</p>
-<p>@deprecated since Nuvola 4.8. Use async variant instead.</p><p><b>Returns</b></p>
+<li><small> method</small> <b id="Nuvola.Notifications.isPersistenceSupported">isPersistenceSupported</b>()<br />
+<p>Check whether persistence is supported</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
+<p><b>Returns</b></p>
 <ul>
 <li><p>Boolean true if persistence is supported</p></li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Notifications.isPersistenceSupportedAsync">isPersistenceSupportedAsync</b>()<br />
-<p>Check whether persistence is supported</p>
-<p>@since Nuvola 4.8
-@async</p><p><b>Returns</b></p>
+<li><small>async  method</small> <b id="Nuvola.Notifications.isPersistenceSupportedAsync">isPersistenceSupportedAsync</b>()<br />
+<p>Check whether persistence is supported</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.8</p>
+<p><b>Returns</b></p>
 <ul>
 <li><p>Boolean true if persistence is supported</p></li>
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.Notifications.showNotification">showNotification</b>(title, text, iconName, iconPath, force, category)<br />
+<li><small> method</small> <b id="Nuvola.Notifications.showNotification">showNotification</b>(title, text, iconName, iconPath, force, category)<br />
 <p>Instantly show anonymous notification.</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>title</b> - short title</li>
@@ -1492,23 +1497,23 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <p>Prototype object of a key-value storage with a lifetime limited to the current session</p>
 <p>Note: Use <a href="#Nuvola.SessionStorage">SessionStorage</a> to store persistent data.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.SessionStorage.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.SessionStorage.$init">$init</b>()<br />
 <p>Initializes new SessionStorage object.</p></li>
 
 </ul></li>
 <li> <small>prototype</small> <b id="Nuvola.WebApp">Nuvola.WebApp</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
 <p>Prototype object for web app integration.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.WebApp.$init">$init</b>()<br />
+<li><small> method</small> <b id="Nuvola.WebApp.$init">$init</b>()<br />
 <p>Initializes new web app object.</p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onHomePageRequest">_onHomePageRequest</b>(emitter, result)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onHomePageRequest">_onHomePageRequest</b>(emitter, result)<br />
 <p>Signal handler for <a href="#Nuvola.Core::HomePageRequest">Core::HomePageRequest</a></p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onInitAppRunner">_onInitAppRunner</b>(emitter)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onInitAppRunner">_onInitAppRunner</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitAppRunner">Core::InitAppRunner</a></p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</b>(emitter)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitWebWorker">Core::InitWebWorker</a>. Override this method to integrate the web page.</p>
 <div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
 <span class="p">{</span>
@@ -1527,20 +1532,20 @@ If the argument is same as in the previous call, this method does nothing.</p>
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onInitWebWorkerHelper">_onInitWebWorkerHelper</b>(emitter)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onInitWebWorkerHelper">_onInitWebWorkerHelper</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitWebWorkerHelper">Core::InitWebWorkerHelper</a>. Override this method to connect to
 <a href="#Nuvola.Core::ResourceRequest">Core::ResourceRequest</a> signal.</p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onLastPageRequest">_onLastPageRequest</b>(emitter, request)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onLastPageRequest">_onLastPageRequest</b>(emitter, request)<br />
 <p>Signal handler for <a href="#Nuvola.Core::LastPageRequest">Core::LastPageRequest</a></p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onNavigationRequest">_onNavigationRequest</b>(object, request)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onNavigationRequest">_onNavigationRequest</b>(object, request)<br />
 <p>Signal handler for <a href="#Nuvola.Core::NavigationRequest">Core::NavigationRequest</a></p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp._onUriChanged">_onUriChanged</b>(object, uri)<br />
+<li><small> method</small> <b id="Nuvola.WebApp._onUriChanged">_onUriChanged</b>(object, uri)<br />
 <p>Signal handler for <a href="#Nuvola.Core::UriChanged">Core::UriChanged</a></p></li>
 
-<li><small>method</small> <b id="Nuvola.WebApp.start">start</b>()<br />
+<li><small> method</small> <b id="Nuvola.WebApp.start">start</b>()<br />
 <p>Convenience function to create new WebApp object linked to Nuvola API.</p>
 <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
 
@@ -1559,7 +1564,7 @@ and then check whether they are properly recognized by a tool <code>xgettext</co
 package.</p>
 <p>See also <a href="../apps/translations.html">translations documentation</a>.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.Translate.gettext">gettext</b>(text)<br />
+<li><small> method</small> <b id="Nuvola.Translate.gettext">gettext</b>(text)<br />
 <p>Translate string.</p>
 <p><strong>Placeholder</strong>: This function is only a placeholder for future functionality, but you can use it to mark
 translatable strings.</p>
@@ -1591,7 +1596,7 @@ translatable strings.</p>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello {1}!&quot;</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span> <span class="c1">// Right</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Translate.ngettext">ngettext</b>(text1, text2, n)<br />
+<li><small> method</small> <b id="Nuvola.Translate.ngettext">ngettext</b>(text1, text2, n)<br />
 <p>Translate string with support of singluar and plural forms.</p>
 <p><strong>Placeholder</strong>: This function is only a placeholder for future functionality, but you can use it to mark
 translatable strings.</p>
@@ -1627,7 +1632,7 @@ translatable strings.</p>
     <span class="nx">eggs</span><span class="p">);</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.Translate.pgettext">pgettext</b>(context, text)<br />
+<li><small> method</small> <b id="Nuvola.Translate.pgettext">pgettext</b>(context, text)<br />
 <p>Translate string with support of a disambiguating message context.</p>
 <p>This is mainly useful for short strings which may need different translations, depending on the context in which they
 are used. e.g.: <code>pgettext("Navigation", "Back")</code> vs <code>pgettext("Body part", "Back")</code>.</p>
@@ -1659,7 +1664,7 @@ translatable strings.</p>
 <li><small>mixin</small> <b id="Nuvola.SignalsMixin">Nuvola.SignalsMixin</b>
 <br /><p>Provides signaling functionality.</p><ul>
 
-<li><small>method</small> <b id="Nuvola.SignalsMixin.addSignal">addSignal</b>(name)<br />
+<li><small> method</small> <b id="Nuvola.SignalsMixin.addSignal">addSignal</b>(name)<br />
 <p>Adds new signal listeners can connect to</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - signal name, should be in CamelCase</li>
@@ -1675,7 +1680,7 @@ translatable strings.</p>
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.SignalsMixin.connect">connect</b>(name, object, handlerName)<br />
+<li><small> method</small> <b id="Nuvola.SignalsMixin.connect">connect</b>(name, object, handlerName)<br />
 <p>Connect handler to a signal</p>
 <p>The first argument passed to the handler is the emitter object, i.e. object that has emitted the signal,
 other arguments should be specified at each signal's description.</p><p><b>Parameters</b></p>
@@ -1700,7 +1705,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <span class="p">}</span>
 </pre></div></li>
 
-<li><small>method</small> <b id="Nuvola.SignalsMixin.disconnect">disconnect</b>(name, object, handlerName)<br />
+<li><small> method</small> <b id="Nuvola.SignalsMixin.disconnect">disconnect</b>(name, object, handlerName)<br />
 <p>Disconnect handler from a signal</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - signal name</li>
@@ -1713,7 +1718,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 </ul>
 </li>
 
-<li><small>method</small> <b id="Nuvola.SignalsMixin.emit">emit</b>(name, varArgsList)<br />
+<li><small> method</small> <b id="Nuvola.SignalsMixin.emit">emit</b>(name, varArgsList)<br />
 <p>Emit a signal</p><p><b>Parameters</b></p>
 <ul>
 <li>String <b>name</b> - signal name</li>
