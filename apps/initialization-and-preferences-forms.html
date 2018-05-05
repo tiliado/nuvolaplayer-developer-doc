@@ -44,7 +44,7 @@
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
                 <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 4 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
@@ -117,51 +117,50 @@ because it has no idea what web page to load without this information.</p>
 <a href="./api_reference.html#Nuvola.Core%3A%3AInitializationForm">Nuvola.Core::InitializationForm</a> signal
 handler is not left empty. The example bellow asks user to provide name to show a greeting.
 API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specification">described later</a>.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
-<span class="p">{</span>
+(function(Nuvola)
+{
 
-<span class="kd">var</span> <span class="nx">USER_NAME</span> <span class="o">=</span> <span class="s2">"app.user_name"</span><span class="p">;</span>
+var USER_NAME = "app.user_name";
 
-<span class="p">...</span>
+...
 
-<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+var WebApp = Nuvola.$WebApp();
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+    Nuvola.config.setDefault(USER_NAME, "");
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// If user name is not configured, request initialization form</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">))</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onInitializationForm = function(emitter, values, entries)
+{
+    // If user name is not configured, request initialization form
+    if (!Nuvola.config.hasKey(USER_NAME))
+        this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">appendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">USER_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="s2">"My Beautiful Media Server"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">"Your name"</span><span class="p">]);</span>
-<span class="p">}</span>
+WebApp.appendPreferences = function(values, entries)
+{
+    values[USER_NAME] = Nuvola.config.get(USER_NAME);
+    entries.push(["header", "My Beautiful Media Server"]);
+    entries.push(["string", USER_NAME, "Your name"]);
+}
 
-<span class="p">...</span>
+...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+WebApp._onPageReady = function()
+{
+    ...
 
-    <span class="nx">alert</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"Hello {1}!"</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">)));</span>
-<span class="p">}</span>
+    alert(Nuvola.format("Hello {1}!", Nuvola.config.get(USER_NAME)));
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <p><img alt="Initialization form" src="../images/guide/initialization_form.png"/>
 <img alt="After initialization form" src="../images/guide/after_initialization_form.png"/></p>
 <div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
@@ -181,46 +180,45 @@ add extra configuration option not necessary needed in initialization phase.</p>
 preferences specific to your service integration in 
 <a href="./api_reference.html#Nuvola.Core%3A%3APreferencesForm">Nuvola.Core::PreferencesForm</a> signal handler.
 API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specification">described later</a>.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
-<span class="p">{</span>
+(function(Nuvola)
+{
 
-<span class="kd">var</span> <span class="nx">USER_NAME</span> <span class="o">=</span> <span class="s2">"app.user_name"</span><span class="p">;</span>
+var USER_NAME = "app.user_name";
 
-<span class="p">...</span>
+...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
+    Nuvola.config.setDefault(USER_NAME, "");
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"PreferencesForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+    Nuvola.core.connect("PreferencesForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// If user name is not configured, request initialization form</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">))</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onInitializationForm = function(emitter, values, entries)
+{
+    // If user name is not configured, request initialization form
+    if (!Nuvola.config.hasKey(USER_NAME))
+        this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPreferencesForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onPreferencesForm = function(emitter, values, entries)
+{
+    this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">appendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">USER_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="s2">"My Beautiful Media Server"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">"Your name"</span><span class="p">]);</span>
-<span class="p">}</span>
+WebApp.appendPreferences = function(values, entries)
+{
+    values[USER_NAME] = Nuvola.config.get(USER_NAME);
+    entries.push(["header", "My Beautiful Media Server"]);
+    entries.push(["string", USER_NAME, "Your name"]);
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <p><img alt="Preferences form" src="../images/guide/preferences_form.png"/></p>
 <div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
 <p>The <a href="./api_reference.html#Nuvola.Core%3A%3APreferencesForm">Nuvola.Core::PreferencesForm</a> signal is executed in a
@@ -272,103 +270,102 @@ item of a form entry describes a type of the entry.</p>
 <h2 id="sample-form">Sample Form</h2>
 <p>This sample form also makes use of <a href="../apps/translations.html">translation functions</a>.</p>
 <p><img alt="Example of form fields" src="../images/guide/form_fields_example.png"/></p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
-<span class="p">{</span>
+(function(Nuvola)
+{
 
-<span class="p">...</span>
-<span class="c1">// Translations</span>
-<span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="cm">/* Form keys and values */</span>
-<span class="kd">var</span> <span class="nx">USER_NAME</span> <span class="o">=</span> <span class="s2">"app.user_name"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">MARRIED</span> <span class="o">=</span> <span class="s2">"app.married"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">MARRIED</span> <span class="o">=</span> <span class="s2">"app.married"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">WANNA_MARRY</span> <span class="o">=</span> <span class="s2">"app.wanna_marry"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">SPOUSE</span> <span class="o">=</span> <span class="s2">"app.spouse"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">DEFAULT_ADDRESS</span> <span class="o">=</span> <span class="s2">"http://localhost:9000/"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">"app.address"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ADDRESS_DEFAULT</span> <span class="o">=</span> <span class="s2">"default"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ADDRESS_CUSTOM</span> <span class="o">=</span> <span class="s2">"custom"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">HOST</span> <span class="o">=</span> <span class="s2">"app.host"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="s2">"app.port"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">COUNTRY_VARIANT</span> <span class="o">=</span> <span class="s2">"app.country_variant"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">COUNTRY_VARIANTS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">[</span><span class="s2">"de"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"Germany"</span><span class="p">)],</span>
-    <span class="p">[</span><span class="s2">"fr"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"France"</span><span class="p">)],</span>
-    <span class="p">[</span><span class="s2">"co.uk"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"United Kingdom"</span><span class="p">)],</span>
-    <span class="p">[</span><span class="s2">"com"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"United States"</span><span class="p">)]</span>
-<span class="p">];</span>
+...
+// Translations
+var _ = Nuvola.Translate.gettext;
+var C_ = Nuvola.Translate.pgettext;
+...
+/* Form keys and values */
+var USER_NAME = "app.user_name";
+var MARRIED = "app.married";
+var MARRIED = "app.married";
+var WANNA_MARRY = "app.wanna_marry";
+var SPOUSE = "app.spouse";
+var DEFAULT_ADDRESS = "http://localhost:9000/";
+var ADDRESS = "app.address";
+var ADDRESS_DEFAULT = "default";
+var ADDRESS_CUSTOM = "custom";
+var HOST = "app.host";
+var PORT = "app.port";
+var COUNTRY_VARIANT = "app.country_variant";
+var COUNTRY_VARIANTS = [
+    ["de", C_("Amazon variant", "Germany")],
+    ["fr", C_("Amazon variant", "France")],
+    ["co.uk", C_("Amazon variant", "United Kingdom")],
+    ["com", C_("Amazon variant", "United States")]
+];
 
-<span class="p">...</span>
+...
 
-<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+var WebApp = Nuvola.$WebApp();
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="cm">/* Default configuration */</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">,</span> <span class="s2">"Mr. Incognito"</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">MARRIED</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">SPOUSE</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">WANNA_MARRY</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_DEFAULT</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">HOST</span><span class="p">,</span> <span class="s2">"localhost"</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">"9000"</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">"fr"</span><span class="p">);</span>
+    /* Default configuration */
+    Nuvola.config.setDefault(USER_NAME, "Mr. Incognito");
+    Nuvola.config.setDefault(MARRIED, false);
+    Nuvola.config.setDefault(SPOUSE, "");
+    Nuvola.config.setDefault(WANNA_MARRY, true);
+    Nuvola.config.setDefault(ADDRESS, ADDRESS_DEFAULT);
+    Nuvola.config.setDefault(HOST, "localhost");
+    Nuvola.config.setDefault(PORT, "9000");
+    Nuvola.config.setDefault(COUNTRY_VARIANT, "fr");
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"PreferencesForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+    Nuvola.core.connect("PreferencesForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// If user name is not configured, request initialization form</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">))</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onInitializationForm = function(emitter, values, entries)
+{
+    // If user name is not configured, request initialization form
+    if (!Nuvola.config.hasKey(USER_NAME))
+        this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPreferencesForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onPreferencesForm = function(emitter, values, entries)
+{
+    this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">appendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">USER_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">USER_NAME</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">MARRIED</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">MARRIED</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">SPOUSE</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">SPOUSE</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">WANNA_MARRY</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">WANNA_MARRY</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"My Beautiful Media Server"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">USER_NAME</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"Your name"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"bool"</span><span class="p">,</span> <span class="nx">MARRIED</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"I'm married"</span><span class="p">),</span> <span class="p">[</span><span class="nx">SPOUSE</span><span class="p">],</span> <span class="p">[</span><span class="nx">WANNA_MARRY</span><span class="p">]]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">SPOUSE</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"Your spouse"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"bool"</span><span class="p">,</span> <span class="nx">WANNA_MARRY</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Service preferences"</span><span class="p">,</span> <span class="s2">"I want to get married"</span><span class="p">)]);</span>
+WebApp.appendPreferences = function(values, entries)
+{
+    values[USER_NAME] = Nuvola.config.get(USER_NAME);
+    values[MARRIED] = Nuvola.config.get(MARRIED);
+    values[SPOUSE] = Nuvola.config.get(SPOUSE);
+    values[WANNA_MARRY] = Nuvola.config.get(WANNA_MARRY);
+    entries.push(["header", _("My Beautiful Media Server")]);
+    entries.push(["string", USER_NAME, C_("Service preferences", "Your name")]);
+    entries.push(["bool", MARRIED, C_("Service preferences", "I'm married"), [SPOUSE], [WANNA_MARRY]]);
+    entries.push(["string", SPOUSE, C_("Service preferences", "Your spouse")]);
+    entries.push(["bool", WANNA_MARRY, C_("Service preferences", "I want to get married")]);
 
-    <span class="nx">values</span><span class="p">[</span><span class="nx">ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">HOST</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">PORT</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Logitech Media Server"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Address of your Logitech Media Server"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_DEFAULT</span><span class="p">,</span>
-        <span class="nx">_</span><span class="p">(</span><span class="s2">"use default address ('localhost:9000')"</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">]]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_CUSTOM</span><span class="p">,</span>
-        <span class="nx">_</span><span class="p">(</span><span class="s2">"use custom address"</span><span class="p">),</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">],</span> <span class="kc">null</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="s2">"Host"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="s2">"Port"</span><span class="p">]);</span>
+    values[ADDRESS] = Nuvola.config.get(ADDRESS);
+    values[HOST] = Nuvola.config.get(HOST);
+    values[PORT] = Nuvola.config.get(PORT);
+    entries.push(["header", _("Logitech Media Server")]);
+    entries.push(["label", _("Address of your Logitech Media Server")]);
+    entries.push(["option", ADDRESS, ADDRESS_DEFAULT,
+        _("use default address ('localhost:9000')"), null, [HOST, PORT]]);
+    entries.push(["option", ADDRESS, ADDRESS_CUSTOM,
+        _("use custom address"), [HOST, PORT], null]);
+    entries.push(["string", HOST, "Host"]);
+    entries.push(["string", PORT, "Port"]);
 
-    <span class="nx">values</span><span class="p">[</span><span class="nx">COUNTRY_VARIANT</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Amazon Cloud Player"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Preferred national variant"</span><span class="p">)]);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
-        <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]);</span>
-<span class="p">}</span>
+    values[COUNTRY_VARIANT] = Nuvola.config.get(COUNTRY_VARIANT);
+    entries.push(["header", _("Amazon Cloud Player")]);
+    entries.push(["label", _("Preferred national variant")]);
+    for (var i = 0; i &lt; COUNTRY_VARIANTS.length; i++)
+        entries.push(["option", COUNTRY_VARIANT, COUNTRY_VARIANTS[i][0], COUNTRY_VARIANTS[i][1]]);
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <h2 id="use-cases">Use cases</h2>
 <p>See article <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a> for
 use cases of Initialization and Preferences Forms to allow user specify a custom home page url.</p>

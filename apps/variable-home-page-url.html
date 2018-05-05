@@ -44,7 +44,7 @@
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
                 <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 4 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
@@ -149,102 +149,98 @@ the preferred national variant.</p>
 (constants by convention) will be used later. Note that 
 <a href="../apps/translations.html">translation function</a> alias <code>C_</code> is used mark short translatable
 strings with context information.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
-<span class="p">{</span>
+(function(Nuvola)
+{
 
-<span class="p">...</span>
-<span class="c1">// Translations</span>
-<span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="kd">var</span> <span class="nx">COUNTRY_VARIANT</span> <span class="o">=</span> <span class="s2">"app.country_variant"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">HOME_PAGE</span> <span class="o">=</span> <span class="s2">"http://www.amazon.{1}/gp/dmusic/mp3/player"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">COUNTRY_VARIANTS</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">[</span><span class="s2">"de"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"Germany"</span><span class="p">)],</span>
-    <span class="p">[</span><span class="s2">"fr"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"France"</span><span class="p">)],</span>
-    <span class="p">[</span><span class="s2">"co.uk"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"United Kingdom"</span><span class="p">)],</span>
-    <span class="p">[</span><span class="s2">"com"</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s2">"Amazon variant"</span><span class="p">,</span> <span class="s2">"United States"</span><span class="p">)]</span>
-<span class="p">];</span>
-<span class="p">...</span>
+...
+// Translations
+var _ = Nuvola.Translate.gettext;
+var C_ = Nuvola.Translate.pgettext;
+...
+var COUNTRY_VARIANT = "app.country_variant";
+var HOME_PAGE = "http://www.amazon.{1}/gp/dmusic/mp3/player";
+var COUNTRY_VARIANTS = [
+    ["de", C_("Amazon variant", "Germany")],
+    ["fr", C_("Amazon variant", "France")],
+    ["co.uk", C_("Amazon variant", "United Kingdom")],
+    ["com", C_("Amazon variant", "United States")]
+];
+...
 
-<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+var WebApp = Nuvola.$WebApp();
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="p">...</span>
-</pre></div>
+    Nuvola.config.setDefault(COUNTRY_VARIANT, "");
+}
+...</code></pre>
 <h3 id="initialization-form">Initialization Form</h3>
 <p>The <a href="../apps/initialization-and-preferences-forms.html">initialization form</a> contains one radio
 entry for each value of <code>COUNTRY_VARIANT</code> key. The empty string as a default value ensures the
 first radio entry is selected by default. Note that 
 <a href="../apps/translations.html">translation function</a> alias <code>_</code> is used mark translatable strings.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
-<span class="c1">// Translations</span>
-<span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
-<span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
+// Translations
+var _ = Nuvola.Translate.gettext;
+var C_ = Nuvola.Translate.pgettext;
+...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    ...
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">))</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onInitializationForm = function(emitter, values, entries)
+{
+    if (!Nuvola.config.hasKey(COUNTRY_VARIANT))
+        this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">appendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">COUNTRY_VARIANT</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Amazon Cloud Player"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Preferred national variant"</span><span class="p">)]);</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
-        <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]);</span>
-<span class="p">}</span>
-</pre></div>
+WebApp.appendPreferences = function(values, entries)
+{
+    values[COUNTRY_VARIANT] = Nuvola.config.get(COUNTRY_VARIANT);
+    entries.push(["header", _("Amazon Cloud Player")]);
+    entries.push(["label", _("Preferred national variant")]);
+    for (var i = 0; i &lt; COUNTRY_VARIANTS.length; i++)
+        entries.push(["option", COUNTRY_VARIANT, COUNTRY_VARIANTS[i][0], COUNTRY_VARIANTS[i][1]]);
+}</code></pre>
 <h3 id="preferences-form">Preferences Form</h3>
 <p>Since we don't need any extra configuration, the
 <a href="../apps/initialization-and-preferences-forms.html">preferences form</a> is same as the initialization
 form, so we reuse <code>WebApp.appendPreferences()</code> method.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    ...
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"PreferencesForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+    Nuvola.core.connect("PreferencesForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPreferencesForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onPreferencesForm = function(emitter, values, entries)
+{
+    this.appendPreferences(values, entries);
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <h3 id="home-page-request-handler">Home Page Request Handler</h3>
 <p>Since we don't use the <code>home_url</code> field of <code>metadata.json</code>, we have to override the default
 handler for <a href="./api_reference.html#Nuvola.Core%3A%3AHomePageRequest">Nuvola.Core::HomePageRequest</a> signal.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">result</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">HOME_PAGE</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">COUNTRY_VARIANT</span><span class="p">));</span>
-<span class="p">}</span>
+WebApp._onHomePageRequest = function(emitter, result)
+{
+    result.url = Nuvola.format(HOME_PAGE, Nuvola.config.get(COUNTRY_VARIANT));
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <h2 id="user-specified-home-page-address">User-specified Home Page Address</h2>
 <p>The default address of <a href="http://en.wikipedia.org/wiki/Logitech_Media_Server">Logitech Media Server</a>
 instance is <code>http://localhost:9000/</code>. However, user can choose a different address, so we cannot
@@ -259,108 +255,104 @@ how to specify address of his instance.</p>
 <li><code>HOST</code> - server hostname</li>
 <li><code>PORT</code> - server port</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span>
-<span class="p">{</span>
+(function(Nuvola)
+{
 
-<span class="p">...</span>
+...
 
-<span class="kd">var</span> <span class="nx">DEFAULT_ADDRESS</span> <span class="o">=</span> <span class="s2">"http://localhost:9000/"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">"app.address"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ADDRESS_DEFAULT</span> <span class="o">=</span> <span class="s2">"default"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">ADDRESS_CUSTOM</span> <span class="o">=</span> <span class="s2">"custom"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">HOST</span> <span class="o">=</span> <span class="s2">"app.host"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">PORT</span> <span class="o">=</span> <span class="s2">"app.port"</span><span class="p">;</span>
+var DEFAULT_ADDRESS = "http://localhost:9000/";
+var ADDRESS = "app.address";
+var ADDRESS_DEFAULT = "default";
+var ADDRESS_CUSTOM = "custom";
+var HOST = "app.host";
+var PORT = "app.port";
 
-<span class="p">...</span>
+...
 
-<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+var WebApp = Nuvola.$WebApp();
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_DEFAULT</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">HOST</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">PORT</span><span class="p">,</span> <span class="s2">""</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="p">...</span>
-</pre></div>
+    Nuvola.config.setDefault(ADDRESS, ADDRESS_DEFAULT);
+    Nuvola.config.setDefault(HOST, "");
+    Nuvola.config.setDefault(PORT, "");
+}
+...</code></pre>
 <h3 id="initialization-form_1">Initialization Form</h3>
 <p>The <a href="../apps/initialization-and-preferences-forms.html">initialization form</a> contains two radio
 entries (one for each value of <code>ADDRESS</code> key) and two text entries for <code>HOST</code> and <code>PORT</code> keys.
 Note that the text entries are disabled (insensitive) when <code>ADDRESS</code> entry is set to
 <code>ADDRESS_DEFAULT</code>. Try it out ;-) Note that 
 <a href="../apps/translations.html">translation function</a> alias <code>_</code> is used mark translatable strings.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
-<span class="c1">// Translations</span>
-<span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
-<span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
+// Translations
+var _ = Nuvola.Translate.gettext;
+...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    ...
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitializationForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">hasKey</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">))</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onInitializationForm = function(emitter, values, entries)
+{
+    if (!Nuvola.config.hasKey(ADDRESS))
+        this.appendPreferences(values, entries);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">appendPreferences</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">ADDRESS</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">HOST</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">);</span>
-    <span class="nx">values</span><span class="p">[</span><span class="nx">PORT</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"header"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Logitech Media Server"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"label"</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s2">"Address of your Logitech Media Server"</span><span class="p">)]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_DEFAULT</span><span class="p">,</span>
-        <span class="nx">_</span><span class="p">(</span><span class="s2">"use default address ('localhost:9000')"</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">]]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"option"</span><span class="p">,</span> <span class="nx">ADDRESS</span><span class="p">,</span> <span class="nx">ADDRESS_CUSTOM</span><span class="p">,</span>
-        <span class="nx">_</span><span class="p">(</span><span class="s2">"use custom address"</span><span class="p">),</span> <span class="p">[</span><span class="nx">HOST</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">],</span> <span class="kc">null</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">HOST</span><span class="p">,</span> <span class="s2">"Host"</span><span class="p">]);</span>
-    <span class="nx">entries</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">"string"</span><span class="p">,</span> <span class="nx">PORT</span><span class="p">,</span> <span class="s2">"Port"</span><span class="p">]);</span>
-<span class="p">}</span>
-</pre></div>
+WebApp.appendPreferences = function(values, entries)
+{
+    values[ADDRESS] = Nuvola.config.get(ADDRESS);
+    values[HOST] = Nuvola.config.get(HOST);
+    values[PORT] = Nuvola.config.get(PORT);
+    entries.push(["header", _("Logitech Media Server")]);
+    entries.push(["label", _("Address of your Logitech Media Server")]);
+    entries.push(["option", ADDRESS, ADDRESS_DEFAULT,
+        _("use default address ('localhost:9000')"), null, [HOST, PORT]]);
+    entries.push(["option", ADDRESS, ADDRESS_CUSTOM,
+        _("use custom address"), [HOST, PORT], null]);
+    entries.push(["string", HOST, "Host"]);
+    entries.push(["string", PORT, "Port"]);
+}</code></pre>
 <h3 id="preferences-form_1">Preferences Form</h3>
 <p>Since we don't need any extra configuration, the
 <a href="../apps/initialization-and-preferences-forms.html">preferences form</a> is same as the initialization
 form, so we reuse <code>WebApp.appendPreferences()</code> method.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
+WebApp._onInitAppRunner = function(emitter)
+{
+    ...
 
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"InitializationForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">"PreferencesForm"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+    Nuvola.core.connect("InitializationForm", this);
+    Nuvola.core.connect("PreferencesForm", this);
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPreferencesForm</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">appendPreferences</span><span class="p">(</span><span class="nx">values</span><span class="p">,</span> <span class="nx">entries</span><span class="p">);</span>
-<span class="p">}</span>
+WebApp._onPreferencesForm = function(emitter, values, entries)
+{
+    this.appendPreferences(values, entries);
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <h3 id="home-page-request-handler_1">Home Page Request Handler</h3>
 <p>Since we don't use the <code>home_url</code> field of <code>metadata.json</code>, we have to override the default
 handler for <a href="./api_reference.html#Nuvola.Core%3A%3AHomePageRequest">Nuvola.Core::HomePageRequest</a> signal.</p>
-<div class="codehilite"><pre><span></span><span class="p">...</span>
+<pre class="codehilite"><code class="language-js">...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">result</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">)</span> <span class="o">===</span> <span class="nx">ADDRESS_CUSTOM</span><span class="p">)</span>
-    <span class="o">?</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">"http://{1}:{2}"</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HOST</span><span class="p">),</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">PORT</span><span class="p">))</span>
-    <span class="o">:</span> <span class="nx">DEFAULT_ADDRESS</span><span class="p">;</span>
-<span class="p">}</span>
+WebApp._onHomePageRequest = function(emitter, result)
+{
+    result.url = (Nuvola.config.get(ADDRESS) === ADDRESS_CUSTOM)
+    ? Nuvola.format("http://{1}:{2}", Nuvola.config.get(HOST), Nuvola.config.get(PORT))
+    : DEFAULT_ADDRESS;
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 
     <div class="footer">
   <hr />

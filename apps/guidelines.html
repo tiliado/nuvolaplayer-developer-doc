@@ -44,7 +44,7 @@
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
                 <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 4 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
@@ -240,7 +240,7 @@ until the file was removed.</p>
 </ul>
 <h4 id="commit-messages">Commit Messages</h4>
 <p>Commit messages should follow this template:</p>
-<div class="codehilite"><pre><span></span>Short (50 chars or less) summary of changes
+<pre class="codehilite"><code>Short (50 chars or less) summary of changes
 
 More detailed explanatory text, if necessary.  Wrap it to
 about 72 characters or so. The blank line separating the
@@ -251,8 +251,7 @@ the two together.
 Further paragraphs come after blank lines. Also don't
 forget to link to issues.
 
-Issue: tiliado/nuvolaplayer#128
-</pre></div>
+Issue: tiliado/nuvolaplayer#128</code></pre>
 <ul>
 <li>Don't forget to update the CHANGELOG.md file.</li>
 <li>Write <strong>useful commit summary</strong> (the first line. max 50 chars):<ul>
@@ -273,7 +272,7 @@ Issue: tiliado/nuvolaplayer#128
 <a href="https://help.github.com/articles/creating-a-pull-request/">create a pull request</a>.
 Pull request should follow similar template like commit messages, because a merge commit message
 will be based it:</p>
-<div class="codehilite"><pre><span></span>Short (50 chars or less) summary of changes
+<pre class="codehilite"><code>Short (50 chars or less) summary of changes
 
 More detailed explanatory text, if necessary.  Wrap it to
 about 72 characters or so. The blank line separating the
@@ -292,8 +291,7 @@ forget to link to issues.
 
 If you have some other notes regarding the pull request,
 add a separator "---" and then write anything you want to ;-)
-This part won't be included in a commit message.
-</pre></div>
+This part won't be included in a commit message.</code></pre>
 <ul>
 <li>The same rules as for the commit summary apply to <strong>the title</strong> of a pull requests.</li>
 <li>Always provide <strong>description</strong> of the pull request: what you changed and why. The merge commit
@@ -310,7 +308,7 @@ create merge commits. First of all, check whether the <strong>title</strong> of 
 <strong>description conforms guidelines</strong> above. If not, notify the author of the pull request (less work
 for you) or prepare a well formed commit message on your own (more work for you).</p>
 <p><strong>Message of merge commits</strong> should follow this template:</p>
-<div class="codehilite"><pre><span></span>Short (50 chars or less) summary of changes
+<pre class="codehilite"><code>Short (50 chars or less) summary of changes
 
 More detailed explanatory text, if necessary.  Wrap it to
 about 72 characters or so. The blank line separating the
@@ -324,8 +322,7 @@ forget to link to issues.
  - Reviewed by: Your Name &lt;your@email&gt;
  - Reviewed by: Another Reviewer &lt;his@email&gt;
  - Pull Request: fenryxo/test#2
- - Issue: fenryxo/test#3
-</pre></div>
+ - Issue: fenryxo/test#3</code></pre>
 <ul>
 <li>Link to a pull request <code>https://github.com/fenryxo/test/pull/2</code> → <code>- Pull request: fenryxo/test#2</code></li>
 <li>Link to an issue <code>https://github.com/fenryxo/test/issues/3</code> -&gt; <code>+ - Issue: fenryxo/test#3</code></li>
@@ -377,22 +374,21 @@ coding style have to be consistent. You can get inspired by coding style of Nuvo
 <li>Other variables and method/function names are in camel case with the first letter lower-cased: <code>methodName()</code>, <code>myVariable</code>.</li>
 <li>Usage of single-letter variables or abbreviations is discouraged except for temporary variables in loops (<code>i</code>, <code>j</code>, etc.).</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="c1">// Prototype name</span>
-<span class="kd">var</span> <span class="nx">ConfigStorage</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$prototype</span><span class="p">(</span><span class="nx">KeyValueStorage</span><span class="p">,</span> <span class="nx">SignalsMixin</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">// Prototype name
+var ConfigStorage = Nuvola.$prototype(KeyValueStorage, SignalsMixin);
 
-<span class="c1">// Enumeration</span>
-<span class="kd">var</span> <span class="nx">PlaybackState</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">UNKNOWN</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="nx">PAUSED</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="nx">PLAYING</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
-<span class="p">}</span>
+// Enumeration
+var PlaybackState = {
+    UNKNOWN: 0,
+    PAUSED: 1,
+    PLAYING: 2,
+}
 
-<span class="c1">// Constant</span>
-<span class="kd">var</span> <span class="nx">PI_VALUE</span> <span class="o">=</span> <span class="s2">"3.14"</span><span class="p">;</span>
+// Constant
+var PI_VALUE = "3.14";
 
-<span class="kd">var</span> <span class="nx">myVariable</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">myFunction</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
-</pre></div>
+var myVariable = 5;
+var myFunction = function(){};</code></pre>
 <h3 id="braces">Braces</h3>
 <ul>
 <li>Both opening and closing curly braces of code blocks appear on the new line. The code is more fluffy.</li>
@@ -401,53 +397,52 @@ coding style have to be consistent. You can get inspired by coding style of Nuvo
 <li>If one branch of <code>if-else</code> block is braced, all should be braced.</li>
 <li>To not put space between function name and opening brace.</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="p">...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<pre class="codehilite"><code class="language-js">var foo = function()
+{
+    for (var i = 0 ; i &lt; 10 ; ++i)
+    {
+        ...
+    }
+}
 
-<span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-<span class="p">}</span>
-<span class="k">else</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-<span class="p">}</span>
+if (x == 4)
+{
+    ...
+}
+else
+{
+    ...
+}
 
-<span class="c1">// Preferred</span>
-<span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
-<span class="k">else</span>
-    <span class="nx">y</span> <span class="o">=</span> <span class="o">-</span><span class="nx">x</span><span class="p">;</span>
+// Preferred
+if (x &gt;= 0)
+    y = x;
+else
+    y = -x;
 
-<span class="c1">// Also possible</span>
-<span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">else</span>
-<span class="p">{</span>
-    <span class="nx">y</span> <span class="o">=</span> <span class="o">-</span><span class="nx">x</span><span class="p">;</span>
-<span class="p">}</span>
+// Also possible
+if (x &gt;= 0)
+{
+    y = x;
+}
+else
+{
+    y = -x;
+}
 
-<span class="k">try</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-<span class="p">}</span>
-<span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-<span class="p">}</span>
+try
+{
+    ...
+}
+catch (e)
+{
+    ...
+}
 
-<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">name</span><span class="o">:</span> <span class="s2">"Jiří"</span><span class="p">,</span>
-    <span class="nx">surname</span><span class="o">:</span> <span class="s2">"Janoušek"</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
+var person = {
+    name: "Jiří",
+    surname: "Janoušek",
+}</code></pre>
 <h3 id="spaces">Spaces</h3>
 <ul>
 <li>Indentation level is four spaces. Use a clever editor that can treat spaces as tabs, i.e. it
@@ -460,18 +455,17 @@ coding style have to be consistent. You can get inspired by coding style of Nuvo
 <li>Use spaces around binary operators.</li>
 <li>Don't use spaces around unary and increment/decrement operators (e.g. <code>++</code>, <code>--</code>, <code>!</code>, <code>!!</code>, <code>-</code>). </li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">document.getElementById("foo");
 
-<span class="nx">myArray</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+myArray[1];
 
-<span class="k">if</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-    <span class="p">...</span>
+if (true)
+    ...
 
-<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="o">-</span><span class="nx">b</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="o">--</span><span class="nx">b</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">success</span> <span class="o">=</span> <span class="o">!</span><span class="nx">failed</span><span class="p">;</span>
-</pre></div>
+var c = a + b;
+var c = -b;
+var c = --b;
+var success = !failed;</code></pre>
 
     <div class="footer">
   <hr />

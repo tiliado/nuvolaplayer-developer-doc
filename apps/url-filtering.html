@@ -44,7 +44,7 @@
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
                 <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 4 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
@@ -111,35 +111,33 @@ If this field is not empty, it is compiled as a <a href="https://developer.mozil
 <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a> then allows
 navigation only to URLs that match that regular expression, other URLs are opened in a default web
 browser.</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
-    <span class="p">...</span>
-    <span class="s2">"allowed_uri"</span><span class="o">:</span> <span class="s2">"^https?://(play\\.google\\.com/)"</span>
-<span class="p">}</span>
-</pre></div>
+<pre class="codehilite"><code class="language-js">{
+    ...
+    "allowed_uri": "^https?://(play\\.google\\.com/)"
+}</code></pre>
 <h2 id="custom-url-filter">Custom URL Filter</h2>
 <p>Since the default URL filter is a JavaScript function, you can override it to match your needs.
 The method <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a>
 is a handler for <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest signal</a>.</p>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp();
 
-<span class="p">...</span>
+...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onNavigationRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Open in a new window? {1}"</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">newWindow</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"I hate long URLS: {1} has {2} characters!"</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-        <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">else</span>
-    <span class="p">{</span>
-        <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+WebApp._onNavigationRequest = function(emitter, request)
+{
+    Nuvola.log("Open in a new window? {1}", request.newWindow);
+    if (request.url.length &gt; 40)
+    {
+        Nuvola.log("I hate long URLS: {1} has {2} characters!", request.url, request.url.length);
+        request.approved = false;
+    }
+    else
+    {
+        request.approved = true;
+    }
+}
 
-<span class="p">...</span>
-</pre></div>
+...</code></pre>
 <div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
 <p>The <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest</a> signal is
 executed in a pure JavaScript environment without
@@ -149,14 +147,13 @@ instead of <a href="https://developer.mozilla.org/en-US/docs/Web/API/console.log
 </div></div>
 <h2 id="debugging-url-filter">Debugging URL Filter</h2>
 <p>If you run Nuvola Player with <code>-D</code> or <code>--debug</code> flag, you will see URL filtering in action:</p>
-<div class="codehilite"><pre><span></span>[Runner:DEBUG    Nuvola] webengine.vala:443: Navigation, current window:
+<pre class="codehilite"><code class="language-text">[Runner:DEBUG    Nuvola] webengine.vala:443: Navigation, current window:
 uri = https://checkout.google.com/inapp/frontend/passive?&amp;usid=0&amp;plid=0,
 result = true, frame = (null), type = WEBKIT_NAVIGATION_TYPE_OTHER
 
 [Runner:DEBUG    Nuvola] webengine.vala:440: Navigation, new window:
 uri = https://plus.google.com/u/0/?tab=YX, result = true, frame = _blank,
-type = WEBKIT_NAVIGATION_TYPE_LINK_CLICKED
-</pre></div>
+type = WEBKIT_NAVIGATION_TYPE_LINK_CLICKED</code></pre>
 <p>The debugging message contains following information:</p>
 <ul>
 <li>Whether to open request in a new window or in the current window (<code>request.newWindow</code>).</li>

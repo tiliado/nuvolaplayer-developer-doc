@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-        <title>NuvolaKit 3.0 JavaScript API Reference</title>
+        <title>NuvolaKit 4 JavaScript API Reference</title>
     
     
 
@@ -47,7 +47,7 @@
                 <li class="divider"></li>
                 <li class="dropdown-header">Basic</li>
                 <li><a href="../apps.html">Introduction</a></li>
-                <li><a href="../apps/api_reference.html">NuvolaKit 3.0 JavaScript API Reference</a></li>
+                <li><a href="../apps/api_reference.html">NuvolaKit 4 JavaScript API Reference</a></li>
                 <li><a href="../apps/tutorial.html">Service Integration Tutorial</a></li>
                 <li><a href="../apps/mediaplayer.html">Media Player Integration</a></li>
                 <li><a href="../apps/guidelines.html">Service Integration Guidelines</a></li>
@@ -72,11 +72,11 @@
         
 <div class="col-sm-12">
     <div class="page-header text-center">
-      <h1 id="top">NuvolaKit 3.0 JavaScript API Reference</h1>
+      <h1 id="top">NuvolaKit 4 JavaScript API Reference</h1>
     </div>
 </div>
 <div class="col-md-3 col-lg-4 sidebar">
-  <h3>NuvolaKit 3.0</h3>
+  <h3>NuvolaKit 4</h3>
   <p><a href="#intro">Introduction</a></p>
   <h3>Namespace Nuvola</h3><h4>Fields</h4>
 <ul>
@@ -97,6 +97,7 @@
 <li><a href="#Nuvola.checkVersion">checkVersion</a></li>
 <li><a href="#Nuvola.clickOnElement">clickOnElement</a></li>
 <li><a href="#Nuvola.encodeVersion">encodeVersion</a></li>
+<li><a href="#Nuvola.exportImageAsBase64">exportImageAsBase64</a></li>
 <li><a href="#Nuvola.format">format</a></li>
 <li><a href="#Nuvola.log">log</a></li>
 <li><a href="#Nuvola.logException">logException</a></li>
@@ -104,6 +105,10 @@
 <li><a href="#Nuvola.makeText">makeText</a></li>
 <li><a href="#Nuvola.objectDiff">objectDiff</a></li>
 <li><a href="#Nuvola.parseTimeUsec">parseTimeUsec</a></li>
+<li><a href="#Nuvola.queryAttribute">queryAttribute</a></li>
+<li><a href="#Nuvola.queryText">queryText</a></li>
+<li><a href="#Nuvola.setInputValueWithEvent">setInputValueWithEvent</a></li>
+<li><a href="#Nuvola.showInfoBar">showInfoBar</a></li>
 <li><a href="#Nuvola.triggerMouseEvent">triggerMouseEvent</a></li>
 <li><a href="#Nuvola.warn">warn</a></li>
 </ul><h4>Prototypes</h4>
@@ -248,7 +253,7 @@
 <li><a href="#Nuvola.MediaKey">MediaKey</a></li>
 <li><a href="#Nuvola.PlaybackState">PlaybackState</a></li>
 <li><a href="#Nuvola.PlayerAction">PlayerAction</a></li>
-</ul>
+</ul><h3>Changelog</h3><ul><li><a href="#x-changelog-3-1">3.1</a></li><li><a href="#x-changelog-4-5">4.5</a></li><li><a href="#x-changelog-4-8">4.8</a></li><li><a href="#x-changelog-4-10">4.10</a></li><li><a href="#x-changelog-4-11">4.11</a></li></ul>
   <h3>Miscellaneous</h3>
   <p><strong>Download documentation</strong></p>
 
@@ -270,7 +275,7 @@
 <div class="col-sm-12 col-md-9 col-lg-8">
 
 <h2 id="intro">Introduction</h2>
-<p>This is a reference of public JavaScript API of NuvolaKit, the core part of Nuvola Player 3. Undocumented parts of
+<p>This is a reference of public JavaScript API of NuvolaKit, the core part of Nuvola Apps Runtime. Undocumented parts of
 the API are considered unstable, internal or experimental, so you should not use them.</p>
 
 <h3>Prototypal inheritance</h3>
@@ -300,7 +305,7 @@ to create new objects from prototypes and provides two convenience wrappers:
   <li>override default signal handlers in <strong><a href="#Nuvola.WebApp">Nuvola.WebApp</a></strong></li>
   <li>connect to <strong><a href="#Nuvola.core">Nuvola.core</a></strong> signals for URI manipulation and custom preferences</li>
   <li>use <strong><a href="#Nuvola.actions">Nuvola.actions</a></strong> to define custom actions (thumbs up, like, star rating, etc.)</li>
-  
+
 </ul>
 
 <h3>Low-level API</h3>
@@ -351,29 +356,27 @@ The app runner process has bare global object.</p></li>
 <ul>
 <li><p>new prototype object extending <a href="#Nuvola.WebApp">WebApp</a></p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp();</code></pre></li>
 
-<li><small> function</small> <b id="Nuvola.$object">Nuvola.$object</b>(proto, init_args)<br />
+<li><small> function</small> <b id="Nuvola.$object">Nuvola.$object</b>(proto, initArgs)<br />
 <p>Creates new initialized object from prototype.</p>
 <p>Creates new object that will have <code>proto</code> as its prototype and will be initialized by calling
 <code>$init</code> method with provided arguments <code>args</code>. This is similar to creating an instance object
 from a class in class-based inheritance. Instance object names are in <code>lowerCamelCase</code>.</p><p><b>Parameters</b></p>
 <ul>
 <li>Object <b>proto</b> - object <a href="#Nuvola.$prototype">prototype</a> or null to use <code>Object</code></li>
-<li>variant <b>init_args...</b> - arguments to pass to the <code>$init</code> method</li>
+<li>variant <b>initArgs...</b> - arguments to pass to the <code>$init</code> method</li>
 </ul>
 <p><b>Returns</b></p>
 <ul>
 <li><p>new initialized object</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">house</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Building</span><span class="p">,</span> <span class="s2">&quot;King Street 1024, London&quot;</span><span class="p">);</span>
-<span class="nx">house</span><span class="p">.</span><span class="nx">printAddress</span><span class="p">();</span>
+<pre class="codehilite"><code class="language-js">var house = Nuvola.$object(Building, &quot;King Street 1024, London&quot;);
+house.printAddress();
 
-<span class="kd">var</span> <span class="nx">candyShop</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Shop</span><span class="p">,</span> <span class="s2">&quot;King Street 1024, London&quot;</span><span class="p">,</span> <span class="s2">&quot;candies&quot;</span><span class="p">);</span>
-<span class="nx">candyShop</span><span class="p">.</span><span class="nx">printAddress</span><span class="p">();</span>
-<span class="nx">candyShop</span><span class="p">.</span><span class="nx">printGoods</span><span class="p">();</span>
-</pre></div></li>
+var candyShop = Nuvola.$object(Shop, &quot;King Street 1024, London&quot;, &quot;candies&quot;);
+candyShop.printAddress();
+candyShop.printGoods();</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.$prototype">Nuvola.$prototype</b>(proto, mixins)<br />
 <p>Creates new object from prototype and mixins.</p>
@@ -388,31 +391,30 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <ul>
 <li><p>new prototype object</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">Building</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$prototype</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">var Building = Nuvola.$prototype(null);
 
-<span class="nx">Building</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">address</span> <span class="o">=</span> <span class="nx">address</span><span class="p">;</span>
-<span class="p">}</span>
+Building.$init = function(address)
+{
+    this.address = address;
+}
 
-<span class="nx">Building</span><span class="p">.</span><span class="nx">printAddress</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">address</span><span class="p">);</span>
-<span class="p">}</span>
+Building.printAddress = function()
+{
+    console.log(this.address);
+}
 
-<span class="kd">var</span> <span class="nx">Shop</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$prototype</span><span class="p">(</span><span class="nx">Building</span><span class="p">);</span>
+var Shop = Nuvola.$prototype(Building);
 
-<span class="nx">Shop</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">goods</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Building</span><span class="p">.</span><span class="nx">$init</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">address</span><span class="p">)</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">goods</span> <span class="o">=</span> <span class="nx">goods</span><span class="p">;</span>
-<span class="p">}</span>
+Shop.$init = function(address, goods)
+{
+    Building.$init.call(this, address)
+    this.goods = goods;
+}
 
-<span class="nx">Shop</span><span class="p">.</span><span class="nx">printGoods</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">goods</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+Shop.printGoods = function()
+{
+    console.log(this.goods);
+}</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.checkVersion">Nuvola.checkVersion</b>(major, minor, micro)<br />
 <p>Check sufficient Nuvola's version</p><p><b>Available since</b> API 4.5</p>
@@ -426,11 +428,10 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <ul>
 <li><p>true if Nuvola's version is greater than or equal to the required version</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span> <span class="o">&amp;&amp;</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="p">{</span>
-    <span class="c1">// Safe to use API &gt;= 4.5</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">if (Nuvola.checkVersion &amp;&amp; Nuvola.checkVersion(4, 5))
+{
+    // Safe to use API &gt;= 4.5
+}</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.clickOnElement">Nuvola.clickOnElement</b>(elm, x, y)<br />
 <p>Simulates click on element</p><p><b>Available since</b> API 4.5: x, y coordinates were added.</p>
@@ -456,6 +457,15 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 </ul>
 </li>
 
+<li><small> function</small> <b id="Nuvola.exportImageAsBase64">Nuvola.exportImageAsBase64</b>(url, callback)<br />
+<p>Download image and export it as base64 data-URI</p><p><b>Available since</b> API 4.11</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>String <b>url</b> - The image URL</li>
+<li>Function <b>callback</b> - The function to be called when the image is exported. The first argument is null if any error occurred, base64 data-URI otgerwise.</li>
+</ul>
+</li>
+
 <li><small> function</small> <b id="Nuvola.format">Nuvola.format</b>()<br />
 <p>Replaces placeholders in a template string with provided data.</p>
 <p>Placeholders are in form of <code>{n}</code> where <code>n</code> is index of data argument starting at 1.
@@ -468,13 +478,12 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 <ul>
 <li><p>String</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">alert</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
-<span class="c1">// &quot;My name is Bond. James Bond!&quot;</span>
+<pre class="codehilite"><code class="language-js">alert(Nuvola.format(&quot;My name is {2}. {1} {2}!&quot;, &quot;James&quot;, &quot;Bond&quot;));
+// &quot;My name is Bond. James Bond!&quot;
 
-<span class="c1">// You can create an alias</span>
-<span class="kd">var</span> <span class="nx">$fmt</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">;</span>
-<span class="nx">alert</span><span class="p">(</span><span class="nx">$fmt</span><span class="p">(</span><span class="s2">&quot;My name is {2}. {1} {2}!&quot;</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">));</span>
-</pre></div></li>
+// You can create an alias
+var $fmt = Nuvola.format;
+alert($fmt(&quot;My name is {2}. {1} {2}!&quot;, &quot;James&quot;, &quot;Bond&quot;));</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.log">Nuvola.log</b>(template)<br />
 <p>Log message to terminal</p>
@@ -540,6 +549,57 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 </ul>
 </li>
 
+<li><small> function</small> <b id="Nuvola.queryAttribute">Nuvola.queryAttribute</b>(selector, attribute, func)<br />
+<p>Query element and return its attribute or null.</p><p><b>Available since</b> API 4.11</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>String <b>selector</b> - CSS selector for element</li>
+<li>String <b>attribute</b> - Attribute name.</li>
+<li>Function <b>func</b> - Optional function to modify resulting value.</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>The attribute of the element, possibly modified with func, null if element is not found.</p></li>
+</ul>
+</li>
+
+<li><small> function</small> <b id="Nuvola.queryText">Nuvola.queryText</b>(selector, func)<br />
+<p>Query element and return text content or null.</p><p><b>Available since</b> API 4.11</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>String <b>selector</b> - CSS selector for element</li>
+<li>Function <b>func</b> - Optional function to modify resulting text.</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>Text content of the element, possibly modified with func, null if element is not found.</p></li>
+</ul>
+</li>
+
+<li><small> function</small> <b id="Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</b>(elm, value)<br />
+<p>Simulates input event</p><p><b>Available since</b> API 4.11</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>HTMLInputElement <b>elm</b> - Input element object</li>
+<li>Var <b>value</b> - The value to set</li>
+</ul>
+</li>
+
+<li><small>async  function</small> <b id="Nuvola.showInfoBar">Nuvola.showInfoBar</b>(id, type, text)<br />
+<p>Show infobar to user.</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
+<p><b>Available since</b> Nuvola 4.10</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>String <b>id</b> - The id of the infobar. The same infobars should have the same id to prevent duplicity.</li>
+<li>InfoBarType <b>type</b> - The type of the message.</li>
+<li>String <b>text</b> - The text of the info bar.</li>
+</ul>
+<p><b>Returns</b></p>
+<ul>
+<li><p>true if a new info bar has been show, false if there already is an info bar with the same id.</p></li>
+</ul>
+</li>
+
 <li><small> function</small> <b id="Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</b>(elm, name, x, y)<br />
 <p>Triggers mouse event on element</p><p><b>Available since</b> API 4.5: x, y coordinates were added.</p>
 <p><b>Parameters</b></p>
@@ -562,7 +622,7 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 
 </ul><h3>Prototypes</h3>
 <ul>
-<li> <small>prototype</small> <b id="Nuvola.Actions">Nuvola.Actions</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
+<li> <small>prototype</small> <b id="Nuvola.Actions">Nuvola.Actions</b> extends Object, contains <a href="#Nuvola.SignalsMixin">Nuvola.SignalsMixin</a><br />
 <p>Manages actions</p>
 <p>Actions can be shown in various user interface components such as menu, tray icon menu, Unity HUD, Unity Laucher
 Quicklist, or invoked by keyboard shortcut, remote control, etc.</p>
@@ -581,7 +641,7 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 </ul>
 </li>
 
-<li><small> method</small> <b id="Nuvola.Actions.addAction">addAction</b>(group, scope, name, label, mnemo_label, icon, keybinding, state)<br />
+<li><small> method</small> <b id="Nuvola.Actions.addAction">addAction</b>(group, scope, name, label, mnemoLabel, icon, keybinding, state)<br />
 <p>Adds new simple or toggle action.</p>
 <p>when action is activated, signal ActionActivated is emitted.</p><p><b>Parameters</b></p>
 <ul>
@@ -594,12 +654,11 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>String|null <b>keybinding</b> - in-app keyboard shortcut, e.g. <code>&lt;ctrl&gt;P</code></li>
 <li>Boolean|null <b>state</b> - <code>null</code> for simple actions, <code>true</code>/<code>false</code> for toggle actions (on/off)</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="c1">// Add new simple action ``play`` with icon ``media-playback-start``</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;play&quot;</span><span class="p">,</span> <span class="s2">&quot;Play&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;media-playback-start&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">// Add new simple action ``play`` with icon ``media-playback-start``
+Nuvola.actions.addAction(&quot;playback&quot;, &quot;win&quot;, &quot;play&quot;, &quot;Play&quot;, null, &quot;media-playback-start&quot;, null);
 
-<span class="c1">// Add new toggle action ``thumbs-up`` with initial state ``true`` (on)</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;thumbs-up&quot;</span><span class="p">,</span> <span class="s2">&quot;Thumbs up&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
-</pre></div></li>
+// Add new toggle action ``thumbs-up`` with initial state ``true`` (on)
+Nuvola.actions.addAction(&quot;playback&quot;, &quot;win&quot;, &quot;thumbs-up&quot;, &quot;Thumbs up&quot;, null, null, null, true);</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.addRadioAction">addRadioAction</b>(group, scope, name, stateId, options)<br />
 <p>Adds new radio action (action with multiple states/option like old radios)</p>
@@ -611,20 +670,19 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>variant <b>stateId</b> - initial state of the action. must be one of states specified in <code>options</code> array</li>
 <li>Array <b>options</b> - array of options definition in form <code>[stateId, label, mnemo_label, icon, keybinding]</code>. <code>stateId</code> is unique identifier (Number or String), other parameters are described in <code>addAction</code> method.</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="c1">// define rating options - 5 states with state id 0-5 representing 0-5 stars</span>
-<span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="c1">// stateId, label, mnemo_label, icon, keybinding</span>
-    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Rating: 0 stars&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Rating: 1 star&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Rating: 2 stars&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Rating: 3 stars&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Rating: 4 stars&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-    <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;Rating: 5 stars&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">]</span>
-<span class="p">];</span>
+<pre class="codehilite"><code class="language-js">// define rating options - 5 states with state id 0-5 representing 0-5 stars
+var ratingOptions = [
+    // stateId, label, mnemo_label, icon, keybinding
+    [0, &quot;Rating: 0 stars&quot;, null, null, null, null],
+    [1, &quot;Rating: 1 star&quot;, null, null, null, null],
+    [2, &quot;Rating: 2 stars&quot;, null, null, null, null],
+    [3, &quot;Rating: 3 stars&quot;, null, null, null, null],
+    [4, &quot;Rating: 4 stars&quot;, null, null, null, null],
+    [5, &quot;Rating: 5 stars&quot;, null, null, null, null]
+];
 
-<span class="c1">// Add new radio action named ``rating`` with initial state ``0`` (0 stars)</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s2">&quot;playback&quot;</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">,</span> <span class="s2">&quot;rating&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">);</span>
-</pre></div></li>
+// Add new radio action named ``rating`` with initial state ``0`` (0 stars)
+Nuvola.actions.addRadioAction(&quot;playback&quot;, &quot;win&quot;, &quot;rating&quot;, 0, ratingOptions);</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.bindButton">bindButton</b>(button, name, parameter)<br />
 <p>Bind HTML button to an action</p>
@@ -634,11 +692,10 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>String <b>name</b> - action name</li>
 <li>optional Variant <b>parameter</b> - parameter to the action</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">navigateBack</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">makeElement</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span>
-<span class="nx">elm</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">);</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">bindButton</span><span class="p">(</span><span class="nx">navigateBack</span><span class="p">,</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">BrowserAction</span><span class="p">.</span><span class="nx">GO_BACK</span><span class="p">);</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var navigateBack = Nuvola.makeElement(&quot;button&quot;, null, &quot;&lt;&quot;);
+var elm = document.getElementById(&quot;bar&quot;);
+elm.appendChild(navigateBack);
+Nuvola.actions.bindButton(navigateBack, Nuvola.BrowserAction.GO_BACK);</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.getState">getState</b>(name)<br />
 <p>Get current state of toggle or radio actions.</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
@@ -650,12 +707,11 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <ul>
 <li><p>current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Thumbs up is toggled &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">thumbsUp</span> <span class="o">?</span> <span class="s2">&quot;on&quot;</span> <span class="o">:</span> <span class="s2">&quot;off&quot;</span><span class="p">));</span>
+<pre class="codehilite"><code class="language-js">var thumbsUp = Nuvola.actions.getState(&quot;thumbs-up&quot;);
+console.log(&quot;Thumbs up is toggled &quot; + (thumbsUp ? &quot;on&quot; : &quot;off&quot;));
 
-<span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getState</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Number of stars: &quot;</span> <span class="o">+</span> <span class="nx">stars</span><span class="p">);</span>
-</pre></div></li>
+var stars = Nuvola.actions.getState(&quot;rating&quot;);
+console.log(&quot;Number of stars: &quot; + stars);</code></pre></li>
 
 <li><small>async  method</small> <b id="Nuvola.Actions.getStateAsync">getStateAsync</b>(name)<br />
 <p>Get current state of toggle or radio actions.</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
@@ -668,14 +724,13 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <ul>
 <li><p>current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getStateAsync</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Thumbs up is toggled &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">state</span> <span class="o">?</span> <span class="s2">&quot;on&quot;</span> <span class="o">:</span> <span class="s2">&quot;off&quot;</span><span class="p">));</span>
-<span class="p">});</span>
+<pre class="codehilite"><code class="language-js">Nuvola.actions.getStateAsync(&quot;thumbs-up&quot;).then(function(state) {
+    console.log(&quot;Thumbs up is toggled &quot; + (state ? &quot;on&quot; : &quot;off&quot;));
+});
 
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">getStateAsync</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">stars</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Number of stars: &quot;</span> <span class="o">+</span> <span class="nx">stars</span><span class="p">);</span>
-<span class="p">});</span>
-</pre></div></li>
+Nuvola.actions.getStateAsync(&quot;rating&quot;).then(function(stars) {
+    console.log(&quot;Number of stars: &quot; + stars);
+});</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.isEnabled">isEnabled</b>(name)<br />
 <p>Checks whether action is enabled</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
@@ -720,12 +775,11 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li>String <b>name</b> - action name</li>
 <li>variant <b>state</b> - current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="c1">// toggle thumbs-up off</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s2">&quot;thumbs-up&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">// toggle thumbs-up off
+Nuvola.actions.setState(&quot;thumbs-up&quot;, false);
 
-<span class="c1">// Set 5 stars</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s2">&quot;rating&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
-</pre></div></li>
+// Set 5 stars
+Nuvola.actions.setState(&quot;rating&quot;, 5);</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.updateEnabledFlag">updateEnabledFlag</b>(name, enabled)<br />
 <p>Update action enabled flag</p>
@@ -768,16 +822,15 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li>String <b>name</b> - action name</li>
 <li>Variant <b>param</b> - action parameter, usually null</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;ActionActivated&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+<pre class="codehilite"><code class="language-js">MyObject.$init = function()
+{
+    Nuvola.actions.connect(&quot;ActionActivated&quot;, this);
+}
 
-<span class="nx">MyObject</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Action activated: &quot;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+MyObject._onActionActivated = function(emitter, name, param)
+{
+    console.log(&quot;Action activated: &quot; + name);
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Actions::ActionEnabledChanged">ActionEnabledChanged</b>(emitter, name, enabled)<br />
 <p>Emitted when an action has been enabled or disabled.</p><p><b>Parameters</b></p>
@@ -786,16 +839,15 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li>String <b>name</b> - action name</li>
 <li>Boolean <b>enabled</b> - true if the action is enabled</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">MyObject</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;ActionEnabledChanged&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-<span class="p">}</span>
+<pre class="codehilite"><code class="language-js">MyObject.$init = function()
+{
+    Nuvola.actions.connect(&quot;ActionEnabledChanged&quot;, this);
+}
 
-<span class="nx">MyObject</span><span class="p">.</span><span class="nx">_ActionEnabledChanged</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">enabled</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Action &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">enabled</span> <span class="o">?</span> <span class="s2">&quot;enabled&quot;</span> <span class="o">:</span> <span class="s2">&quot;disabled&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+MyObject._ActionEnabledChanged = function(emitter, name, enabled)
+{
+    console.log(&quot;Action &quot; + name + &quot; &quot; + (enabled ? &quot;enabled&quot; : &quot;disabled&quot;) + &quot;.&quot;);
+}</code></pre></li>
 
 </ul></li>
 <li> <small>prototype</small> <b id="Nuvola.Browser">Nuvola.Browser</b> extends Object<br />
@@ -826,7 +878,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </ul></li>
 
 </ul></li>
-<li> <small>prototype</small> <b id="Nuvola.ConfigStorage">Nuvola.ConfigStorage</b> extends <a href="#Nuvola.KeyValueStorage">KeyValueStorage</a>, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
+<li> <small>prototype</small> <b id="Nuvola.ConfigStorage">Nuvola.ConfigStorage</b> extends <a href="#Nuvola.KeyValueStorage">KeyValueStorage</a>, contains <a href="#Nuvola.SignalsMixin">Nuvola.SignalsMixin</a><br />
 <p>Prototype object to access persistent configuration</p>
 <p>Note: Use <a href="#Nuvola.SessionStorage">SessionStorage</a> for temporary data.</p><ul>
 
@@ -842,7 +894,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 </li>
 
 </ul></li>
-<li> <small>prototype</small> <b id="Nuvola.Core">Nuvola.Core</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
+<li> <small>prototype</small> <b id="Nuvola.Core">Nuvola.Core</b> extends Object, contains <a href="#Nuvola.SignalsMixin">Nuvola.SignalsMixin</a><br />
 <p>Prototype object to manage Nuvola Player Core</p><ul>
 
 <li><small> method</small> <b id="Nuvola.Core.$init">$init</b>()<br />
@@ -960,11 +1012,10 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String <b>request.url</b> - property to assign home page url to</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onHomePageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://tiliado.eu&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onHomePageRequest = function(emitter, request)
+{
+    request.url = &quot;http://tiliado.eu&quot;;
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::InitAppRunner">InitAppRunner</b>(emitter)<br />
 <p>Emitted at start-up when initialization of the app runner process is needed.
@@ -1005,11 +1056,10 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String|null <b>result.url</b> - property to assign the last visited URL to</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onLastPageRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;last_uri&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="kc">null</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onLastPageRequest = function(emitter, result)
+{
+    request.url = Nuvola.config.get(&quot;last_uri&quot;) || null;
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::NavigationRequest">NavigationRequest</b>(emitter, request)<br />
 <p>Emitted on request for navigation to a new web page.</p><p><b>Parameters</b></p>
@@ -1019,11 +1069,10 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Boolean <b>request.newWindow</b> - whether to open request in a new window, you can overwrite this field</li>
 <li>Boolean <b>request.approved</b> - whether the navigation is approved, set to <code>false</code> when the <code>request.url</code> should be opened in user's default web browser</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onNavigationRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">request</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="nx">isAddressAllowed</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onNavigationRequest = function(object, request)
+{
+    request.approved = isAddressAllowed(request.url);
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::PageSettings">PageSettings</b>(emitter, request)<br />
 <p>Emitted on request for web page settings.</p><p><b>Parameters</b></p>
@@ -1034,15 +1083,14 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Boolean <b>request.javascript</b> - whether javascript should be enabled</li>
 <li>String <b>request.userAgent</b> - whether to override user agent string</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onPageSettings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">request</span><span class="p">.</span><span class="nx">userAgent</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;https://accounts.google.com/&quot;</span><span class="p">)</span>
-        <span class="o">||</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;https://accounts.youtube.com/&quot;</span><span class="p">)</span>
-        <span class="o">?</span> <span class="s2">&quot;WEBKIT&quot;</span> <span class="o">:</span> <span class="kc">null</span>
-    <span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onPageSettings = function(object, request)
+{
+    request.userAgent = (
+        request.url.startsWith(&quot;https://accounts.google.com/&quot;)
+        || request.url.startsWith(&quot;https://accounts.youtube.com/&quot;)
+        ? &quot;WEBKIT&quot; : null
+    );
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::PreferencesForm">PreferencesForm</b>(emitter, values, entries)<br />
 <p>Emitted when preferences dialog is being built.</p><p><b>Parameters</b></p>
@@ -1060,12 +1108,11 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>bool <b>result.approved</b> - Whether application can quit. If false, application will continue running in background.</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onQuitRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span>
-<span class="p">{</span>
-     <span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;myapp.run_in_background&quot;</span><span class="p">))</span>
-         <span class="nx">result</span><span class="p">.</span><span class="nx">approved</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onQuitRequest = function(emitter, result)
+{
+     if (Nuvola.config.get(&quot;myapp.run_in_background&quot;))
+         result.approved = false;
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::ResourceRequest">ResourceRequest</b>(emitter, request)<br />
 <p>Emitted on request for loading a web resource.</p><p><b>Parameters</b></p>
@@ -1074,11 +1121,10 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>String <b>request.url</b> - URL of the resource (can be overwritten)</li>
 <li>Boolean <b>request.approved</b> - whether the resource loading is approved</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onResourceRequest</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">request</span><span class="p">.</span><span class="nx">url</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;webcomponents.js&quot;</span><span class="p">,</span> <span class="s2">&quot;webcomponents2.js&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onResourceRequest = function(emitter, request)
+{
+    request.url = request.url.replace(&quot;webcomponents.js&quot;, &quot;webcomponents2.js&quot;);
+}</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::UriChanged">UriChanged</b>(emitter, uri)<br />
 <p>Emitted after <a href="#Nuvola.Core::NavigationRequest">approved navigation</a> to a new page URL.</p><p><b>Parameters</b></p>
@@ -1086,11 +1132,10 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>string <b>uri</b> - URI of the new page</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_onUriChanged</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">uri</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">&quot;last_uri&quot;</span><span class="p">,</span> <span class="nx">uri</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var _onUriChanged = function(emitter, uri)
+{
+    Nuvola.config.set(&quot;last_uri&quot;, uri);
+}</code></pre></li>
 
 </ul></li>
 <li> <small>prototype</small> <b id="Nuvola.KeyValueStorage">Nuvola.KeyValueStorage</b> extends Object<br />
@@ -1186,15 +1231,14 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;app.address&quot;</span><span class="p">;</span>
-    <span class="c1">// Nuvola.config is a KeyValueStorage</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefault</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+    var ADDRESS = &quot;app.address&quot;;
+    // Nuvola.config is a KeyValueStorage
+    Nuvola.config.setDefault(ADDRESS, &quot;default&quot;);
+}</code></pre></li>
 
 <li><small>async  method</small> <b id="Nuvola.KeyValueStorage.setDefaultAsync">setDefaultAsync</b>(key, value)<br />
 <p>Set default value for given key</p>
@@ -1205,15 +1249,14 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">WebApp._onInitAppRunner = function(emitter)
+{
+    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
 
-    <span class="kd">var</span> <span class="nx">ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;app.address&quot;</span><span class="p">;</span>
-    <span class="c1">// Nuvola.config is a KeyValueStorage</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">setDefaultAsync</span><span class="p">(</span><span class="nx">ADDRESS</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">));</span>
-<span class="p">}</span>
-</pre></div></li>
+    var ADDRESS = &quot;app.address&quot;;
+    // Nuvola.config is a KeyValueStorage
+    Nuvola.config.setDefaultAsync(ADDRESS, &quot;default&quot;).catch(console.log.bind(console));
+}</code></pre></li>
 
 </ul></li>
 <li> <small>prototype</small> <b id="Nuvola.Launcher">Nuvola.Launcher</b> extends Object<br />
@@ -1257,7 +1300,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </li>
 
 </ul></li>
-<li> <small>prototype</small> <b id="Nuvola.MediaKeys">Nuvola.MediaKeys</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
+<li> <small>prototype</small> <b id="Nuvola.MediaKeys">Nuvola.MediaKeys</b> extends Object, contains <a href="#Nuvola.SignalsMixin">Nuvola.SignalsMixin</a><br />
 <p>Prototype object integrating media keys handling</p><ul>
 
 <li><small> method</small> <b id="Nuvola.MediaKeys.$init">$init</b>()<br />
@@ -1272,7 +1315,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 </li>
 
 </ul></li>
-<li> <small>prototype</small> <b id="Nuvola.MediaPlayer">Nuvola.MediaPlayer</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
+<li> <small>prototype</small> <b id="Nuvola.MediaPlayer">Nuvola.MediaPlayer</b> extends Object, contains <a href="#Nuvola.SignalsMixin">Nuvola.SignalsMixin</a><br />
 <p>Media player controller.</p><ul>
 
 <li><small> method</small> <b id="Nuvola.MediaPlayer.$init">$init</b>()<br />
@@ -1501,7 +1544,7 @@ If the argument is same as in the previous call, this method does nothing.</p><p
 <p>Initializes new SessionStorage object.</p></li>
 
 </ul></li>
-<li> <small>prototype</small> <b id="Nuvola.WebApp">Nuvola.WebApp</b> extends Object, contains <a href="#Nuvola.SignalsMixin">SignalsMixin</a><br />
+<li> <small>prototype</small> <b id="Nuvola.WebApp">Nuvola.WebApp</b> extends Object, contains <a href="#Nuvola.SignalsMixin">Nuvola.SignalsMixin</a><br />
 <p>Prototype object for web app integration.</p><ul>
 
 <li><small> method</small> <b id="Nuvola.WebApp.$init">$init</b>()<br />
@@ -1515,22 +1558,21 @@ If the argument is same as in the previous call, this method does nothing.</p><p
 
 <li><small> method</small> <b id="Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitWebWorker">Core::InitWebWorker</a>. Override this method to integrate the web page.</p>
-<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">);</span>
+<pre class="codehilite"><code class="language-js">WebApp._onInitWebWorker = function(emitter)
+{
+    Nuvola.WebApp._onInitWebWorker.call(this, emitter);
 
-    <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="s2">&quot;interactive&quot;</span> <span class="o">||</span> <span class="nx">state</span> <span class="o">===</span> <span class="s2">&quot;complete&quot;</span><span class="p">)</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">();</span>
-    <span class="k">else</span>
-        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-<span class="p">}</span>
+    var state = document.readyState;
+    if (state === &quot;interactive&quot; || state === &quot;complete&quot;)
+        this._onPageReady();
+    else
+        document.addEventListener(&quot;DOMContentLoaded&quot;, this._onPageReady.bind(this));
+}
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>
-<span class="p">}</span>
-</pre></div></li>
+WebApp._onPageReady = function(event)
+{
+    ...
+}</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.WebApp._onInitWebWorkerHelper">_onInitWebWorkerHelper</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitWebWorkerHelper">Core::InitWebWorkerHelper</a>. Override this method to connect to
@@ -1547,12 +1589,11 @@ If the argument is same as in the previous call, this method does nothing.</p><p
 
 <li><small> method</small> <b id="Nuvola.WebApp.start">start</b>()<br />
 <p>Convenience function to create new WebApp object linked to Nuvola API.</p>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">();</span>
+<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp();
 
-<span class="p">...</span>
+...
 
-<span class="nx">WebApp</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
-</pre></div></li>
+WebApp.start();</code></pre></li>
 
 </ul></li>
 </ul><h3>Namespaces</h3>
@@ -1580,21 +1621,20 @@ translatable strings.</p>
 <ul>
 <li><p>String        translated string</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">gettext</span><span class="p">;</span>
-<span class="c1">/// You can use tree slashes to add comment for translators.</span>
-<span class="c1">/// It has to be on a line preceding the translated string though.</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">));</span> <span class="c1">// Right</span>
+<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext;
+/// You can use tree slashes to add comment for translators.
+/// It has to be on a line preceding the translated string though.
+console.log(_(&quot;Hello world!&quot;)); // Right
 
-<span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="s2">&quot;Hello world!&quot;</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="nx">greeting</span><span class="p">));</span> <span class="c1">// Wrong!</span>
+var greeting = &quot;Hello world!&quot;;
+console.log(_(greeting)); // Wrong!
 
-<span class="kd">var</span> <span class="nx">greeting</span> <span class="o">=</span> <span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">);</span> <span class="c1">// Right</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">greeting</span><span class="p">);</span>
+var greeting = _(&quot;Hello world!&quot;); // Right
+console.log(greeting);
 
-<span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span><span class="p">;</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;!&quot;</span><span class="p">));</span> <span class="c1">// Wrong!</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">_</span><span class="p">(</span><span class="s2">&quot;Hello {1}!&quot;</span><span class="p">),</span> <span class="nx">name</span><span class="p">));</span> <span class="c1">// Right</span>
-</pre></div></li>
+var name = &quot;John&quot;;
+console.log(_(&quot;Hello &quot; + name + &quot;!&quot;)); // Wrong!
+console.log(Nuvola.format(_(&quot;Hello {1}!&quot;), name)); // Right</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Translate.ngettext">ngettext</b>(text1, text2, n)<br />
 <p>Translate string with support of singluar and plural forms.</p>
@@ -1614,23 +1654,22 @@ translatable strings.</p>
 <ul>
 <li><p>String           translated string</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
-    <span class="s2">&quot;There is {1} egg in the fridge.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;There are {1} eggs in the fridge.&quot;</span><span class="p">,</span>
-    <span class="nx">eggs</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">eggs</span><span class="p">));</span>
+<pre class="codehilite"><code class="language-js">var ngettext = Nuvola.Translate.ngettext;
+var eggs = 5;
+var text = ngettext(
+    &quot;There is {1} egg in the fridge.&quot;,
+    &quot;There are {1} eggs in the fridge.&quot;,
+    eggs);
+console.log(Nuvola.format(text, eggs));
 
-<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
-    <span class="c1">/// You can use tree slashes to add comment for translators.</span>
-    <span class="c1">/// It has to be on a line preceding the singular string though.</span>
-    <span class="c1">/// {1} will be replaced by number of eggs in both forms,</span>
-    <span class="c1">/// but can be omitted as shown in singular form.</span>
-    <span class="s2">&quot;There is one egg in the fridge.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;There are {1} eggs in the fridge.&quot;</span><span class="p">,</span>
-    <span class="nx">eggs</span><span class="p">);</span>
-</pre></div></li>
+var text = ngettext(
+    /// You can use tree slashes to add comment for translators.
+    /// It has to be on a line preceding the singular string though.
+    /// {1} will be replaced by number of eggs in both forms,
+    /// but can be omitted as shown in singular form.
+    &quot;There is one egg in the fridge.&quot;,
+    &quot;There are {1} eggs in the fridge.&quot;,
+    eggs);</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Translate.pgettext">pgettext</b>(context, text)<br />
 <p>Translate string with support of a disambiguating message context.</p>
@@ -1651,12 +1690,11 @@ translatable strings.</p>
 <ul>
 <li><p>String           translated string</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span><span class="p">;</span>
-<span class="c1">/// You can use tree slashes to add comment for translators.</span>
-<span class="c1">/// It has to be on a line preceding the translated string though.</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">&quot;Navigation&quot;</span><span class="p">,</span> <span class="s2">&quot;Back&quot;</span><span class="p">));</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">C_</span><span class="p">(</span><span class="s2">&quot;Body part&quot;</span><span class="p">,</span> <span class="s2">&quot;Back&quot;</span><span class="p">));</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">var C_ = Nuvola.Translate.pgettext;
+/// You can use tree slashes to add comment for translators.
+/// It has to be on a line preceding the translated string though.
+console.log(C_(&quot;Navigation&quot;, &quot;Back&quot;));
+console.log(C_(&quot;Body part&quot;, &quot;Back&quot;));</code></pre></li>
 
 </ul></li>
 </ul><h3>Mixins</h3>
@@ -1669,16 +1707,15 @@ translatable strings.</p>
 <ul>
 <li>String <b>name</b> - signal name, should be in CamelCase</li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">BookStore</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="cm">/**</span>
-<span class="cm">     * Emitted when a book is added.</span>
-<span class="cm">     *</span>
-<span class="cm">     * @param Book book    book that has been added</span>
-<span class="cm">     */</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">addSignal</span><span class="p">(</span><span class="s2">&quot;BookAdded&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">BookStore.$init = function()
+{
+    /**
+     * Emitted when a book is added.
+     *
+     * @param Book book    book that has been added
+     */
+    this.addSignal(&quot;BookAdded&quot;);
+}</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.SignalsMixin.connect">connect</b>(name, object, handlerName)<br />
 <p>Connect handler to a signal</p>
@@ -1693,17 +1730,16 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <ul>
 <li><p>Error if signal doesn't exist</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">Logger</span><span class="p">.</span><span class="nx">_onBookAdded</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">book</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;New book: &quot;</span> <span class="o">+</span> <span class="nx">book</span><span class="p">.</span><span class="nx">title</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">);</span>
-<span class="p">}</span>
+<pre class="codehilite"><code class="language-js">Logger._onBookAdded = function(emitter, book)
+{
+    console.log(&quot;New book: &quot; + book.title + &quot;.&quot;);
+}
 
-<span class="nx">Logger</span><span class="p">.</span><span class="nx">$init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="nx">bookStore</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s2">&quot;BookAdded&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
-    <span class="c1">// equivalent: bookStore.connect(&quot;BookAdded&quot;, this, &quot;_onBookAdded&quot;);</span>
-<span class="p">}</span>
-</pre></div></li>
+Logger.$init = function()
+{
+    bookStore.connect(&quot;BookAdded&quot;, this);
+    // equivalent: bookStore.connect(&quot;BookAdded&quot;, this, &quot;_onBookAdded&quot;);
+}</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.SignalsMixin.disconnect">disconnect</b>(name, object, handlerName)<br />
 <p>Disconnect handler from a signal</p><p><b>Parameters</b></p>
@@ -1728,12 +1764,11 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <ul>
 <li><p>Error if signal doesn't exist</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="nx">BookStore</span><span class="p">.</span><span class="nx">addBook</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">book</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">books</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">book</span><span class="p">);</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s2">&quot;book-added&quot;</span><span class="p">,</span> <span class="nx">book</span><span class="p">)</span>
-<span class="p">}</span>
-</pre></div></li>
+<pre class="codehilite"><code class="language-js">BookStore.addBook = function(book)
+{
+    this.books.push(book);
+    this.emit(&quot;book-added&quot;, book)
+}</code></pre></li>
 
 </ul></li>
 </ul><h3>Enums</h3>
@@ -1775,7 +1810,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <li><b id="Nuvola.PlayerAction.STOP">STOP</b> - Stop playback</li>
 <li><b id="Nuvola.PlayerAction.TOGGLE_PLAY">TOGGLE_PLAY</b> - Toggle playback (play/pause)</li>
 </ul></li>
-</ul>
+</ul><h2>Changelog</h2><h3 id="x-changelog-3-1">Since 3.1</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanRate">Nuvola.MediaPlayer.setCanRate</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer::RatingSet">Nuvola.MediaPlayer::RatingSet</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-5">Since 4.5</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanChangeVolume">Nuvola.MediaPlayer.setCanChangeVolume</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setCanSeek">Nuvola.MediaPlayer.setCanSeek</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setTrackPosition">Nuvola.MediaPlayer.setTrackPosition</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.updateVolume">Nuvola.MediaPlayer.updateVolume</a> <i>(new)</i></li><li><a href="#Nuvola.checkVersion">Nuvola.checkVersion</a> <i>(new)</i></li><li><a href="#Nuvola.clickOnElement">Nuvola.clickOnElement</a> <i>(new)</i>: x, y coordinates were added.</li><li><a href="#Nuvola.encodeVersion">Nuvola.encodeVersion</a> <i>(new)</i></li><li><a href="#Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</a> <i>(new)</i>: x, y coordinates were added.</li></ul><h3 id="x-changelog-4-8">Since 4.8</h3><ul><li><a href="#Nuvola.Actions.getState">Nuvola.Actions.getState</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.getStateAsync">Nuvola.Actions.getStateAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Actions.isEnabled">Nuvola.Actions.isEnabled</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.isEnabledAsync">Nuvola.Actions.isEnabledAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.getComponentInfo">Nuvola.Core.getComponentInfo</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.getComponentInfoAsync">Nuvola.Core.getComponentInfoAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentActive">Nuvola.Core.isComponentActive</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentActiveAsync">Nuvola.Core.isComponentActiveAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentLoaded">Nuvola.Core.isComponentLoaded</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentLoadedAsync">Nuvola.Core.isComponentLoadedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.get">Nuvola.KeyValueStorage.get</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.getAsync">Nuvola.KeyValueStorage.getAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.hasKey">Nuvola.KeyValueStorage.hasKey</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.hasKeyAsync">Nuvola.KeyValueStorage.hasKeyAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.set">Nuvola.KeyValueStorage.set</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setAsync">Nuvola.KeyValueStorage.setAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.setDefault">Nuvola.KeyValueStorage.setDefault</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setDefaultAsync">Nuvola.KeyValueStorage.setDefaultAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Notifications.isPersistenceSupported">Nuvola.Notifications.isPersistenceSupported</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Notifications.isPersistenceSupportedAsync">Nuvola.Notifications.isPersistenceSupportedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.logException">Nuvola.logException</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-10">Since 4.10</h3><ul><li><a href="#Nuvola.showInfoBar">Nuvola.showInfoBar</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-11">Since 4.11</h3><ul><li><a href="#Nuvola.exportImageAsBase64">Nuvola.exportImageAsBase64</a> <i>(new)</i></li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i></li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i></li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i></li></ul>
 
 <div class="footer">
   <hr />
@@ -1808,7 +1843,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
     <a href="http://bootswatch.com/united/">United</a>.
   </p>
 </div>
-</div> 
+</div>
 
       </div>
     </div>
