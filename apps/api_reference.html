@@ -356,7 +356,7 @@ The app runner process has bare global object.</p></li>
 <ul>
 <li><p>new prototype object extending <a href="#Nuvola.WebApp">WebApp</a></p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp();</code></pre></li>
+<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp()</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.$object">Nuvola.$object</b>(proto, initArgs)<br />
 <p>Creates new initialized object from prototype.</p>
@@ -371,12 +371,12 @@ from a class in class-based inheritance. Instance object names are in <code>lowe
 <ul>
 <li><p>new initialized object</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var house = Nuvola.$object(Building, &quot;King Street 1024, London&quot;);
-house.printAddress();
+<pre class="codehilite"><code class="language-js">var house = Nuvola.$object(Building, 'King Street 1024, London')
+house.printAddress()
 
-var candyShop = Nuvola.$object(Shop, &quot;King Street 1024, London&quot;, &quot;candies&quot;);
-candyShop.printAddress();
-candyShop.printGoods();</code></pre></li>
+var candyShop = Nuvola.$object(Shop, 'King Street 1024, London', 'candies')
+candyShop.printAddress()
+candyShop.printGoods()</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.$prototype">Nuvola.$prototype</b>(proto, mixins)<br />
 <p>Creates new object from prototype and mixins.</p>
@@ -391,29 +391,25 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <ul>
 <li><p>new prototype object</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var Building = Nuvola.$prototype(null);
+<pre class="codehilite"><code class="language-js">var Building = Nuvola.$prototype(null)
 
-Building.$init = function(address)
-{
-    this.address = address;
+Building.$init = function (address) {
+  this.address = address
 }
 
-Building.printAddress = function()
-{
-    console.log(this.address);
+Building.printAddress = function () {
+  console.log(this.address)
 }
 
-var Shop = Nuvola.$prototype(Building);
+var Shop = Nuvola.$prototype(Building)
 
-Shop.$init = function(address, goods)
-{
-    Building.$init.call(this, address)
-    this.goods = goods;
+Shop.$init = function (address, goods) {
+  Building.$init.call(this, address)
+  this.goods = goods
 }
 
-Shop.printGoods = function()
-{
-    console.log(this.goods);
+Shop.printGoods = function() {
+  console.log(this.goods)
 }</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.checkVersion">Nuvola.checkVersion</b>(major, minor, micro)<br />
@@ -428,9 +424,8 @@ Shop.printGoods = function()
 <ul>
 <li><p>true if Nuvola's version is greater than or equal to the required version</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">if (Nuvola.checkVersion &amp;&amp; Nuvola.checkVersion(4, 5))
-{
-    // Safe to use API &gt;= 4.5
+<pre class="codehilite"><code class="language-js">if (Nuvola.checkVersion &amp;&amp; Nuvola.checkVersion(4, 5)) {
+  // Safe to use API &gt;= 4.5
 }</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.clickOnElement">Nuvola.clickOnElement</b>(elm, x, y)<br />
@@ -478,12 +473,12 @@ Special placeholders are <code>{-1}</code> for <code>{</code> and <code>{-2}</co
 <ul>
 <li><p>String</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">alert(Nuvola.format(&quot;My name is {2}. {1} {2}!&quot;, &quot;James&quot;, &quot;Bond&quot;));
-// &quot;My name is Bond. James Bond!&quot;
+<pre class="codehilite"><code class="language-js">alert(Nuvola.format('My name is {2}. {1} {2}!', 'James', 'Bond'))
+// 'My name is Bond. James Bond!'
 
 // You can create an alias
 var $fmt = Nuvola.format;
-alert($fmt(&quot;My name is {2}. {1} {2}!&quot;, &quot;James&quot;, &quot;Bond&quot;));</code></pre></li>
+alert($fmt('My name is {2}. {1} {2}!', 'James', 'Bond'))</code></pre></li>
 
 <li><small> function</small> <b id="Nuvola.log">Nuvola.log</b>(template)<br />
 <p>Log message to terminal</p>
@@ -645,8 +640,8 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <p>Adds new simple or toggle action.</p>
 <p>when action is activated, signal ActionActivated is emitted.</p><p><b>Parameters</b></p>
 <ul>
-<li>String <b>group</b> - action group, e.g. "playback"</li>
-<li>String <b>scope</b> - action scope, use "win" for window-specific actions (preferred) or "app" for app-specific actions</li>
+<li>String <b>group</b> - action group, e.g. 'playback'</li>
+<li>String <b>scope</b> - action scope, use 'win' for window-specific actions (preferred) or 'app' for app-specific actions</li>
 <li>String <b>name</b> - action name, should be in <code>dash-separated-lower-case</code>, e.g. <code>toggle-play</code></li>
 <li>String|null <b>label</b> - label shown in user interface, e.g. <code>Play</code></li>
 <li>String|null <b>mnemo_label</b> - label shown in user interface with keyboard navigation using Alt key and letter prefixed with underscore, e.g. Alt+p for <code>_Play</code></li>
@@ -655,34 +650,34 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <li>Boolean|null <b>state</b> - <code>null</code> for simple actions, <code>true</code>/<code>false</code> for toggle actions (on/off)</li>
 </ul>
 <pre class="codehilite"><code class="language-js">// Add new simple action ``play`` with icon ``media-playback-start``
-Nuvola.actions.addAction(&quot;playback&quot;, &quot;win&quot;, &quot;play&quot;, &quot;Play&quot;, null, &quot;media-playback-start&quot;, null);
+Nuvola.actions.addAction('playback', 'win', 'play', 'Play', null, 'media-playback-start', null)
 
 // Add new toggle action ``thumbs-up`` with initial state ``true`` (on)
-Nuvola.actions.addAction(&quot;playback&quot;, &quot;win&quot;, &quot;thumbs-up&quot;, &quot;Thumbs up&quot;, null, null, null, true);</code></pre></li>
+Nuvola.actions.addAction('playback', 'win', 'thumbs-up', 'Thumbs up', null, null, null, true)</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.addRadioAction">addRadioAction</b>(group, scope, name, stateId, options)<br />
 <p>Adds new radio action (action with multiple states/option like old radios)</p>
 <p>when action is activated, signal ActionActivated is emitted.</p><p><b>Parameters</b></p>
 <ul>
-<li>String <b>group</b> - action group, e.g. "playback"</li>
-<li>String <b>scope</b> - action scope, use "win" for window-specific actions (preferred) or "app" for app-specific actions</li>
+<li>String <b>group</b> - action group, e.g. 'playback'</li>
+<li>String <b>scope</b> - action scope, use 'win' for window-specific actions (preferred) or 'app' for app-specific actions</li>
 <li>String <b>name</b> - action name, should be in <code>dash-separated-lower-case</code>, e.g. <code>toggle-play</code></li>
 <li>variant <b>stateId</b> - initial state of the action. must be one of states specified in <code>options</code> array</li>
 <li>Array <b>options</b> - array of options definition in form <code>[stateId, label, mnemo_label, icon, keybinding]</code>. <code>stateId</code> is unique identifier (Number or String), other parameters are described in <code>addAction</code> method.</li>
 </ul>
 <pre class="codehilite"><code class="language-js">// define rating options - 5 states with state id 0-5 representing 0-5 stars
 var ratingOptions = [
-    // stateId, label, mnemo_label, icon, keybinding
-    [0, &quot;Rating: 0 stars&quot;, null, null, null, null],
-    [1, &quot;Rating: 1 star&quot;, null, null, null, null],
-    [2, &quot;Rating: 2 stars&quot;, null, null, null, null],
-    [3, &quot;Rating: 3 stars&quot;, null, null, null, null],
-    [4, &quot;Rating: 4 stars&quot;, null, null, null, null],
-    [5, &quot;Rating: 5 stars&quot;, null, null, null, null]
-];
+  // stateId, label, mnemo_label, icon, keybinding
+  [0, 'Rating: 0 stars', null, null, null, null],
+  [1, 'Rating: 1 star', null, null, null, null],
+  [2, 'Rating: 2 stars', null, null, null, null],
+  [3, 'Rating: 3 stars', null, null, null, null],
+  [4, 'Rating: 4 stars', null, null, null, null],
+  [5, 'Rating: 5 stars', null, null, null, null]
+]
 
 // Add new radio action named ``rating`` with initial state ``0`` (0 stars)
-Nuvola.actions.addRadioAction(&quot;playback&quot;, &quot;win&quot;, &quot;rating&quot;, 0, ratingOptions);</code></pre></li>
+Nuvola.actions.addRadioAction('playback', 'win', 'rating', 0, ratingOptions)</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.bindButton">bindButton</b>(button, name, parameter)<br />
 <p>Bind HTML button to an action</p>
@@ -692,10 +687,10 @@ Nuvola.actions.addRadioAction(&quot;playback&quot;, &quot;win&quot;, &quot;ratin
 <li>String <b>name</b> - action name</li>
 <li>optional Variant <b>parameter</b> - parameter to the action</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var navigateBack = Nuvola.makeElement(&quot;button&quot;, null, &quot;&lt;&quot;);
-var elm = document.getElementById(&quot;bar&quot;);
-elm.appendChild(navigateBack);
-Nuvola.actions.bindButton(navigateBack, Nuvola.BrowserAction.GO_BACK);</code></pre></li>
+<pre class="codehilite"><code class="language-js">var navigateBack = Nuvola.makeElement('button', null, '&lt;')
+var elm = document.getElementById('bar')
+elm.appendChild(navigateBack)
+Nuvola.actions.bindButton(navigateBack, Nuvola.BrowserAction.GO_BACK)</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.getState">getState</b>(name)<br />
 <p>Get current state of toggle or radio actions.</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
@@ -707,11 +702,11 @@ Nuvola.actions.bindButton(navigateBack, Nuvola.BrowserAction.GO_BACK);</code></p
 <ul>
 <li><p>current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var thumbsUp = Nuvola.actions.getState(&quot;thumbs-up&quot;);
-console.log(&quot;Thumbs up is toggled &quot; + (thumbsUp ? &quot;on&quot; : &quot;off&quot;));
+<pre class="codehilite"><code class="language-js">var thumbsUp = Nuvola.actions.getState('thumbs-up')
+console.log('Thumbs up is toggled ' + (thumbsUp ? 'on' : 'off'))
 
-var stars = Nuvola.actions.getState(&quot;rating&quot;);
-console.log(&quot;Number of stars: &quot; + stars);</code></pre></li>
+var stars = Nuvola.actions.getState('rating')
+console.log('Number of stars: ' + stars)</code></pre></li>
 
 <li><small>async  method</small> <b id="Nuvola.Actions.getStateAsync">getStateAsync</b>(name)<br />
 <p>Get current state of toggle or radio actions.</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
@@ -724,13 +719,13 @@ console.log(&quot;Number of stars: &quot; + stars);</code></pre></li>
 <ul>
 <li><p>current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">Nuvola.actions.getStateAsync(&quot;thumbs-up&quot;).then(function(state) {
-    console.log(&quot;Thumbs up is toggled &quot; + (state ? &quot;on&quot; : &quot;off&quot;));
-});
+<pre class="codehilite"><code class="language-js">Nuvola.actions.getStateAsync('thumbs-up').then(function (state) {
+  console.log('Thumbs up is toggled ' + (state ? 'on' : 'off'));
+})
 
-Nuvola.actions.getStateAsync(&quot;rating&quot;).then(function(stars) {
-    console.log(&quot;Number of stars: &quot; + stars);
-});</code></pre></li>
+Nuvola.actions.getStateAsync('rating').then(function (stars) {
+  console.log('Number of stars: ' + stars)
+})</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.isEnabled">isEnabled</b>(name)<br />
 <p>Checks whether action is enabled</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
@@ -776,10 +771,10 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <li>variant <b>state</b> - current state: <code>true/false</code> for toggle actions, one of stateId entries of radio actions</li>
 </ul>
 <pre class="codehilite"><code class="language-js">// toggle thumbs-up off
-Nuvola.actions.setState(&quot;thumbs-up&quot;, false);
+Nuvola.actions.setState('thumbs-up', false)
 
 // Set 5 stars
-Nuvola.actions.setState(&quot;rating&quot;, 5);</code></pre></li>
+Nuvola.actions.setState('rating', 5)</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.updateEnabledFlag">updateEnabledFlag</b>(name, enabled)<br />
 <p>Update action enabled flag</p>
@@ -822,14 +817,12 @@ Nuvola.actions.setState(&quot;rating&quot;, 5);</code></pre></li>
 <li>String <b>name</b> - action name</li>
 <li>Variant <b>param</b> - action parameter, usually null</li>
 </ul>
-<pre class="codehilite"><code class="language-js">MyObject.$init = function()
-{
-    Nuvola.actions.connect(&quot;ActionActivated&quot;, this);
+<pre class="codehilite"><code class="language-js">MyObject.$init = function () {
+  Nuvola.actions.connect('ActionActivated', this)
 }
 
-MyObject._onActionActivated = function(emitter, name, param)
-{
-    console.log(&quot;Action activated: &quot; + name);
+MyObject._onActionActivated = function (emitter, name, param) {
+  console.log('Action activated: ' + name)
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Actions::ActionEnabledChanged">ActionEnabledChanged</b>(emitter, name, enabled)<br />
@@ -839,14 +832,12 @@ MyObject._onActionActivated = function(emitter, name, param)
 <li>String <b>name</b> - action name</li>
 <li>Boolean <b>enabled</b> - true if the action is enabled</li>
 </ul>
-<pre class="codehilite"><code class="language-js">MyObject.$init = function()
-{
-    Nuvola.actions.connect(&quot;ActionEnabledChanged&quot;, this);
+<pre class="codehilite"><code class="language-js">MyObject.$init = function () {
+  Nuvola.actions.connect('ActionEnabledChanged', this)
 }
 
-MyObject._ActionEnabledChanged = function(emitter, name, enabled)
-{
-    console.log(&quot;Action &quot; + name + &quot; &quot; + (enabled ? &quot;enabled&quot; : &quot;disabled&quot;) + &quot;.&quot;);
+MyObject._ActionEnabledChanged = function (emitter, name, enabled) {
+  console.log('Action ' + name + ' ' + (enabled ? 'enabled' : 'disabled') + '.')
 }</code></pre></li>
 
 </ul></li>
@@ -1012,9 +1003,8 @@ MyObject._ActionEnabledChanged = function(emitter, name, enabled)
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String <b>request.url</b> - property to assign home page url to</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onHomePageRequest = function(emitter, request)
-{
-    request.url = &quot;http://tiliado.eu&quot;;
+<pre class="codehilite"><code class="language-js">var _onHomePageRequest = function (emitter, request) {
+  request.url = &quot;http://tiliado.eu&quot;
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::InitAppRunner">InitAppRunner</b>(emitter)<br />
@@ -1056,9 +1046,8 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>String|null <b>result.url</b> - property to assign the last visited URL to</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onLastPageRequest = function(emitter, result)
-{
-    request.url = Nuvola.config.get(&quot;last_uri&quot;) || null;
+<pre class="codehilite"><code class="language-js">var _onLastPageRequest = function (emitter, result) {
+  request.url = Nuvola.config.get(&quot;last_uri&quot;) || null
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::NavigationRequest">NavigationRequest</b>(emitter, request)<br />
@@ -1069,9 +1058,8 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Boolean <b>request.newWindow</b> - whether to open request in a new window, you can overwrite this field</li>
 <li>Boolean <b>request.approved</b> - whether the navigation is approved, set to <code>false</code> when the <code>request.url</code> should be opened in user's default web browser</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onNavigationRequest = function(object, request)
-{
-    request.approved = isAddressAllowed(request.url);
+<pre class="codehilite"><code class="language-js">var _onNavigationRequest = function (object, request) {
+  request.approved = isAddressAllowed(request.url)
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::PageSettings">PageSettings</b>(emitter, request)<br />
@@ -1083,13 +1071,12 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>Boolean <b>request.javascript</b> - whether javascript should be enabled</li>
 <li>String <b>request.userAgent</b> - whether to override user agent string</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onPageSettings = function(object, request)
-{
-    request.userAgent = (
-        request.url.startsWith(&quot;https://accounts.google.com/&quot;)
-        || request.url.startsWith(&quot;https://accounts.youtube.com/&quot;)
-        ? &quot;WEBKIT&quot; : null
-    );
+<pre class="codehilite"><code class="language-js">var _onPageSettings = function (object, request) {
+  request.userAgent = (
+    request.url.startsWith(&quot;https://accounts.google.com/&quot;)
+    || request.url.startsWith(&quot;https://accounts.youtube.com/&quot;)
+    ? &quot;WEBKIT&quot; : null
+    )
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::PreferencesForm">PreferencesForm</b>(emitter, values, entries)<br />
@@ -1108,10 +1095,10 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>bool <b>result.approved</b> - Whether application can quit. If false, application will continue running in background.</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onQuitRequest = function(emitter, result)
-{
-     if (Nuvola.config.get(&quot;myapp.run_in_background&quot;))
-         result.approved = false;
+<pre class="codehilite"><code class="language-js">var _onQuitRequest = function (emitter, result) {
+  if (Nuvola.config.get(&quot;myapp.run_in_background&quot;)) {
+    result.approved = false
+  }
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::ResourceRequest">ResourceRequest</b>(emitter, request)<br />
@@ -1121,9 +1108,8 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li>String <b>request.url</b> - URL of the resource (can be overwritten)</li>
 <li>Boolean <b>request.approved</b> - whether the resource loading is approved</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onResourceRequest = function(emitter, request)
-{
-    request.url = request.url.replace(&quot;webcomponents.js&quot;, &quot;webcomponents2.js&quot;);
+<pre class="codehilite"><code class="language-js">var _onResourceRequest = function (emitter, request) {
+  request.url = request.url.replace(&quot;webcomponents.js&quot;, &quot;webcomponents2.js&quot;)
 }</code></pre></li>
 
 <li><small>signal</small> <b id="Nuvola.Core::UriChanged">UriChanged</b>(emitter, uri)<br />
@@ -1132,9 +1118,8 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><a href="#Nuvola.Core">Core</a> <b>emitter</b> - object that emitted the signal</li>
 <li>string <b>uri</b> - URI of the new page</li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _onUriChanged = function(emitter, uri)
-{
-    Nuvola.config.set(&quot;last_uri&quot;, uri);
+<pre class="codehilite"><code class="language-js">var _onUriChanged = function(emitter, uri) {
+  Nuvola.config.set(&quot;last_uri&quot;, uri)
 }</code></pre></li>
 
 </ul></li>
@@ -1151,7 +1136,7 @@ You can use it to perform own initialization routine.</p><p><b>Parameters</b></p
 <li><small> method</small> <b id="Nuvola.KeyValueStorage.get">get</b>(key)<br />
 <p>Get value by key name</p>
 <p>Note that behavior on a key without an assigned value nor <a href="#Nuvola.KeyValueStorage.setDefault">the default value</a>
-is undefined - it may return <em>anything</em> or throw and error. (The current implementation returns string <code>"&lt;UNDEFINED&gt;"</code>
+is undefined - it may return <em>anything</em> or throw and error. (The current implementation returns string <code>'&lt;UNDEFINED&gt;'</code>
 as it helps to identify unwanted manipulation with <code>undefined</code> value type.)</p><p><b>Deprecated since</b> Nuvola 4.8: Use async variant instead.</p>
 <p><b>Parameters</b></p>
 <ul>
@@ -1166,7 +1151,7 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li><small>async  method</small> <b id="Nuvola.KeyValueStorage.getAsync">getAsync</b>(key)<br />
 <p>Get value by key name</p>
 <p>Note that behavior on a key without an assigned value nor <a href="#Nuvola.KeyValueStorage.setDefault">the default value</a>
-is undefined - it may return <em>anything</em> or throw and error. (The current implementation returns string <code>"&lt;UNDEFINED&gt;"</code>
+is undefined - it may return <em>anything</em> or throw and error. (The current implementation returns string <code>'&lt;UNDEFINED&gt;'</code>
 as it helps to identify unwanted manipulation with <code>undefined</code> value type.)</p><p><b>Asynchronous:</b> This function returns <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">a Promise object</a> to resolve the value when it is ready. Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises">Using Promises</a> to learn how to work with them.</p>
 <p><b>Available since</b> Nuvola 4.8</p>
 <p><b>Parameters</b></p>
@@ -1231,13 +1216,12 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
 </ul>
-<pre class="codehilite"><code class="language-js">WebApp._onInitAppRunner = function(emitter)
-{
-    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
+<pre class="codehilite"><code class="language-js">WebApp._onInitAppRunner = function (emitter) {
+  Nuvola.WebApp._onInitAppRunner.call(this, emitter)
 
-    var ADDRESS = &quot;app.address&quot;;
-    // Nuvola.config is a KeyValueStorage
-    Nuvola.config.setDefault(ADDRESS, &quot;default&quot;);
+  var ADDRESS = 'app.address'
+  // Nuvola.config is a KeyValueStorage
+  Nuvola.config.setDefault(ADDRESS, 'default')
 }</code></pre></li>
 
 <li><small>async  method</small> <b id="Nuvola.KeyValueStorage.setDefaultAsync">setDefaultAsync</b>(key, value)<br />
@@ -1249,13 +1233,12 @@ as it helps to identify unwanted manipulation with <code>undefined</code> value 
 <li>String <b>key</b> - the key name</li>
 <li>Variant <b>value</b> - value of the key</li>
 </ul>
-<pre class="codehilite"><code class="language-js">WebApp._onInitAppRunner = function(emitter)
-{
-    Nuvola.WebApp._onInitAppRunner.call(this, emitter);
+<pre class="codehilite"><code class="language-js">WebApp._onInitAppRunner = function(emitter) {
+  Nuvola.WebApp._onInitAppRunner.call(this, emitter)
 
-    var ADDRESS = &quot;app.address&quot;;
-    // Nuvola.config is a KeyValueStorage
-    Nuvola.config.setDefaultAsync(ADDRESS, &quot;default&quot;).catch(console.log.bind(console));
+  var ADDRESS = 'app.address'
+  // Nuvola.config is a KeyValueStorage
+  Nuvola.config.setDefaultAsync(ADDRESS, 'default').catch(console.log.bind(console))
 }</code></pre></li>
 
 </ul></li>
@@ -1558,20 +1541,19 @@ If the argument is same as in the previous call, this method does nothing.</p><p
 
 <li><small> method</small> <b id="Nuvola.WebApp._onInitWebWorker">_onInitWebWorker</b>(emitter)<br />
 <p>Signal handler for <a href="#Nuvola.Core::InitWebWorker">Core::InitWebWorker</a>. Override this method to integrate the web page.</p>
-<pre class="codehilite"><code class="language-js">WebApp._onInitWebWorker = function(emitter)
-{
-    Nuvola.WebApp._onInitWebWorker.call(this, emitter);
+<pre class="codehilite"><code class="language-js">WebApp._onInitWebWorker = function (emitter) {
+    Nuvola.WebApp._onInitWebWorker.call(this, emitter)
 
-    var state = document.readyState;
-    if (state === &quot;interactive&quot; || state === &quot;complete&quot;)
-        this._onPageReady();
-    else
-        document.addEventListener(&quot;DOMContentLoaded&quot;, this._onPageReady.bind(this));
+    var state = document.readyState
+    if (state === 'interactive' || state === 'complete') {
+      this._onPageReady()
+    } else {
+      document.addEventListener('DOMContentLoaded', this._onPageReady.bind(this))
+    }
 }
 
-WebApp._onPageReady = function(event)
-{
-    ...
+WebApp._onPageReady = function (event) {
+  ...
 }</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.WebApp._onInitWebWorkerHelper">_onInitWebWorkerHelper</b>(emitter)<br />
@@ -1589,11 +1571,11 @@ WebApp._onPageReady = function(event)
 
 <li><small> method</small> <b id="Nuvola.WebApp.start">start</b>()<br />
 <p>Convenience function to create new WebApp object linked to Nuvola API.</p>
-<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp();
+<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp()
 
 ...
 
-WebApp.start();</code></pre></li>
+WebApp.start()</code></pre></li>
 
 </ul></li>
 </ul><h3>Namespaces</h3>
@@ -1611,7 +1593,7 @@ package.</p>
 translatable strings.</p>
 <p><strong>Usage notes</strong></p>
 <ul>
-<li>It is usual to create alias <code>var _ = Nuvola.Translate.gettext;</code></li>
+<li>It is usual to create alias <code>var _ = Nuvola.Translate.gettext</code></li>
 <li>You have to pass plain string literals, not expressions nor variables.</li>
 </ul><p><b>Parameters</b></p>
 <ul>
@@ -1621,20 +1603,20 @@ translatable strings.</p>
 <ul>
 <li><p>String        translated string</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext;
+<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext
 /// You can use tree slashes to add comment for translators.
 /// It has to be on a line preceding the translated string though.
-console.log(_(&quot;Hello world!&quot;)); // Right
+console.log(_('Hello world!')) // Right
 
-var greeting = &quot;Hello world!&quot;;
-console.log(_(greeting)); // Wrong!
+var greeting = 'Hello world!'
+console.log(_(greeting)) // Wrong!
 
-var greeting = _(&quot;Hello world!&quot;); // Right
-console.log(greeting);
+var greeting = _('Hello world!') // Right
+console.log(greeting)
 
-var name = &quot;John&quot;;
-console.log(_(&quot;Hello &quot; + name + &quot;!&quot;)); // Wrong!
-console.log(Nuvola.format(_(&quot;Hello {1}!&quot;), name)); // Right</code></pre></li>
+var name = 'John'
+console.log(_('Hello ' + name + '!')) // Wrong!
+console.log(Nuvola.format(_('Hello {1}!'), name)) // Right</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Translate.ngettext">ngettext</b>(text1, text2, n)<br />
 <p>Translate string with support of singluar and plural forms.</p>
@@ -1642,7 +1624,7 @@ console.log(Nuvola.format(_(&quot;Hello {1}!&quot;), name)); // Right</code></pr
 translatable strings.</p>
 <p><strong>Usage notes</strong></p>
 <ul>
-<li>It is usual to create alias <code>var ngettext = Nuvola.Translate.ngettext;</code></li>
+<li>It is usual to create alias <code>var ngettext = Nuvola.Translate.ngettext</code></li>
 <li>You have to pass plain string literals, not expressions nor variables.</li>
 </ul><p><b>Parameters</b></p>
 <ul>
@@ -1654,32 +1636,32 @@ translatable strings.</p>
 <ul>
 <li><p>String           translated string</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var ngettext = Nuvola.Translate.ngettext;
-var eggs = 5;
+<pre class="codehilite"><code class="language-js">var ngettext = Nuvola.Translate.ngettext
+var eggs = 5
 var text = ngettext(
-    &quot;There is {1} egg in the fridge.&quot;,
-    &quot;There are {1} eggs in the fridge.&quot;,
-    eggs);
-console.log(Nuvola.format(text, eggs));
+  'There is {1} egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)
+console.log(Nuvola.format(text, eggs))
 
 var text = ngettext(
-    /// You can use tree slashes to add comment for translators.
-    /// It has to be on a line preceding the singular string though.
-    /// {1} will be replaced by number of eggs in both forms,
-    /// but can be omitted as shown in singular form.
-    &quot;There is one egg in the fridge.&quot;,
-    &quot;There are {1} eggs in the fridge.&quot;,
-    eggs);</code></pre></li>
+  /// You can use tree slashes to add comment for translators.
+  /// It has to be on a line preceding the singular string though.
+  /// {1} will be replaced by number of eggs in both forms,
+  /// but can be omitted as shown in singular form.
+  'There is one egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.Translate.pgettext">pgettext</b>(context, text)<br />
 <p>Translate string with support of a disambiguating message context.</p>
 <p>This is mainly useful for short strings which may need different translations, depending on the context in which they
-are used. e.g.: <code>pgettext("Navigation", "Back")</code> vs <code>pgettext("Body part", "Back")</code>.</p>
+are used. e.g.: <code>pgettext('Navigation', 'Back')</code> vs <code>pgettext('Body part', 'Back')</code>.</p>
 <p><strong>Placeholder</strong>: This function is only a placeholder for future functionality, but you can use it to mark
 translatable strings.</p>
 <p><strong>Usage notes</strong></p>
 <ul>
-<li>It is usual to create alias <code>var C_ = Nuvola.Translate.pgettext;</code></li>
+<li>It is usual to create alias <code>var C_ = Nuvola.Translate.pgettext</code></li>
 <li>You have to pass plain string literals, not expressions nor variables.</li>
 </ul><p><b>Parameters</b></p>
 <ul>
@@ -1690,11 +1672,11 @@ translatable strings.</p>
 <ul>
 <li><p>String           translated string</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">var C_ = Nuvola.Translate.pgettext;
+<pre class="codehilite"><code class="language-js">var C_ = Nuvola.Translate.pgettext
 /// You can use tree slashes to add comment for translators.
 /// It has to be on a line preceding the translated string though.
-console.log(C_(&quot;Navigation&quot;, &quot;Back&quot;));
-console.log(C_(&quot;Body part&quot;, &quot;Back&quot;));</code></pre></li>
+console.log(C_('Navigation', 'Back'))
+console.log(C_('Body part', 'Back'))</code></pre></li>
 
 </ul></li>
 </ul><h3>Mixins</h3>
@@ -1707,14 +1689,13 @@ console.log(C_(&quot;Body part&quot;, &quot;Back&quot;));</code></pre></li>
 <ul>
 <li>String <b>name</b> - signal name, should be in CamelCase</li>
 </ul>
-<pre class="codehilite"><code class="language-js">BookStore.$init = function()
-{
-    /**
-     * Emitted when a book is added.
-     *
-     * @param Book book    book that has been added
-     */
-    this.addSignal(&quot;BookAdded&quot;);
+<pre class="codehilite"><code class="language-js">BookStore.$init = function() {
+  /**
+   * Emitted when a book is added.
+   *
+   * @param Book book    book that has been added
+   */
+  this.addSignal('BookAdded')
 }</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.SignalsMixin.connect">connect</b>(name, object, handlerName)<br />
@@ -1730,15 +1711,13 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <ul>
 <li><p>Error if signal doesn't exist</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">Logger._onBookAdded = function(emitter, book)
-{
-    console.log(&quot;New book: &quot; + book.title + &quot;.&quot;);
+<pre class="codehilite"><code class="language-js">Logger._onBookAdded = function(emitter, book) {
+  console.log('New book: ' + book.title + '.')
 }
 
-Logger.$init = function()
-{
-    bookStore.connect(&quot;BookAdded&quot;, this);
-    // equivalent: bookStore.connect(&quot;BookAdded&quot;, this, &quot;_onBookAdded&quot;);
+Logger.$init = function() {
+  bookStore.connect('BookAdded', this)
+  // equivalent: bookStore.connect('BookAdded', this, '_onBookAdded')
 }</code></pre></li>
 
 <li><small> method</small> <b id="Nuvola.SignalsMixin.disconnect">disconnect</b>(name, object, handlerName)<br />
@@ -1764,10 +1743,9 @@ Logger.$init = function()
 <ul>
 <li><p>Error if signal doesn't exist</p></li>
 </ul>
-<pre class="codehilite"><code class="language-js">BookStore.addBook = function(book)
-{
-    this.books.push(book);
-    this.emit(&quot;book-added&quot;, book)
+<pre class="codehilite"><code class="language-js">BookStore.addBook = function(book) {
+  this.books.push(book)
+  this.emit('book-added', book)
 }</code></pre></li>
 
 </ul></li>
@@ -1810,7 +1788,7 @@ Logger.$init = function()
 <li><b id="Nuvola.PlayerAction.STOP">STOP</b> - Stop playback</li>
 <li><b id="Nuvola.PlayerAction.TOGGLE_PLAY">TOGGLE_PLAY</b> - Toggle playback (play/pause)</li>
 </ul></li>
-</ul><h2>Changelog</h2><h3 id="x-changelog-3-1">Since 3.1</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanRate">Nuvola.MediaPlayer.setCanRate</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer::RatingSet">Nuvola.MediaPlayer::RatingSet</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-5">Since 4.5</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanChangeVolume">Nuvola.MediaPlayer.setCanChangeVolume</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setCanSeek">Nuvola.MediaPlayer.setCanSeek</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setTrackPosition">Nuvola.MediaPlayer.setTrackPosition</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.updateVolume">Nuvola.MediaPlayer.updateVolume</a> <i>(new)</i></li><li><a href="#Nuvola.checkVersion">Nuvola.checkVersion</a> <i>(new)</i></li><li><a href="#Nuvola.clickOnElement">Nuvola.clickOnElement</a> <i>(new)</i>: x, y coordinates were added.</li><li><a href="#Nuvola.encodeVersion">Nuvola.encodeVersion</a> <i>(new)</i></li><li><a href="#Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</a> <i>(new)</i>: x, y coordinates were added.</li></ul><h3 id="x-changelog-4-8">Since 4.8</h3><ul><li><a href="#Nuvola.Actions.getState">Nuvola.Actions.getState</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.getStateAsync">Nuvola.Actions.getStateAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Actions.isEnabled">Nuvola.Actions.isEnabled</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.isEnabledAsync">Nuvola.Actions.isEnabledAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.getComponentInfo">Nuvola.Core.getComponentInfo</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.getComponentInfoAsync">Nuvola.Core.getComponentInfoAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentActive">Nuvola.Core.isComponentActive</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentActiveAsync">Nuvola.Core.isComponentActiveAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentLoaded">Nuvola.Core.isComponentLoaded</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentLoadedAsync">Nuvola.Core.isComponentLoadedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.get">Nuvola.KeyValueStorage.get</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.getAsync">Nuvola.KeyValueStorage.getAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.hasKey">Nuvola.KeyValueStorage.hasKey</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.hasKeyAsync">Nuvola.KeyValueStorage.hasKeyAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.set">Nuvola.KeyValueStorage.set</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setAsync">Nuvola.KeyValueStorage.setAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.setDefault">Nuvola.KeyValueStorage.setDefault</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setDefaultAsync">Nuvola.KeyValueStorage.setDefaultAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Notifications.isPersistenceSupported">Nuvola.Notifications.isPersistenceSupported</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Notifications.isPersistenceSupportedAsync">Nuvola.Notifications.isPersistenceSupportedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.logException">Nuvola.logException</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-10">Since 4.10</h3><ul><li><a href="#Nuvola.showInfoBar">Nuvola.showInfoBar</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-11">Since 4.11</h3><ul><li><a href="#Nuvola.exportImageAsBase64">Nuvola.exportImageAsBase64</a> <i>(new)</i></li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i></li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i></li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i></li></ul>
+</ul><h2 id="x-changelog">Changelog</h2><h3 id="x-changelog-3-1">Since 3.1</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanRate">Nuvola.MediaPlayer.setCanRate</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer::RatingSet">Nuvola.MediaPlayer::RatingSet</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-5">Since 4.5</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanChangeVolume">Nuvola.MediaPlayer.setCanChangeVolume</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setCanSeek">Nuvola.MediaPlayer.setCanSeek</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setTrackPosition">Nuvola.MediaPlayer.setTrackPosition</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.updateVolume">Nuvola.MediaPlayer.updateVolume</a> <i>(new)</i></li><li><a href="#Nuvola.checkVersion">Nuvola.checkVersion</a> <i>(new)</i></li><li><a href="#Nuvola.clickOnElement">Nuvola.clickOnElement</a> <i>(new)</i>: x, y coordinates were added.</li><li><a href="#Nuvola.encodeVersion">Nuvola.encodeVersion</a> <i>(new)</i></li><li><a href="#Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</a> <i>(new)</i>: x, y coordinates were added.</li></ul><h3 id="x-changelog-4-8">Since 4.8</h3><ul><li><a href="#Nuvola.Actions.getState">Nuvola.Actions.getState</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.getStateAsync">Nuvola.Actions.getStateAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Actions.isEnabled">Nuvola.Actions.isEnabled</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.isEnabledAsync">Nuvola.Actions.isEnabledAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.getComponentInfo">Nuvola.Core.getComponentInfo</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.getComponentInfoAsync">Nuvola.Core.getComponentInfoAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentActive">Nuvola.Core.isComponentActive</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentActiveAsync">Nuvola.Core.isComponentActiveAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentLoaded">Nuvola.Core.isComponentLoaded</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentLoadedAsync">Nuvola.Core.isComponentLoadedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.get">Nuvola.KeyValueStorage.get</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.getAsync">Nuvola.KeyValueStorage.getAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.hasKey">Nuvola.KeyValueStorage.hasKey</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.hasKeyAsync">Nuvola.KeyValueStorage.hasKeyAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.set">Nuvola.KeyValueStorage.set</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setAsync">Nuvola.KeyValueStorage.setAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.setDefault">Nuvola.KeyValueStorage.setDefault</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setDefaultAsync">Nuvola.KeyValueStorage.setDefaultAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Notifications.isPersistenceSupported">Nuvola.Notifications.isPersistenceSupported</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Notifications.isPersistenceSupportedAsync">Nuvola.Notifications.isPersistenceSupportedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.logException">Nuvola.logException</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-10">Since 4.10</h3><ul><li><a href="#Nuvola.showInfoBar">Nuvola.showInfoBar</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-11">Since 4.11</h3><ul><li><a href="#Nuvola.exportImageAsBase64">Nuvola.exportImageAsBase64</a> <i>(new)</i></li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i></li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i></li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i></li></ul>
 
 <div class="footer">
   <hr />

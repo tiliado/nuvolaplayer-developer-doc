@@ -88,13 +88,6 @@
 <li><a href="#merge-commits">Merge Commits</a></li>
 </ul>
 </li>
-<li><a href="#coding-style">Coding Style</a><ul>
-<li><a href="#basics">Basics</a></li>
-<li><a href="#naming">Naming</a></li>
-<li><a href="#braces">Braces</a></li>
-<li><a href="#spaces">Spaces</a></li>
-</ul>
-</li>
 </ul>
 </div>
     
@@ -139,15 +132,14 @@ and distributed in the Nuvola Player repository</strong>, following rules apply.
 <p>You must provide contact e-mail in <code>README.md</code>, e.g. inside Copyright section.</p>
 </li>
 <li>
-<p>You must use a consistent coding style of <code>integrate.json</code>, preferably the coding style of
-    Nuvola Player.</p>
+<p>You must use <a href="https://standardjs.com/">Standard JS coding style</a> for <code>integrate.json</code>.</p>
 </li>
 <li>
 <p>You must use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">strict JavaScript mode</a> and <a href="http://markdalgleish.com/2011/03/self-executing-anonymous-functions/">self-executing anonymous function</a>.
     (See <a href="../apps/tutorial.html">tutorial</a>.)</p>
 </li>
 <li>
-<p>You have to use Nuvola Player JavaScript API &gt;= 4.6.</p>
+<p>You have to use <a href="./api_reference.html#x-changelog">NuvolaKit JavaScript API</a> &gt;= 4.11.</p>
 </li>
 <li>
 <p>You have to <a href="../apps/translations.html">mark translatable strings</a> in <code>integrate.js</code>.</p>
@@ -264,7 +256,7 @@ Issue: tiliado/nuvolaplayer#128</code></pre>
 </li>
 <li>If short summary is not clear enough, add one or a few paragraphs with <strong>description</strong> about what you
   changed and why.</li>
-<li>Add link to a <strong>Github issue</strong>, e.g. <code>tiliado/nuvolaplayer#128</code>, if there is any. See 
+<li>Add link to a <strong>Github issue</strong>, e.g. <code>tiliado/nuvolaplayer#128</code>, if there is any. See
   <a href="https://help.github.com/articles/writing-on-github/#references">Writing on GitHub</a> for details.</li>
 </ul>
 <h4 id="pull-requests">Pull Requests</h4>
@@ -332,7 +324,7 @@ forget to link to issues.
 <li>It creates a commit summary like "Merge pull request #1 from fenryxo/mybranch.". That has
     <strong>zero</strong> information <strong>value</strong>.</li>
 <li>It provides only a basic text box to fill in a commit description. No control of line wrapping
-    at 75 characters. </li>
+    at 75 characters.</li>
 </ul>
 <p><img alt="no_github_merge" src="https://cloud.githubusercontent.com/assets/853706/8862021/fb68290e-318d-11e5-8e5e-5989d7df0a83.png"/></p>
 <p>Always <strong>merge</strong> pull requests <strong>via command line</strong>:</p>
@@ -341,7 +333,7 @@ forget to link to issues.
    <code>git remote add gh-USER https://github.com/USER/REPO.git; git fetch gh-USER</code></li>
 <li>Switch to the branch of the pull request: <code>git checkout gh-USER/BRANCH</code></li>
 <li>Review and test changes.</li>
-<li>Switch to the master branch: <code>git checkout master</code> </li>
+<li>Switch to the master branch: <code>git checkout master</code></li>
 <li>Use <code>git merge --no-ff --no-commit gh-USER/BRANCH</code> instead of a plain <code>git merge</code> to merge the
    pull request.</li>
 <li>Use <code>git commit --author "Pull Request Author Name &lt;author@email&gt;"</code> to commit the merge on
@@ -357,115 +349,6 @@ forget to link to issues.
 <li>Finally, <code>git push</code>.</li>
 <li><em>Optionally</em>, you can remove remote repository: <code>git remote remove gh-USER/BRANCH</code></li>
 </ul>
-<h2 id="coding-style">Coding Style</h2>
-<p>Service integrations are maintained in separate repositories as more or less independent sub-projects.
-Therefore, you can use different coding style that the main Nuvola Player project. However, your
-coding style have to be consistent. You can get inspired by coding style of Nuvola Player:</p>
-<h3 id="basics">Basics</h3>
-<ul>
-<li>Source lines may be up to 100 characters long.</li>
-<li>Variables should be declared at the point where they are first needed rather than at the top of
-    a block or function.</li>
-</ul>
-<h3 id="naming">Naming</h3>
-<ul>
-<li>Prototype objects ("classes") are named in camel case: <code>MediaPlayer</code>.</li>
-<li>Constants (and values of enumerations) are all uppercase, with underscores between words: <code>CONSTANT_NAME</code></li>
-<li>Other variables and method/function names are in camel case with the first letter lower-cased: <code>methodName()</code>, <code>myVariable</code>.</li>
-<li>Usage of single-letter variables or abbreviations is discouraged except for temporary variables in loops (<code>i</code>, <code>j</code>, etc.).</li>
-</ul>
-<pre class="codehilite"><code class="language-js">// Prototype name
-var ConfigStorage = Nuvola.$prototype(KeyValueStorage, SignalsMixin);
-
-// Enumeration
-var PlaybackState = {
-    UNKNOWN: 0,
-    PAUSED: 1,
-    PLAYING: 2,
-}
-
-// Constant
-var PI_VALUE = "3.14";
-
-var myVariable = 5;
-var myFunction = function(){};</code></pre>
-<h3 id="braces">Braces</h3>
-<ul>
-<li>Both opening and closing curly braces of code blocks appear on the new line. The code is more fluffy.</li>
-<li>The opening curly brace of an object literal appears on the same line as a preceding assignment operator.</li>
-<li>If body of <code>if</code>, <code>else</code>, <code>while</code> or <code>for</code> only one statement, it can be optionally surrounded by braces. However, it should always be on a new line with proper indentation.</li>
-<li>If one branch of <code>if-else</code> block is braced, all should be braced.</li>
-<li>To not put space between function name and opening brace.</li>
-</ul>
-<pre class="codehilite"><code class="language-js">var foo = function()
-{
-    for (var i = 0 ; i &lt; 10 ; ++i)
-    {
-        ...
-    }
-}
-
-if (x == 4)
-{
-    ...
-}
-else
-{
-    ...
-}
-
-// Preferred
-if (x &gt;= 0)
-    y = x;
-else
-    y = -x;
-
-// Also possible
-if (x &gt;= 0)
-{
-    y = x;
-}
-else
-{
-    y = -x;
-}
-
-try
-{
-    ...
-}
-catch (e)
-{
-    ...
-}
-
-var person = {
-    name: "Jiří",
-    surname: "Janoušek",
-}</code></pre>
-<h3 id="spaces">Spaces</h3>
-<ul>
-<li>Indentation level is four spaces. Use a clever editor that can treat spaces as tabs, i.e. it
-    inserts four spaces when you press TAB.</li>
-<li>A blank line should be padded to the “natural” indentation level of the surrounding lines. </li>
-<li>Don't put spaces between function name and opening brace.</li>
-<li>Don't put spaces between variable name and opening square brace.</li>
-<li>Keywords like <code>if</code>, <code>for</code>, <code>while</code> and <code>catch</code> are followed by a space and opening bracket.</li>
-<li>Don't use inner spaces of brackets.</li>
-<li>Use spaces around binary operators.</li>
-<li>Don't use spaces around unary and increment/decrement operators (e.g. <code>++</code>, <code>--</code>, <code>!</code>, <code>!!</code>, <code>-</code>). </li>
-</ul>
-<pre class="codehilite"><code class="language-js">document.getElementById("foo");
-
-myArray[1];
-
-if (true)
-    ...
-
-var c = a + b;
-var c = -b;
-var c = --b;
-var success = !failed;</code></pre>
 
     <div class="footer">
   <hr />

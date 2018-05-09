@@ -112,29 +112,25 @@ If this field is not empty, it is compiled as a <a href="https://developer.mozil
 navigation only to URLs that match that regular expression, other URLs are opened in a default web
 browser.</p>
 <pre class="codehilite"><code class="language-js">{
-    ...
-    "allowed_uri": "^https?://(play\\.google\\.com/)"
+  ...
+  "allowed_uri": "^https?://(play\\.google\\.com/)"
 }</code></pre>
 <h2 id="custom-url-filter">Custom URL Filter</h2>
 <p>Since the default URL filter is a JavaScript function, you can override it to match your needs.
 The method <a href="./api_reference.html#Nuvola.WebApp._onNavigationRequest">Nuvola.WebApp._onNavigationRequest</a>
 is a handler for <a href="./api_reference.html#Nuvola.Core%3A%3ANavigationRequest">Nuvola.Core::NavigationRequest signal</a>.</p>
-<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp();
+<pre class="codehilite"><code class="language-js">var WebApp = Nuvola.$WebApp()
 
 ...
 
-WebApp._onNavigationRequest = function(emitter, request)
-{
-    Nuvola.log("Open in a new window? {1}", request.newWindow);
-    if (request.url.length &gt; 40)
-    {
-        Nuvola.log("I hate long URLS: {1} has {2} characters!", request.url, request.url.length);
-        request.approved = false;
-    }
-    else
-    {
-        request.approved = true;
-    }
+WebApp._onNavigationRequest = function (emitter, request) {
+  Nuvola.log('Open in a new window? {1}', request.newWindow)
+  if (request.url.length &gt; 40) {
+    Nuvola.log('I hate long URLS: {1} has {2} characters!', request.url, request.url.length)
+    request.approved = false
+  } else {
+    request.approved = true
+  }
 }
 
 ...</code></pre>

@@ -174,25 +174,25 @@ cp "$(nuvolasdk data-dir)/examples/home.html" .</code></pre>
 <a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.in.json</code>.
 Let's look at the example:</p>
 <pre class="codehilite"><code class="language-json">{
-    "id": "happy_songs",
-    "name": "Happy Songs",
-    "maintainer_name": "Jiří Janoušek",
-    "maintainer_link": "https://github.com/fenryxo",
-    "version_major": 1,
-    "version_minor": 0,
-    "api_major": 4,
-    "api_minor": 6,
-    "categories": "AudioVideo;Audio;",
-    "requirements": "Feature[Flash] Codec[MP3]",
-    "home_url": "nuvola://home.html",
-    "license": "2-Clause BSD, CC-BY-3.0",
-    "build": {
-        "icons": [
-            "src/icon.svg SCALABLE 64 128 256", 
-            "src/icon-xs.svg 16 22 24", 
-            "src/icon-sm.svg 32 48"
-            ]
-    }</code></pre>
+  "id": "happy_songs",
+  "name": "Happy Songs",
+  "maintainer_name": "Jiří Janoušek",
+  "maintainer_link": "https://github.com/fenryxo",
+  "version_major": 1,
+  "version_minor": 0,
+  "api_major": 4,
+  "api_minor": 6,
+  "categories": "AudioVideo;Audio;",
+  "requirements": "Feature[Flash] Codec[MP3]",
+  "home_url": "nuvola://home.html",
+  "license": "2-Clause BSD, CC-BY-3.0",
+  "build": {
+    "icons": [
+      "src/icon.svg SCALABLE 64 128 256",
+      "src/icon-xs.svg 16 22 24",
+      "src/icon-sm.svg 32 48"
+    ]
+  }</code></pre>
 <p>This file contains several mandatory fields:</p>
 <dl>
 <dt><code>id</code></dt>
@@ -213,7 +213,7 @@ separate words, e.g. <code>google_play_music</code> for Google Play Music, <code
 <dd>
 <p>A minor version of service integration, an integer &gt;= 0.  This field should
 be increased only when a new release is made. Never increase version number
-in regular commits nor pull requests, but only in release commits with 
+in regular commits nor pull requests, but only in release commits with
 a commit message "Release X.Y".</p>
 </dd>
 <dt><code>maintainer_name</code></dt>
@@ -295,14 +295,14 @@ modifications.</p>
  * Copyright 2017 Your name &lt;your e-mail&gt;
  *
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met: 
- * 
+ * modification, are permitted provided that the following conditions are met:
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer. 
+ *    list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution. 
- * 
+ *    and/or other materials provided with the distribution.
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -315,69 +315,65 @@ modifications.</p>
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-"use strict";
+'use strict'
 
-(function(Nuvola)
-{
+(function (Nuvola) {
 
-// Create media player component
-var player = Nuvola.$object(Nuvola.MediaPlayer);
+  // Create media player component
+  var player = Nuvola.$object(Nuvola.MediaPlayer)
 
-// Handy aliases
-var PlaybackState = Nuvola.PlaybackState;
-var PlayerAction = Nuvola.PlayerAction;
+  // Handy aliases
+  var PlaybackState = Nuvola.PlaybackState
+  var PlayerAction = Nuvola.PlayerAction
 
-// Create new WebApp prototype
-var WebApp = Nuvola.$WebApp();
+  // Create new WebApp prototype
+  var WebApp = Nuvola.$WebApp()
 
-// Initialization routines
-WebApp._onInitWebWorker = function(emitter)
-{
-    Nuvola.WebApp._onInitWebWorker.call(this, emitter);
+  // Initialization routines
+  WebApp._onInitWebWorker = function (emitter) {
+    Nuvola.WebApp._onInitWebWorker.call(this, emitter)
 
-    var state = document.readyState;
-    if (state === "interactive" || state === "complete")
-        this._onPageReady();
-    else
-        document.addEventListener("DOMContentLoaded", this._onPageReady.bind(this));
-}
+    var state = document.readyState
+    if (state === 'interactive' || state === 'complete') {
+      this._onPageReady()
+    } else {
+      document.addEventListener('DOMContentLoaded', this._onPageReady.bind(this))
+    }
+  }
 
-// Page is ready for magic
-WebApp._onPageReady = function()
-{
+  // Page is ready for magic
+  WebApp._onPageReady = function () {
     // Connect handler for signal ActionActivated
-    Nuvola.actions.connect("ActionActivated", this);
+    Nuvola.actions.connect('ActionActivated', this)
 
     // Start update routine
-    this.update();
-}
+    this.update()
+  }
 
-// Extract data from the web page
-WebApp.update = function()
-{
+  // Extract data from the web page
+  WebApp.update = function () {
     var track = {
-        title: null,
-        artist: null,
-        album: null,
-        artLocation: null,
-        rating: null
+      title: null,
+      artist: null,
+      album: null,
+      artLocation: null,
+      rating: null
     }
 
-    player.setTrack(track);
-    player.setPlaybackState(PlaybackState.UNKNOWN);
+    player.setTrack(track)
+    player.setPlaybackState(PlaybackState.UNKNOWN)
 
     // Schedule the next update
-    setTimeout(this.update.bind(this), 500);
-}
+    setTimeout(this.update.bind(this), 500)
+  }
 
-// Handler of playback actions
-WebApp._onActionActivated = function(emitter, name, param)
-{
-}
+  // Handler of playback actions
+  WebApp._onActionActivated = function (emitter, name, param) {
+  }
 
-WebApp.start();
+  WebApp.start();
 
-})(this);  // function(Nuvola)</code></pre>
+})(this)  // function (Nuvola)</code></pre>
 <dl>
 <dt>Lines 2-22</dt>
 <dd>
@@ -401,7 +397,7 @@ details.</p>
 <dt>Line 38</dt>
 <dd>
 <p>Create new WebApp prototype object derived from the <a href="./api_reference.html#Nuvola.WebApp">Nuvola.WebApp</a> prototype that contains
-handy default handlers for initialization routines and signals from Nuvola core. 
+handy default handlers for initialization routines and signals from Nuvola core.
 You can override them if your web app requires more magic ;-)</p>
 </dd>
 <dt>Lines 41-50</dt>
@@ -483,7 +479,7 @@ instances and run it again with your parameters.</code></pre>
 </div></div>
 <p><img alt="A list with single service integration" src="../images/guide/app_list_one_service.png"/></p>
 <p>Launch your service integration and a new window will be opened with the test service. First of all,
-show <strong>developer's sidebar</strong> (Gear menu → Show sidebar → select "Developer" in the right 
+show <strong>developer's sidebar</strong> (Gear menu → Show sidebar → select "Developer" in the right
 sidebar), then enable <strong>WebKit Web Inspector</strong> (right-click the web page anywhere and select
 "Inspect element").</p>
 <p><img alt="Show sidebar - GNOME Shell" src="../images/guide/show_sidebar_gnome_shell.png"/></p>
@@ -500,7 +496,7 @@ However, this will change for Nuvola 4.x in the future and you should not count 
 in <code>metadata.in.json</code>. It can contain a space separated list of following requirements:</p>
 <ul>
 <li><code>Codec[MP3]</code>: The web app can play audio with HTML5 audio technology and requires a MP3 codec.</li>
-<li><code>Feature[Flash]</code>: The web app requires Adobe Flash plugin. Use only if your app cannot use 
+<li><code>Feature[Flash]</code>: The web app requires Adobe Flash plugin. Use only if your app cannot use
     HTML5 Audio.</li>
 <li><code>WebKitGTK[X.Y.Z]</code>: The web app doesn't work properly in WebKitGTK &lt; X.Y.Z. While the genuine flatpak
     builds of Nuvola always contain the latest stable release of WebKitGTK, this may not be true for
@@ -582,7 +578,7 @@ apps yet.</p>
 Apps project</strong> and distributed in Nuvola Player repository, follow these steps:</p>
 <ul>
 <li>Make sure your script follows the <a href="../apps/guidelines.html">Service Integration Guidelines</a>.</li>
-<li>Make sure your <code>integrate.js</code> contain proper copyright information 
+<li>Make sure your <code>integrate.js</code> contain proper copyright information
     "Copyright 2017 Your name &lt;your e-mail&gt;".</li>
 <li>The test service used in tutorial and guide contains 2-Clause BSD license. If you have severe
     reasons to choose a different license, update license text in both <code>integrate.js</code> and
@@ -615,7 +611,7 @@ integration. You are encouraged to take a look at articles in advanced section t
     This article covers Web apps that don't have a single (constant) home page URL, so their home page has to be specified by user.</li>
 <li><a href="../apps/custom-actions.html">Custom Actions</a>:
     This article covers API that allows you to add custom actions like thumbs up/down rating.</li>
-<li><a href="../apps/translations.html">Translations</a>: How to mark translatable strings for 
+<li><a href="../apps/translations.html">Translations</a>: How to mark translatable strings for
     <a href="http://www.gnu.org/software/gettext/manual/gettext.html">Gettext-based</a>
     translations framework for service integration scripts.</li>
 </ul>

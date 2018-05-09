@@ -125,68 +125,68 @@ i. e. it cannot be translated differently depending on a message context.</p>
 <ul>
 <li>
 <p>Use function <a href="./api_reference.html#Nuvola.Translate.gettext">Translate.gettext</a>.</p>
-<pre class="codehilite"><code class="language-js">console.log(Nuvola.Translate.gettext("Bye World!"));</code></pre>
+<pre class="codehilite"><code class="language-js">console.log(Nuvola.Translate.gettext('Bye World!'))</code></pre>
 </li>
 <li>
 <p>It's common to create a short alias <code>_</code>. (Note that other aliases won't be recognized by
     a translation extraction tool.)</p>
-<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext;
-console.log(_("Hello world!"));</code></pre>
+<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext
+console.log(_('Hello world!'))</code></pre>
 </li>
 <li>
 <p>Note that you have to provide a string literal, not variable nor expression, because the
     translation extraction tool doesn't expand variables.</p>
-<pre class="codehilite"><code class="language-js">var greeting = "Hello world!";
-console.log(_(greeting)); // Wrong!
+<pre class="codehilite"><code class="language-js">var greeting = 'Hello world!'
+console.log(_(greeting)) // Wrong!
 
-var greeting = _("Hello world!"); // Right
+var greeting = _('Hello world!') // Right
 console.log(greeting)</code></pre>
 </li>
 <li>
 <p>If you need to compose message with variables, use <a href="./api_reference.html#Nuvola.format">Nuvola.format</a>.</p>
-<pre class="codehilite"><code class="language-js">var name = "John";
-console.log(_("Hello " + name + "!")); // Wrong!
-console.log(Nuvola.format(_("Hello {1}!"), name)); // Right
-var $fmt = Nuvola.format;
-console.log($fmt(_("Hello {1}!"), name)); // Right</code></pre>
+<pre class="codehilite"><code class="language-js">var name = 'John'
+console.log(_('Hello ' + name + '!')) // Wrong!
+console.log(Nuvola.format(_('Hello {1}!'), name)) // Right
+var $fmt = Nuvola.format
+console.log($fmt(_('Hello {1}!'), name)) // Right</code></pre>
 </li>
 <li>
 <p>You can optionally add a comment for translators after tree slashes. It has to be on a line
     preceding the translated string though.</p>
-<pre class="codehilite"><code class="language-js">var name = "John";
+<pre class="codehilite"><code class="language-js">var name = 'John'
 /// {1} is a placeholder for user name
-console.log(Nuvola.format(_("Hello {1}!"), name));</code></pre>
+console.log(Nuvola.format(_('Hello {1}!'), name))</code></pre>
 </li>
 </ul>
 <h3 id="disambiguating-message-context">Disambiguating message context</h3>
 <p>You might sometimes have short strings that could be translated differently depending on a context.
-For example, "Back" string in navigation or in a body part. You should use this function for
+For example, 'Back' string in navigation or in a body part. You should use this function for
 labels of <a href="../apps/custom-actions.html">custom actions</a> or entries of
 <a href="../apps/initialization-and-preferences-forms.html">initialization and preferences forms</a>.</p>
 <ul>
 <li>
 <p>Use function <a href="./api_reference.html#Nuvola.Translate.pgettext">Translate.pgettext</a>.</p>
-<pre class="codehilite"><code class="language-js">console.log(Nuvola.Translate.pgettext("Action label", "Show notification"));
-console.log(Nuvola.Translate.pgettext("Checkbox label", "Show notification"));</code></pre>
+<pre class="codehilite"><code class="language-js">console.log(Nuvola.Translate.pgettext('Action label', 'Show notification'))
+console.log(Nuvola.Translate.pgettext('Checkbox label', 'Show notification'))</code></pre>
 </li>
 <li>
 <p>It's common to create a short alias <code>C_</code>. (Note that other aliases won't be recognized by
     a translation extraction tool.)</p>
-<pre class="codehilite"><code class="language-js">var C_ = Nuvola.Translate.pgettext;
-console.log(C_("Action label", "Show notification"));
-console.log(C_("Checkbox label", "Show notification"));</code></pre>
+<pre class="codehilite"><code class="language-js">var C_ = Nuvola.Translate.pgettext
+console.log(C_('Action label', 'Show notification'))
+console.log(C_('Checkbox label', 'Show notification'))</code></pre>
 </li>
 <li>
 <p>You can optionally add a comment for translators after tree slashes. It has to be on a line
     preceding the translated string though.</p>
 <pre class="codehilite"><code class="language-js">/// My comment
-console.log(C_("Action label", "Show notification"));
+console.log(C_('Action label', 'Show notification'))
 
 console.log(C_(
-    "Checkbox label",
-    /// My comment
-    "Show notification"
-    ));</code></pre>
+  'Checkbox label',
+  /// My comment
+  'Show notification'
+  ))</code></pre>
 </li>
 </ul>
 <h3 id="singular-and-plural-form">Singular and plural form</h3>
@@ -196,42 +196,42 @@ console.log(C_(
 <p>Use function <a href="./api_reference.html#Nuvola.Translate.ngettext">Translate.ngettext</a>.</p>
 <pre class="codehilite"><code class="language-js">var eggs = 5;
 var text = Nuvola.Translate.ngettext(
-    "There is {1} egg in the fridge.",
-    "There are {1} eggs in the fridge.",
-    eggs);
-console.log(Nuvola.format(text, eggs));
+  'There is {1} egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)
+console.log(Nuvola.format(text, eggs))
 
-var $fmt = Nuvola.format;
-console.log($fmt(text, eggs));</code></pre>
+var $fmt = Nuvola.format
+console.log($fmt(text, eggs))</code></pre>
 </li>
 <li>
 <p>It's common to create an  alias <code>ngettext</code>. (Note that other aliases won't be recognized by
     a translation extraction tool.)</p>
-<pre class="codehilite"><code class="language-js">var ngettext = Nuvola.Translate.ngettext;
-var eggs = 5;
+<pre class="codehilite"><code class="language-js">var ngettext = Nuvola.Translate.ngettext
+var eggs = 5
 var text = ngettext(
-    "There is {1} egg in the fridge.",
-    "There are {1} eggs in the fridge.",
-    eggs);
-console.log(Nuvola.format(text, eggs));</code></pre>
+  'There is {1} egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)
+console.log(Nuvola.format(text, eggs))</code></pre>
 </li>
 <li>
 <p>It's possible to replace placeholder in the singular form with <code>one</code>.</p>
 <pre class="codehilite"><code class="language-js">var text = ngettext(
-    "There is one egg in the fridge.",
-    "There are {1} eggs in the fridge.",
-    eggs);
-console.log(Nuvola.format(text, eggs));</code></pre>
+  'There is one egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)
+console.log(Nuvola.format(text, eggs))</code></pre>
 </li>
 <li>
 <p>You can optionally add a comment for translators after tree slashes. It has to be on a line
     preceding the singular string though.</p>
 <pre class="codehilite"><code class="language-js">var text = ngettext(
-    /// {1} is a placeholder for a number
-    "There is one egg in the fridge.",
-    "There are {1} eggs in the fridge.",
-    eggs);
-console.log(Nuvola.format(text, eggs));</code></pre>
+  /// {1} is a placeholder for a number
+  'There is one egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)
+console.log(Nuvola.format(text, eggs))</code></pre>
 </li>
 </ul>
 <h2 id="extract-translations">Extract translations</h2>
@@ -240,42 +240,42 @@ Make sure all strings you have intended to mark for translations do appear in ge
 template including translation comments.</p>
 <pre class="codehilite"><code class="language-sh">xgettext --from-code=utf-8 -kC_:1c,2 -c/ -o- integrate.js</code></pre>
 <h3 id="example">Example</h3>
-<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext;
-var C_ = Nuvola.Translate.pgettext;
-var ngettext = Nuvola.Translate.ngettext;
-var $fmt = Nuvola.format;
+<pre class="codehilite"><code class="language-js">var _ = Nuvola.Translate.gettext
+var C_ = Nuvola.Translate.pgettext
+var ngettext = Nuvola.Translate.ngettext
+var $fmt = Nuvola.format
 
-var greeting = _("Hello world!");
+var greeting = _('Hello world!')
 console.log(greeting)
 
-var name = "John";
+var name = 'John'
 /// {1} is a placeholder for user name
-console.log(Nuvola.format(_("Hello {1}!"), name));
-console.log($fmt(_("Hello {1}!"), name));
+console.log(Nuvola.format(_('Hello {1}!'), name))
+console.log($fmt(_('Hello {1}!'), name))
 
 /// My comment
-console.log(C_("Action label", "Show notification"));
+console.log(C_('Action label', 'Show notification'))
 console.log(C_(
-    "Checkbox label",
-    /// My comment
-    "Show notification"
-    ));
+  'Checkbox label',
+  /// My comment
+  'Show notification'
+  ))
 
-var eggs = 1;
+var eggs = 1
 var text = ngettext(
-    "There is {1} egg in the fridge.",
-    "There are {1} eggs in the fridge.",
-    eggs);
-console.log(Nuvola.format(text, eggs));
-console.log($fmt(text, eggs));
+    'There is {1} egg in the fridge.',
+    'There are {1} eggs in the fridge.',
+    eggs)
+console.log(Nuvola.format(text, eggs))
+console.log($fmt(text, eggs))
 
-var eggs = 5;
+var eggs = 5
 var text = ngettext(
-    /// {1} is a placeholder for a number
-    "There is one egg in the fridge.",
-    "There are {1} eggs in the fridge.",
-    eggs);
-console.log(Nuvola.format(text, eggs));</code></pre>
+  /// {1} is a placeholder for a number
+  'There is one egg in the fridge.',
+  'There are {1} eggs in the fridge.',
+  eggs)
+console.log(Nuvola.format(text, eggs))</code></pre>
 <pre class="codehilite"><code class="language-sh">xgettext --from-code=utf-8 -kC_:1c,2 -c/ -o- integrate.js</code></pre>
 <pre class="codehilite"><code class="language-gettext"># SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
