@@ -183,7 +183,7 @@ Let's look at the example:</p>
   "api_major": 4,
   "api_minor": 6,
   "categories": "AudioVideo;Audio;",
-  "requirements": "Feature[Flash] Codec[MP3]",
+  "requirements": "Chromium[65] Codec[MP3] Feature[MSE]",
   "home_url": "nuvola://home.html",
   "license": "2-Clause BSD, CC-BY-3.0",
   "build": {
@@ -461,32 +461,14 @@ No errors have been found.</code></pre>
 <li><code>./configure</code> to generate <code>Makefile</code> and <code>metadata.json</code> from <code>metadata.in.json</code></li>
 <li><code>make all</code> to build the project</li>
 </ul>
-<p>After the project have been built, you can run Nuvola Runtime from terminal with following command and you will see a list with only one
-service Happy Songs, because we told Nuvola to load service integrations only from directory
-<code>~/projects/nuvola-apps</code>.</p>
-<pre class="codehilite"><code>$ nuvola -D -A ~/projects/nuvola-apps
-...
-[Master:DEBUG    Nuvola] WebAppRegistry.vala:128: Found web app Happy Songs at /home/fenryxo/projects/nuvola-aps/nuvola-app-happy-songs, version 1.0
-...</code></pre>
-<div class="panel panel-danger"><p class="panel-heading">Make sure all Nuvola Apps instances have been closed</p><div class="panel-body">
-<p>If you see following warning in terminal, there is a running instance of Nuvola Apps
-that must be closed. Otherwise, the <code>-A</code> parameter is ignored.</p>
-<pre class="codehilite"><code>[Master:INFO     Nuvola] master.vala:135: Nuvola App instance is already running
-and will be activated.
-[Master:WARNING  Nuvola] master.vala:137: Some command line parameters (-D, -v, -A, -L) are
-ignored because they apply only to a new instance. You might want to close all Nuvola Apps
-instances and run it again with your parameters.</code></pre>
-</div></div>
-<p><img alt="A list with single service integration" src="../images/guide/app_list_one_service.png"/></p>
-<p>Launch your service integration and a new window will be opened with the test service. First of all,
-show <strong>developer's sidebar</strong> (Gear menu → Show sidebar → select "Developer" in the right
-sidebar), then enable <strong>WebKit Web Inspector</strong> (right-click the web page anywhere and select
-"Inspect element").</p>
+<p>After the project have been built, you can run your script with Nuvola Runtime from terminal with following command.</p>
+<pre class="codehilite"><code>$ nuvolaruntime -D</code></pre>
+<p>First of all, show <strong>developer's sidebar</strong> (Gear menu → Show sidebar → select "Developer" in the right
+sidebar), then enable <strong>Web Inspector</strong> (click Open Dev Tools button for Chromium-based backend or
+right-click the web page anywhere and select "Inspect element" for WebKitGTK backend).</p>
 <p><img alt="Show sidebar - GNOME Shell" src="../images/guide/show_sidebar_gnome_shell.png"/></p>
 <p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
 <p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
-<p>You can also launch your service integration with id <code>happy_songs</code> directly.</p>
-<pre class="codehilite"><code>nuvola -D -A ~/projects/nuvola-apps -a happy_songs</code></pre>
 <h2 id="web-compatibility-issues">Web Compatibility Issues</h2>
 <h3 id="web-technologies">Web Technologies</h3>
 <p>A particular web app may require certain technologies to function properly.
@@ -498,12 +480,13 @@ in <code>metadata.in.json</code>. It can contain a space separated list of follo
 <li><code>Codec[MP3]</code>: The web app can play audio with HTML5 audio technology and requires a MP3 codec.</li>
 <li><code>Feature[Flash]</code>: The web app requires Adobe Flash plugin. Use only if your app cannot use
     HTML5 Audio.</li>
-<li><code>WebKitGTK[X.Y.Z]</code>: The web app doesn't work properly in WebKitGTK &lt; X.Y.Z. While the genuine flatpak
-    builds of Nuvola always contain the latest stable release of WebKitGTK, this may not be true for
-    unofficial third-party builds.</li>
+<li><code>WebKitGTK[X.Y.Z]</code>: The web app requires WebKitGTK &gt;= X.Y.Z.</li>
+<li><code>Chromium[X]</code>: The web app requires Chromium Embedded Framework from Chromium release X.</li>
 <li><code>Feature[MSE]</code>: The web app requires Media Source extension for HTML5 Audio playback.</li>
 <li><code>Codec[H264]</code>: The web app requires h264 codec for HTML5 Audio playback.</li>
 </ul>
+<p>If you integrate <strong>a media player</strong>, start with <code>Chromium[65] Codec[MP3] Feature[MSE]</code>. If it complains about Flash plugin,
+use <code>Chromium[65] Codec[MP3] Feature[MSE] Feature[Flash]</code>.</p>
 <h3 id="user-agent-quirks">User Agent Quirks</h3>
 <p>It can sometimes happen that a web page provides a different code depending on which web browser is used.
 Nuvola uses the user agent of WebKitGTK web rendering engine by default. However, if the web app you are
