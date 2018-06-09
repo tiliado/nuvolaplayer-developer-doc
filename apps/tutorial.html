@@ -118,7 +118,7 @@
   <div class="col-sm-12 col-md-10 col-lg-9">
     
 <p>This tutorial briefly describes creation of <strong>a new web app script for Nuvola Apps Runtime from
-scratch</strong>. The goal is to write an integration script for <em>fake Happy Songs  service</em> shipped with
+scratch</strong>. The goal is to write an integration script for <em>demo player website</em> shipped with
 Nuvola SDK and to prepare you to create your own service integration.
 I'm looking forward to a code review ;-)</p>
 <h2 id="prepare-development-environment">Prepare development environment</h2>
@@ -136,9 +136,9 @@ I'm looking forward to a code review ;-)</p>
 <p><a href="https://github.com/tiliado/nuvolaruntime/wiki/Nuvola-App-Developer-Kit#running-and-set-up">Launch and set up Nuvola ADK</a></p>
 </li>
 <li>
-<p>Create a new project with "nuvola://home.html" as a home URL.</p>
+<p>Create a new project with "nuvola://demo/main.html" as a home URL.</p>
 <pre class="codehilite"><code>$ cd ~/projects/nuvola-apps
-$ nuvolasdk new-project --name "Happy Songs" --url "nuvola://home.html"
+$ nuvolasdk new-project --name "Happy Songs" --url "nuvola://demo/main.html"
 ...
 Finished!
 
@@ -159,9 +159,9 @@ drwxr-sr-x 1 fenryxo fenryxo   144 Dec  4 18:39 .git
 drwxr-sr-x 1 fenryxo fenryxo    60 Dec  3 18:57 src</code></pre>
 </li>
 <li>
-<p>Copy a dumb example of a streaming website.</p>
+<p>Copy a demo player - an example of a streaming website.</p>
 <pre class="codehilite"><code class="language-sh">cd ~/projects/nuvola-apps/nuvola-app-happy-songs
-cp "$(nuvolasdk data-dir)/examples/home.html" .</code></pre>
+cp -r "$(nuvolasdk data-dir)/demo/demo" .</code></pre>
 </li>
 <li>
 <p>If you are not familiar with the <a href="http://git-scm.com/">Git version control system</a>,
@@ -184,7 +184,7 @@ Let's look at the example:</p>
   "api_minor": 6,
   "categories": "AudioVideo;Audio;",
   "requirements": "Chromium[65] Codec[MP3] Feature[MSE]",
-  "home_url": "nuvola://home.html",
+  "home_url": "nuvola://demo/main.html",
   "license": "2-Clause BSD, CC-BY-3.0",
   "build": {
     "icons": [
@@ -241,8 +241,8 @@ Media player services should be in <code>"AudioVideo;Audio;"</code>.</p>
 </dd>
 <dt><code>home_url</code></dt>
 <dd>
-<p>Home page of your service. The dump example of a streaming website contains file <code>home.html</code>, which
-has a special address <code>nuvola://home.html</code>. You will use a real homepage later in your own
+<p>Home page of your service. The dump example of a streaming website contains file <code>demo/main.html</code>, which
+has a special address <code>nuvola://demo/main.html</code>. You will use a real homepage later in your own
 service integration (e.g. <code>https://play.google.com/music/</code> for Google Play Music).</p>
 <p>This field is not required if you use custom function to handle home page request.
 See <a href="../apps/variable-home-page-url.html">Web apps with a variable home page URL</a>.</p>
@@ -292,7 +292,7 @@ in the web page rendering process every-time a web page is loaded in the web vie
 next sample integration script that doesn't actually do much, but will be used as a base for further
 modifications.</p>
 <pre class="codehilite"><code class="language-js linenums">/*
- * Copyright 2017 Your name &lt;your e-mail&gt;
+ * Copyright 2018 Your name &lt;your e-mail&gt;
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -451,8 +451,11 @@ or <a href="../apps/custom-actions.html">Custom Actions</a>.</p>
 </li>
 </ul>
 <h2 id="check-build-and-run-your-script">Check, Build and Run Your Script</h2>
-<p>First of all, make sure you have <a href="https://github.com/tiliado/nuvolasdk#build-a-project-using-nuvola-sdk">installed all dependencies</a>.
-Then run <code>nuvolasdk check-project</code> to check there are no common errors.</p>
+<p>First of all, make sure you have upgraded to the latest
+<a href="https://github.com/tiliado/nuvolaruntime/wiki/Nuvola-App-Developer-Kit">Nuvola App Developer Kit (ADK)</a>
+because it is updated between Nuvola releases. I always recommend running
+<code>flatpak update --system; flatpak update --user</code> before doing any work.</p>
+<p>Then run <code>nuvolasdk check-project</code> (inside Nuvola ADK environment) to check there are no common errors.</p>
 <pre class="codehilite"><code>$ nuvolasdk check-project
 Checking the project...
 No errors have been found.</code></pre>
@@ -467,8 +470,8 @@ No errors have been found.</code></pre>
 sidebar), then enable <strong>Web Inspector</strong> (click Open Dev Tools button for Chromium-based backend or
 right-click the web page anywhere and select "Inspect element" for WebKitGTK backend).</p>
 <p><img alt="Show sidebar - GNOME Shell" src="../images/guide/show_sidebar_gnome_shell.png"/></p>
-<p><img alt="Inspect element" src="../images/guide/inspect_element.png"/></p>
-<p><img alt="WebKit Web Inspector" src="../images/guide/webkit_web_inspector.png"/></p>
+<p><img alt="Open Dev tools in CHromium" src="../images/guide/open_dev_tools.png"/></p>
+<p><img alt="Inspect element in WebKitGTK" src="../images/guide/inspect_element.png"/></p>
 <h2 id="web-compatibility-issues">Web Compatibility Issues</h2>
 <h3 id="web-technologies">Web Technologies</h3>
 <p>A particular web app may require certain technologies to function properly.
