@@ -85,9 +85,9 @@
 <li><a href="#playback-state">Playback state</a></li>
 <li><a href="#track-details">Track details</a></li>
 <li><a href="#media-player-actions">Media Player Actions</a></li>
-<li><a href="#track-rating">Track Rating</a></li>
 <li><a href="#progress-bar">Progress bar</a></li>
 <li><a href="#volume-management">Volume management</a></li>
+<li><a href="#track-rating">Track Rating</a></li>
 <li><a href="#custom-actions">Custom Actions</a></li>
 </ul>
 </li>
@@ -353,8 +353,107 @@ WebApp._onActionActivated = function (emitter, name, param) {
 <div class="panel panel-danger"><p class="panel-heading">Always test playback actions</p><div class="panel-body">
 <p>You should click action buttons in the developer's sidebar to be sure they are working as expected.</p>
 </div></div>
+<h3 id="progress-bar">Progress bar</h3>
+<p>Since <strong>Nuvola 4.5</strong>, it is also possible to integrate progress bar. In order to extract track length and position,
+use these API calls:</p>
+<ul>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack</a> supports <code>track.length</code> property, which holds track
+    length either as a string 'mm:ss' or number of microseconds.</li>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrackPosition">MediaPlayer.setTrackPosition</a> is used to update track position.</li>
+<li><a href="./api_reference.html#Nuvola.parseTimeUsec">Nuvola.parseTimeUsec</a> can be used to convert track length string (e.g. '2:35')
+    into the number of microseconds. <a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack</a> does that automatically
+    for the <code>track.length</code> property.</li>
+</ul>
+<p>The necessary information is available as a plain text in the Demo player, so we can use
+<a href="./api_reference.html#Nuvola.queryText">Nuvola.queryText()</a> utility function for that.</p>
+<pre class="codehilite"><code class="language-js">WebApp.update = function () {
+  ...
+  var track = {}
+  ...
+  track.length = Nuvola.queryText('#timetotal')
+  player.setTrack(track)
+  ...
+  player.setTrackPosition(Nuvola.queryText('#timeelapsed'))
+  ...
+}</code></pre>
+<p>If you wish to let user change track position, use this API:</p>
+<ul>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer.setCanSeek">MediaPlayer.setCanSeek</a> is used to enable/disable remote seek.</li>
+<li>Then the <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction.SEEK</a> is emitted whenever a remote seek is requested.
+    The action parameter contains a track position in microseconds.</li>
+<li>You may need to use <a href="./api_reference.html#Nuvola.clickOnElement">Nuvola.clickOnElement</a> with coordinates to trigger a click
+    event at the position of progress bar corresponding to the track position,
+    e.g. <code>Nuvola.clickOnElement(progressBar, param/Nuvola.parseTimeUsec(trackLength), 0.5)</code>.</li>
+</ul>
+<pre class="codehilite"><code class="language-js">WebApp.update = function () {
+  ...
+  player.setCanSeek(state !== PlaybackState.UNKNOWN &amp;&amp; elms.progressbar)
+  ...
+}
+
+...
+
+WebApp._onActionActivated = function (emitter, name, param) {
+  var elms = this._getElements()
+  switch (name) {
+    ...
+    case PlayerAction.SEEK:
+        var total = Nuvola.parseTimeUsec(Nuvola.queryText('#timetotal'))
+        if (param &gt; 0 &amp;&amp; param &lt;= total) {
+          Nuvola.clickOnElement(elms.progressbar, param / total, 0.5)
+        }
+        break
+    ...
+  }
+}
+
+...</code></pre>
+<p><img alt="Playback time" src="../images/guide/progress_bar.png"/></p>
+<h3 id="volume-management">Volume management</h3>
+<p>Since <strong>Nuvola 4.5</strong>, it is also possible to integrate volume management. In order to extract volume, use
+<a href="./api_reference.html#Nuvola.MediaPlayer.updateVolume">MediaPlayer.updateVolume</a> with the parameter in range 0.0-1.0 (i.e. 0-100%).</p>
+<p>The volume is stored as an <code>aria-valuenow</code> attribute in the demo app, so we can use
+<a href="./api_reference.html#Nuvola.queryAttribute">Nuvola.queryAttribute()</a> for that.</p>
+<pre class="codehilite"><code class="language-js">WebApp.update = function () {
+  ...
+  player.updateVolume(Nuvola.queryAttribute('#volume-mark', 'aria-valuenow', (volume) =&gt; volume / 100))
+  ...
+}</code></pre>
+<p>If you wish to let user change volume, use this API:</p>
+<ul>
+<li><a href="./api_reference.html#Nuvola.MediaPlayer.setCanChangeVolume">MediaPlayer.setCanChangeVolume</a> is used to enable/disable remote
+    volume management.</li>
+<li>Then the <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction.CHANGE_VOLUME</a> is emitted whenever a remote volume change
+    requested. The action parameter contains new volume as a double value in range 0.0-1.0.</li>
+<li>You may need to use <a href="./api_reference.html#Nuvola.clickOnElement">Nuvola.clickOnElement</a> with coordinates to trigger a click
+    event at the position of volume bar corresponding to the desired volume,
+    e.g. <code>Nuvola.clickOnElement(volumeBar, param, 0.5)</code>.</li>
+</ul>
+<pre class="codehilite"><code class="language-js">WebApp.update = function () {
+  ...
+  player.setCanChangeVolume(!!elms.volumebar)
+  ...
+}
+
+...
+
+WebApp._onActionActivated = function (emitter, name, param) {
+  var elms = this._getElements()
+  switch (name) {
+    ...
+    case PlayerAction.CHANGE_VOLUME:
+      Nuvola.clickOnElement(elms.volumebar, param, 0.5)
+      break
+    ...
+  }
+}
+
+...</code></pre>
+<p><img alt="Playback volume" src="../images/guide/volume_management.png"/></p>
 <h3 id="track-rating">Track Rating</h3>
-<p>Since <strong>Nuvola 3.1</strong>, it is also possible to integrate track rating.</p>
+<p>Since <strong>Nuvola 3.1</strong>, it is also possible to integrate track rating. One of consumers of this metadata is
+<a href="https://extensions.gnome.org/extension/55/media-player-indicator/">GNOME Shell Media Player extension</a>, for example:</p>
+<p><img alt="Example of MPRIS rating" src="../images/guide/example_mpris_rating.png"/></p>
 <p>In order to provide users with the current rating state, use these API calls:</p>
 <ul>
 <li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack()</a> method accepts <code>track.rating</code> property, which holds
@@ -461,106 +560,15 @@ WebApp._setRating = function (stars) {
 
 ...</code></pre>
 <p><img alt="Track Rating" src="../images/guide/track_rating.png"/></p>
-<h3 id="progress-bar">Progress bar</h3>
-<p>Since <strong>Nuvola 4.5</strong>, it is also possible to integrate progress bar. In order to extract track length and position,
-use these API calls:</p>
-<ul>
-<li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack</a> supports <code>track.length</code> property, which holds track
-    length either as a string 'mm:ss' or number of microseconds.</li>
-<li><a href="./api_reference.html#Nuvola.MediaPlayer.setTrackPosition">MediaPlayer.setTrackPosition</a> is used to update track position.</li>
-<li><a href="./api_reference.html#Nuvola.parseTimeUsec">Nuvola.parseTimeUsec</a> can be used to convert track length string (e.g. '2:35')
-    into the number of microseconds. <a href="./api_reference.html#Nuvola.MediaPlayer.setTrack">MediaPlayer.setTrack</a> does that automatically
-    for the <code>track.length</code> property.</li>
-</ul>
-<p>The necessary information is available as a plain text in the Demo player, so we can use
-<a href="./api_reference.html#Nuvola.queryText">Nuvola.queryText()</a> utility function for that.</p>
-<pre class="codehilite"><code class="language-js">WebApp.update = function () {
-  ...
-  var track = {}
-  ...
-  track.length = Nuvola.queryText('#timetotal')
-  player.setTrack(track)
-  ...
-  player.setTrackPosition(Nuvola.queryText('#timeelapsed'))
-  ...
-}</code></pre>
-<p>If you wish to let user change track position, use this API:</p>
-<ul>
-<li><a href="./api_reference.html#Nuvola.MediaPlayer.setCanSeek">MediaPlayer.setCanSeek</a> is used to enable/disable remote seek.</li>
-<li>Then the <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction.SEEK</a> is emitted whenever a remote seek is requested.
-    The action parameter contains a track position in microseconds.</li>
-<li>You may need to use <a href="./api_reference.html#Nuvola.clickOnElement">Nuvola.clickOnElement</a> with coordinates to trigger a click
-    event at the position of progress bar corresponding to the track position,
-    e.g. <code>Nuvola.clickOnElement(progressBar, param/Nuvola.parseTimeUsec(trackLength), 0.5)</code>.</li>
-</ul>
-<pre class="codehilite"><code class="language-js">WebApp.update = function () {
-  ...
-  player.setCanSeek(state !== PlaybackState.UNKNOWN &amp;&amp; elms.progressbar)
-  ...
-}
-
-...
-
-WebApp._onActionActivated = function (emitter, name, param) {
-  var elms = this._getElements()
-  switch (name) {
-    ...
-    case PlayerAction.SEEK:
-        var total = Nuvola.parseTimeUsec(Nuvola.queryText('#timetotal'))
-        if (param &gt; 0 &amp;&amp; param &lt;= total) {
-          Nuvola.clickOnElement(elms.progressbar, param / total, 0.5)
-        }
-        break
-    ...
-  }
-}
-
-...</code></pre>
-<p><img alt="Playback time" src="../images/guide/progress_bar.png"/></p>
-<h3 id="volume-management">Volume management</h3>
-<p>Since <strong>Nuvola 4.5</strong>, it is also possible to integrate volume management. In order to extract volume, use
-<a href="./api_reference.html#Nuvola.MediaPlayer.updateVolume">MediaPlayer.updateVolume</a> with the parameter in range 0.0-1.0 (i.e. 0-100%).</p>
-<p>The volume is stored as an <code>aria-valuenow</code> attribute in the demo app, so we can use
-<a href="./api_reference.html#Nuvola.queryAttribute">Nuvola.queryAttribute()</a> for that.</p>
-<pre class="codehilite"><code class="language-js">WebApp.update = function () {
-  ...
-  player.updateVolume(Nuvola.queryAttribute('#volume-mark', 'aria-valuenow', (volume) =&gt; volume / 100))
-  ...
-}</code></pre>
-<p>If you wish to let user change volume, use this API:</p>
-<ul>
-<li><a href="./api_reference.html#Nuvola.MediaPlayer.setCanChangeVolume">MediaPlayer.setCanChangeVolume</a> is used to enable/disable remote
-    volume management.</li>
-<li>Then the <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction.CHANGE_VOLUME</a> is emitted whenever a remote volume change
-    requested. The action parameter contains new volume as a double value in range 0.0-1.0.</li>
-<li>You may need to use <a href="./api_reference.html#Nuvola.clickOnElement">Nuvola.clickOnElement</a> with coordinates to trigger a click
-    event at the position of volume bar corresponding to the desired volume,
-    e.g. <code>Nuvola.clickOnElement(volumeBar, param, 0.5)</code>.</li>
-</ul>
-<pre class="codehilite"><code class="language-js">WebApp.update = function () {
-  ...
-  player.setCanChangeVolume(!!elms.volumebar)
-  ...
-}
-
-...
-
-WebApp._onActionActivated = function (emitter, name, param) {
-  var elms = this._getElements()
-  switch (name) {
-    ...
-    case PlayerAction.CHANGE_VOLUME:
-      Nuvola.clickOnElement(elms.volumebar, param, 0.5)
-      break
-    ...
-  }
-}
-
-...</code></pre>
-<p><img alt="Playback volume" src="../images/guide/volume_management.png"/></p>
 <h3 id="custom-actions">Custom Actions</h3>
-<p>Service integrations can also create <a href="../apps/custom-actions.html">custom Actions</a> like thumbs up/down or star rating.
-Let's add custom actions for 5 star rating:</p>
+<p>Service integrations can also create <a href="../apps/custom-actions.html">custom Actions</a> like <strong>thumbs up/down</strong>,
+<strong>star rating</strong> or whatever might be useful. These actions are typically exported as menu items of a tray icon or
+a dock item, or can have a keyboard shortcut:</p>
+<p><img alt="Custom actions in AppIndicators" src="../images/guide/example_gnome_appindicator_custom_actions.png"/>
+<img alt="Custom actions in Pantheon dock" src="../images/guide/example_pantheon_dock_custom_actions.png"/>
+<img alt="Custom actions in Unity launcher" src="../images/guide/example_unity_launcher_custom_actions.png"/>
+<img alt="Custom actions inKeybindings" src="../images/guide/example_keybindings_custom_actions.png"/></p>
+<p>Let's enhance our current integration of track rating with custom actions for that:</p>
 <pre class="codehilite"><code class="language-js">...
 var player = Nuvola.$object(Nuvola.MediaPlayer)
 var _ = Nuvola.Translate.gettext
