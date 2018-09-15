@@ -128,44 +128,45 @@ from letters, digits and dash. Then we create the actions in
 <p>Note that <a href="../apps/translations.html">translation function</a> alias <code>C_</code> is used mark short
 translatable strings with context information ("Action") and <code>ngettext</code> for string with both
 singular and plural forms.</p>
-<pre class="codehilite"><code class="language-js">...
-// Translations
-var C_ = Nuvola.Translate.pgettext
-var ngettext = Nuvola.Translate.ngettext
-...
-var ACTION_ALERT = 'x-alert'
-var ACTION_THUMBS_UP = 'thumbs-up'
-var ACTION_THUMBS_DOWN = 'thumbs-down'
-var ACTION_RATING = 'rating'
+<div class="codehilite"><pre><span></span><span class="p">...</span>
+<span class="c1">// Translations</span>
+<span class="kd">var</span> <span class="nx">C_</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">pgettext</span>
+<span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span>
+<span class="p">...</span>
+<span class="kd">var</span> <span class="nx">ACTION_ALERT</span> <span class="o">=</span> <span class="s1">'x-alert'</span>
+<span class="kd">var</span> <span class="nx">ACTION_THUMBS_UP</span> <span class="o">=</span> <span class="s1">'thumbs-up'</span>
+<span class="kd">var</span> <span class="nx">ACTION_THUMBS_DOWN</span> <span class="o">=</span> <span class="s1">'thumbs-down'</span>
+<span class="kd">var</span> <span class="nx">ACTION_RATING</span> <span class="o">=</span> <span class="s1">'rating'</span>
 
-...
+<span class="p">...</span>
 
-var WebApp = Nuvola.$WebApp()
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">()</span>
 
-WebApp._onInitAppRunner = function (emitter) {
-  Nuvola.WebApp._onInitAppRunner.call(this, emitter)
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitAppRunner</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">)</span>
 
-  Nuvola.actions.addAction('playback', 'win', ACTION_ALERT, C_('Action', 'Alert!'),
-    null, null, null, null)
-  Nuvola.actions.addAction('playback', 'win', ACTION_THUMBS_UP, C_('Action', 'Thumbs up'),
-    null, null, null, true)
-  Nuvola.actions.addAction('playback', 'win', ACTION_THUMBS_DOWN, C_('Action', 'Thumbs down'),
-    null, null, null, true)
-  var ratingOptions = []
-  for (var stars = 0; stars &lt; 6; stars++) {
-    ratingOptions.push([
-      stars, // stateId
-      /// Star rating, {1} is a placeholder for a number
-      Nuvola.format(ngettext('Rating: {1} star', 'Rating: {1} stars', stars), stars), // label
-      null, // mnemo_label
-      null, // icon
-      null  // keybinding
-    ])
-  }
-  Nuvola.actions.addRadioAction('playback', 'win', ACTION_RATING, 0, ratingOptions)
-}
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s1">'Action'</span><span class="p">,</span> <span class="s1">'Alert!'</span><span class="p">),</span>
+    <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s1">'Action'</span><span class="p">,</span> <span class="s1">'Thumbs up'</span><span class="p">),</span>
+    <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s1">'Action'</span><span class="p">,</span> <span class="s1">'Thumbs down'</span><span class="p">),</span>
+    <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+  <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ratingOptions</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
+      <span class="nx">stars</span><span class="p">,</span> <span class="c1">// stateId</span>
+      <span class="c1">/// Star rating, {1} is a placeholder for a number</span>
+      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">ngettext</span><span class="p">(</span><span class="s1">'Rating: {1} star'</span><span class="p">,</span> <span class="s1">'Rating: {1} stars'</span><span class="p">,</span> <span class="nx">stars</span><span class="p">),</span> <span class="nx">stars</span><span class="p">),</span> <span class="c1">// label</span>
+      <span class="kc">null</span><span class="p">,</span> <span class="c1">// mnemo_label</span>
+      <span class="kc">null</span><span class="p">,</span> <span class="c1">// icon</span>
+      <span class="kc">null</span>  <span class="c1">// keybinding</span>
+    <span class="p">])</span>
+  <span class="p">}</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
+<span class="p">}</span>
 
-...</code></pre>
+<span class="p">...</span>
+</pre></div>
 <div class="panel panel-danger"><p class="panel-heading">Global window object not available</p><div class="panel-body">
 <p>The <a href="./api_reference.html#Nuvola.Core%3A%3AInitAppRunner">Nuvola.Core::InitAppRunner</a> signal is
 executed in a pure JavaScript environment without
@@ -179,27 +180,28 @@ add these actions to the media player component with method
 <a href="./api_reference.html#Nuvola.MediaPlayer.addExtraActions">Nuvola.MediaPlayer.addExtraActions</a>. Note that we have
 to add one identifier for each option/state of a radio action, the indentifier consists of the
 action name and the option id separated by two colons <code>::</code>.</p>
-<pre class="codehilite"><code class="language-js">...
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
-var player = Nuvola.$object(Nuvola.MediaPlayer)
+<span class="kd">var</span> <span class="nx">player</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">MediaPlayer</span><span class="p">)</span>
 
-...
+<span class="p">...</span>
 
-var WebApp = Nuvola.$WebApp()
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">()</span>
 
-...
+<span class="p">...</span>
 
-WebApp._onPageReady = function () {
-  var actions = [ACTION_ALERT, ACTION_THUMBS_UP, ACTION_THUMBS_DOWN]
-  for (var i=0; i &lt;= 5; i++) {
-    actions.push(ACTION_RATING + '::' + i)
-  }
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">actions</span> <span class="o">=</span> <span class="p">[</span><span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">actions</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s1">'::'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span>
+  <span class="p">}</span>
 
-  player.addExtraActions(actions)
-  this.update()
-}
+  <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">actions</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span>
+<span class="p">}</span>
 
-...</code></pre>
+<span class="p">...</span>
+</pre></div>
 <p>The media player component than orders Nuvola Player to show the actions in user interface:</p>
 <p><img alt="Custom actions" src="../images/guide/custom_actions.png"/></p>
 <h2 id="manage-actions">Manage Actions</h2>
@@ -211,79 +213,81 @@ and to extract state of toggle and radio actions. Then update enabled flag with 
 state of radio and toggle actions with method
 <a href="./api_reference.html#Nuvola.Actions.updateState">Nuvola.actions.updateState</a> or
 <a href="./api_reference.html#Nuvola.Actions.updateStates">Nuvola.actions.updateStates</a>.</p>
-<pre class="codehilite"><code class="language-js">...
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
-WebApp.update = function () {
-  ...
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="p">...</span>
 
-  // Extract whether the action is enabled and its state from a web page
-  var actionsEnabled = {}
-  var actionsStates = {}
+  <span class="c1">// Extract whether the action is enabled and its state from a web page</span>
+  <span class="kd">var</span> <span class="nx">actionsEnabled</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="kd">var</span> <span class="nx">actionsStates</span> <span class="o">=</span> <span class="p">{}</span>
 
-  actionsEnabled[ACTION_ALERT] = true
+  <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_ALERT</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
 
-  actionsEnabled[ACTION_THUMBS_UP] = true
-  actionsStates[ACTION_THUMBS_UP] = true;// on/checked
+  <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span><span class="c1">// on/checked</span>
 
-  actionsEnabled[ACTION_THUMBS_DOWN] = true
-  actionsStates[ACTION_THUMBS_DOWN] = false // off/unchecked
+  <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span> <span class="o">=</span> <span class="kc">false</span> <span class="c1">// off/unchecked</span>
 
-  actionsEnabled[ACTION_RATING] = true
-  actionsStates[ACTION_RATING] = 3 // three stars
+  <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">// three stars</span>
 
-  // Compare with previous values and update if necessary
-  Nuvola.actions.updateEnabledFlags(actionsEnabled)
-  Nuvola.actions.updateStates(actionsStates)
+  <span class="c1">// Compare with previous values and update if necessary</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlags</span><span class="p">(</span><span class="nx">actionsEnabled</span><span class="p">)</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateStates</span><span class="p">(</span><span class="nx">actionsStates</span><span class="p">)</span>
 
-  ...
-}
+  <span class="p">...</span>
+<span class="p">}</span>
 
-...</code></pre>
+<span class="p">...</span>
+</pre></div>
 <p><img alt="Custom actions - enabled" src="../images/guide/custom_actions_enabled.png"/></p>
 <h2 id="respond-to-actions">Respond to Actions</h2>
 <p>The final step is to write handlers for the new actions similarly like for
 <a href="./api_reference.html#Nuvola.PlayerAction">player actions</a>: extend <code>WebApp._onActionActivated</code> method
 from <a href="../apps/tutorial.html">tutorial</a>.</p>
-<pre class="codehilite"><code class="language-js">...
+<div class="codehilite"><pre><span></span><span class="p">...</span>
 
-WebApp._onActionActivated = function (emitter, name, param) {
-  switch (name) {
-    /* Base media player actions */
-    case PlayerAction.TOGGLE_PLAY:
-      ...
-      break
-    case PlayerAction.PLAY:
-      ...
-      break
-    case PlayerAction.PAUSE:
-    case PlayerAction.STOP:
-      ...
-      break
-    case PlayerAction.PREV_SONG:
-      ...
-      break
-    case PlayerAction.NEXT_SONG:
-      ...
-      break
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* Base media player actions */</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">TOGGLE_PLAY</span><span class="o">:</span>
+      <span class="p">...</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PLAY</span><span class="o">:</span>
+      <span class="p">...</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PAUSE</span><span class="o">:</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">STOP</span><span class="o">:</span>
+      <span class="p">...</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">PREV_SONG</span><span class="o">:</span>
+      <span class="p">...</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">NEXT_SONG</span><span class="o">:</span>
+      <span class="p">...</span>
+      <span class="k">break</span>
 
-    /* Custom actions */
-    case ACTION_ALERT:
-      window.alert('Alert!');
-      break
-    case ACTION_THUMBS_UP:
-      Nuvola.clickOnElement(document.getElementById('thumbs-up'))
-      break
-    case ACTION_THUMBS_DOWN:
-      Nuvola.clickOnElement(document.getElementById('thumbs-down'))
-      break
-    case ACTION_RATING:
-      // param contains action's state, i.e. number of stars
-      Nuvola.clickOnElement(document.getElementById('star-' + param))
-      break
-  }
-}
+    <span class="cm">/* Custom actions */</span>
+    <span class="k">case</span> <span class="nx">ACTION_ALERT</span><span class="o">:</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="s1">'Alert!'</span><span class="p">);</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">ACTION_THUMBS_UP</span><span class="o">:</span>
+      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'thumbs-up'</span><span class="p">))</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="o">:</span>
+      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'thumbs-down'</span><span class="p">))</span>
+      <span class="k">break</span>
+    <span class="k">case</span> <span class="nx">ACTION_RATING</span><span class="o">:</span>
+      <span class="c1">// param contains action's state, i.e. number of stars</span>
+      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'star-'</span> <span class="o">+</span> <span class="nx">param</span><span class="p">))</span>
+      <span class="k">break</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-...</code></pre>
+<span class="p">...</span>
+</pre></div>
 <p><img alt="Custom action - Alert!" src="../images/guide/custom_action_alert.png"/></p>
 <div class="panel panel-info"><p class="panel-heading">Implementation detail</p><div class="panel-body">
 <p><a href="./api_reference.html#Nuvola.PlayerAction">Player actions</a> are created by
@@ -297,75 +301,76 @@ WebApp._onActionActivated = function (emitter, name, param) {
 example, Google Play Music offers only thumbs up/down rating for songs by default, but users can
 turn on five-star ratting in Music Labs. The following code detects which rating type is supported
 and adds actions accordingly.</p>
-<pre class="codehilite"><code class="language-js">var THUMBS_ACTIONS = [ACTION_THUMBS_UP, ACTION_THUMBS_DOWN]
-var STARS_ACTIONS = []
-for (var i=0; i &lt;= 5; i++) {
-  STARS_ACTIONS.push(ACTION_RATING + '::' + i)
-}
+<div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">THUMBS_ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span>
+<span class="kd">var</span> <span class="nx">STARS_ACTIONS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">STARS_ACTIONS</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s1">'::'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span>
+<span class="p">}</span>
 
-...
+<span class="p">...</span>
 
-var WebApp = Nuvola.$WebApp()
+<span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">()</span>
 
-...
+<span class="p">...</span>
 
-WebApp.getThumbs = function () {
-  var elm = document.querySelector('#player-right-wrapper .thumbs.rating-container')
-  return [elm, elm.childNodes[0], elm.childNodes[1]]
-}
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">getThumbs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#player-right-wrapper .thumbs.rating-container'</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">[</span><span class="nx">elm</span><span class="p">,</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="p">}</span>
 
-WebApp.getStars = function () {
-  return document.querySelector('#player-right-wrapper .stars.rating-container')
-}
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">getStars</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#player-right-wrapper .stars.rating-container'</span><span class="p">)</span>
+<span class="p">}</span>
 
-WebApp.update = function () {
-  ...
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="p">...</span>
 
-  // null = disabled; true/false toggled on/off
-  var thumbsUp, thumbsDown
-  try {
-    var thumbs = this.getThumbs()
-    if (thumbs[0].style.visibility === 'hidden') {
-      thumbsUp = thumbsDown = null
-    } else {
-      this.toggleThumbRating(true);
-      thumbsUp = thumbs[1].className === 'selected'
-      thumbsDown = thumbs[2].className === 'selected'
-    }
-  } catch (e) {
-    thumbsUp = thumbsDown = null
-  }
+  <span class="c1">// null = disabled; true/false toggled on/off</span>
+  <span class="kd">var</span> <span class="nx">thumbsUp</span><span class="p">,</span> <span class="nx">thumbsDown</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">thumbs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getThumbs</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">thumbs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">===</span> <span class="s1">'hidden'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="kc">null</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">toggleThumbRating</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+      <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">className</span> <span class="o">===</span> <span class="s1">'selected'</span>
+      <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">className</span> <span class="o">===</span> <span class="s1">'selected'</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="kc">null</span>
+  <span class="p">}</span>
 
-  // null = disabled
-  var starRating
-  try {
-      var stars = this.getStars()
-      if (stars.style.visibility == 'hidden') {
-        starRating = null
-      } else {
-        this.toggleStarRating(true)
-        starRating = stars.childNodes[0].getAttribute('data-rating') * 1
-      }
-  } catch (e) {
-    starRating = null
-  }
+  <span class="c1">// null = disabled</span>
+  <span class="kd">var</span> <span class="nx">starRating</span>
+  <span class="k">try</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getStars</span><span class="p">()</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">stars</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">==</span> <span class="s1">'hidden'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">starRating</span> <span class="o">=</span> <span class="kc">null</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">toggleStarRating</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+        <span class="nx">starRating</span> <span class="o">=</span> <span class="nx">stars</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'data-rating'</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span>
+      <span class="p">}</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">starRating</span> <span class="o">=</span> <span class="kc">null</span>
+  <span class="p">}</span>
 
-  ...
-}
+  <span class="p">...</span>
+<span class="p">}</span>
 
-WebApp.toggleStarRating = function (enabled) {
-  if (enabled &amp;&amp; this.starRatingEnabled !== true) {
-    player.addExtraActions(STARS_ACTIONS)
-    this.starRatingEnabled = true
-  }
-}
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">toggleStarRating</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">enabled</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">starRatingEnabled</span> <span class="o">!==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">STARS_ACTIONS</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">starRatingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-WebApp.toggleThumbRating = function (enabled) {
-  if (enabled &amp;&amp; this.thumbRatingEnabled !== true) {
-    player.addExtraActions(THUMBS_ACTIONS)
-    this.thumbRatingEnabled = true
-  }
-}</code></pre>
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">toggleThumbRating</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">enabled</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">enabled</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">thumbRatingEnabled</span> <span class="o">!==</span> <span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">THUMBS_ACTIONS</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">thumbRatingEnabled</span> <span class="o">=</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 
     <div class="footer">
   <hr />

@@ -131,38 +131,41 @@ I'm looking forward to a code review ;-)</p>
 <li>
 <p>Create a project directory <code>~/projects/nuvola-apps</code> (or any other name, but don't forget to
     adjust paths in this tutorial).</p>
-<pre class="codehilite"><code>mkdir -p ~/projects/nuvola-apps</code></pre>
+<div class="codehilite"><pre><span></span>mkdir -p ~/projects/nuvola-apps
+</pre></div>
 </li>
 <li>
 <p><a href="https://github.com/tiliado/nuvolaruntime/wiki/Nuvola-App-Developer-Kit#running-and-set-up">Launch and set up Nuvola ADK</a></p>
 </li>
 <li>
 <p>Create a new project with "nuvola://demo/main.html" as a home URL.</p>
-<pre class="codehilite"><code>$ cd ~/projects/nuvola-apps
-$ nuvolasdk new-project --name "Happy Songs" --url "nuvola://demo/main.html"
+<div class="codehilite"><pre><span></span>$ <span class="nb">cd</span> ~/projects/nuvola-apps
+$ nuvolasdk new-project --name <span class="s2">"Happy Songs"</span> --url <span class="s2">"nuvola://demo/main.html"</span>
 ...
 Finished!
 
 ./nuvola-app-happy-songs
-total 52
-drwxr-sr-x 1 fenryxo fenryxo   244 Dec  4 18:39 .
-drwxr-xr-x 1 fenryxo fenryxo    44 Dec  4 18:39 ..
--rw-r--r-- 1 fenryxo fenryxo   103 Dec  4 18:39 CHANGELOG.md
--rwxr-xr-x 1 fenryxo fenryxo    65 Dec  4 18:39 configure
--rw-r--r-- 1 fenryxo fenryxo  3649 Dec  4 18:39 CONTRIBUTING.md
-drwxr-sr-x 1 fenryxo fenryxo   144 Dec  4 18:39 .git
--rw-r--r-- 1 fenryxo fenryxo    91 Dec  4 18:39 .gitignore
--rw-r--r-- 1 fenryxo fenryxo  2701 Dec  4 18:39 integrate.js
--rw-r--r-- 1 fenryxo fenryxo  1246 Dec  3 18:57 LICENSE-BSD.txt
--rw-r--r-- 1 fenryxo fenryxo 18424 Dec  3 18:57 LICENSE-CC-BY.txt
--rw-r--r-- 1 fenryxo fenryxo   541 Dec  4 18:39 metadata.in.json
--rw-r--r-- 1 fenryxo fenryxo  1079 Dec  4 18:39 README.md
-drwxr-sr-x 1 fenryxo fenryxo    60 Dec  3 18:57 src</code></pre>
+total <span class="m">52</span>
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">244</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 .
+drwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">44</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 ..
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">103</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 CHANGELOG.md
+-rwxr-xr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">65</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 configure
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">3649</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 CONTRIBUTING.md
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo   <span class="m">144</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 .git
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo    <span class="m">91</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 .gitignore
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">2701</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 integrate.js
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1246</span> Dec  <span class="m">3</span> <span class="m">18</span>:57 LICENSE-BSD.txt
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo <span class="m">18424</span> Dec  <span class="m">3</span> <span class="m">18</span>:57 LICENSE-CC-BY.txt
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo   <span class="m">541</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 metadata.in.json
+-rw-r--r-- <span class="m">1</span> fenryxo fenryxo  <span class="m">1079</span> Dec  <span class="m">4</span> <span class="m">18</span>:39 README.md
+drwxr-sr-x <span class="m">1</span> fenryxo fenryxo    <span class="m">60</span> Dec  <span class="m">3</span> <span class="m">18</span>:57 src
+</pre></div>
 </li>
 <li>
 <p>Copy a demo player - an example of a streaming website.</p>
-<pre class="codehilite"><code class="language-sh">cd ~/projects/nuvola-apps/nuvola-app-happy-songs
-cp -r "$(nuvolasdk data-dir)/demo/demo" .</code></pre>
+<div class="codehilite"><pre><span></span><span class="nb">cd</span> ~/projects/nuvola-apps/nuvola-app-happy-songs
+cp -r <span class="s2">"</span><span class="k">$(</span>nuvolasdk data-dir<span class="k">)</span><span class="s2">/demo/demo"</span> .
+</pre></div>
 </li>
 <li>
 <p>If you are not familiar with the <a href="http://git-scm.com/">Git version control system</a>,
@@ -174,26 +177,27 @@ cp -r "$(nuvolasdk data-dir)/demo/demo" .</code></pre>
 <p><strong>Metadata file contains basic information about your service integrations.</strong> It uses
 <a href="http://en.wikipedia.org/wiki/JSON">JSON format</a> and it's called <code>metadata.in.json</code>.
 Let's look at the example:</p>
-<pre class="codehilite"><code class="language-json">{
-  "id": "happy_songs",
-  "name": "Happy Songs",
-  "maintainer_name": "Jiří Janoušek",
-  "maintainer_link": "https://github.com/fenryxo",
-  "version_major": 1,
-  "version_minor": 0,
-  "api_major": 4,
-  "api_minor": 6,
-  "categories": "AudioVideo;Audio;",
-  "requirements": "Chromium[65] Codec[MP3] Feature[MSE]",
-  "home_url": "nuvola://demo/main.html",
-  "license": "2-Clause BSD, CC-BY-3.0",
-  "build": {
-    "icons": [
-      "src/icon.svg SCALABLE 64 128 256",
-      "src/icon-xs.svg 16 22 24",
-      "src/icon-sm.svg 32 48"
-    ]
-  }</code></pre>
+<div class="codehilite"><pre><span></span><span class="p">{</span>
+  <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"happy_songs"</span><span class="p">,</span>
+  <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Happy Songs"</span><span class="p">,</span>
+  <span class="nt">"maintainer_name"</span><span class="p">:</span> <span class="s2">"Jiří Janoušek"</span><span class="p">,</span>
+  <span class="nt">"maintainer_link"</span><span class="p">:</span> <span class="s2">"https://github.com/fenryxo"</span><span class="p">,</span>
+  <span class="nt">"version_major"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">"version_minor"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nt">"api_major"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+  <span class="nt">"api_minor"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+  <span class="nt">"categories"</span><span class="p">:</span> <span class="s2">"AudioVideo;Audio;"</span><span class="p">,</span>
+  <span class="nt">"requirements"</span><span class="p">:</span> <span class="s2">"Chromium[65] Codec[MP3] Feature[MSE]"</span><span class="p">,</span>
+  <span class="nt">"home_url"</span><span class="p">:</span> <span class="s2">"nuvola://demo/main.html"</span><span class="p">,</span>
+  <span class="nt">"license"</span><span class="p">:</span> <span class="s2">"2-Clause BSD, CC-BY-3.0"</span><span class="p">,</span>
+  <span class="nt">"build"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"icons"</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">"src/icon.svg SCALABLE 64 128 256"</span><span class="p">,</span>
+      <span class="s2">"src/icon-xs.svg 16 22 24"</span><span class="p">,</span>
+      <span class="s2">"src/icon-sm.svg 32 48"</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+</pre></div>
 <p>This file contains several mandatory fields:</p>
 <dl>
 <dt><code>id</code></dt>
@@ -292,89 +296,173 @@ perform initialization of the main process and again
 in the web page rendering process every-time a web page is loaded in the web view. Let's look at the
 next sample integration script that doesn't actually do much, but will be used as a base for further
 modifications.</p>
-<pre class="codehilite"><code class="language-js linenums">/*
- * Copyright 2018 Your name &lt;your e-mail&gt;
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions and the following disclaimer in the documentation
- *    and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * Copyright 2018 Your name &lt;your e-mail&gt;</span>
+<span class="cm"> *</span>
+<span class="cm"> * Redistribution and use in source and binary forms, with or without</span>
+<span class="cm"> * modification, are permitted provided that the following conditions are met:</span>
+<span class="cm"> *</span>
+<span class="cm"> * 1. Redistributions of source code must retain the above copyright notice, this</span>
+<span class="cm"> *    list of conditions and the following disclaimer.</span>
+<span class="cm"> * 2. Redistributions in binary form must reproduce the above copyright notice,</span>
+<span class="cm"> *    this list of conditions and the following disclaimer in the documentation</span>
+<span class="cm"> *    and/or other materials provided with the distribution.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND</span>
+<span class="cm"> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
+<span class="cm"> * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
+<span class="cm"> * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR</span>
+<span class="cm"> * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
+<span class="cm"> * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
+<span class="cm"> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
+<span class="cm"> * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT</span>
+<span class="cm"> * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS</span>
+<span class="cm"> * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span>
+<span class="cm"> */</span>
 
-'use strict'
+<span class="s1">'use strict'</span>
 
-(function (Nuvola) {
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">)</span> <span class="p">{</span>
 
-  // Create media player component
-  var player = Nuvola.$object(Nuvola.MediaPlayer)
+  <span class="c1">// Create media player component</span>
+  <span class="kd">var</span> <span class="nx">player</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$object</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">MediaPlayer</span><span class="p">)</span>
 
-  // Handy aliases
-  var PlaybackState = Nuvola.PlaybackState
-  var PlayerAction = Nuvola.PlayerAction
+  <span class="c1">// Handy aliases</span>
+  <span class="kd">var</span> <span class="nx">PlaybackState</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlaybackState</span>
+  <span class="kd">var</span> <span class="nx">PlayerAction</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerAction</span>
 
-  // Create new WebApp prototype
-  var WebApp = Nuvola.$WebApp()
+  <span class="c1">// Create new WebApp prototype</span>
+  <span class="kd">var</span> <span class="nx">WebApp</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">$WebApp</span><span class="p">()</span>
 
-  // Initialization routines
-  WebApp._onInitWebWorker = function (emitter) {
-    Nuvola.WebApp._onInitWebWorker.call(this, emitter)
+  <span class="c1">// Initialization routines</span>
+  <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onInitWebWorker</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">emitter</span><span class="p">)</span>
 
-    var state = document.readyState
-    if (state === 'interactive' || state === 'complete') {
-      this._onPageReady()
-    } else {
-      document.addEventListener('DOMContentLoaded', this._onPageReady.bind(this))
-    }
-  }
+    <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">state</span> <span class="o">===</span> <span class="s1">'interactive'</span> <span class="o">||</span> <span class="nx">state</span> <span class="o">===</span> <span class="s1">'complete'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'DOMContentLoaded'</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_onPageReady</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
 
-  // Page is ready for magic
-  WebApp._onPageReady = function () {
-    // Connect handler for signal ActionActivated
-    Nuvola.actions.connect('ActionActivated', this)
+  <span class="c1">// Page is ready for magic</span>
+  <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Connect handler for signal ActionActivated</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="s1">'ActionActivated'</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
 
-    // Start update routine
-    this.update()
-  }
+    <span class="c1">// Start update routine</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">()</span>
+  <span class="p">}</span>
 
-  // Extract data from the web page
-  WebApp.update = function () {
-    var track = {
-      title: null,
-      artist: null,
-      album: null,
-      artLocation: null,
-      rating: null
-    }
+  <span class="c1">// Extract data from the web page</span>
+  <span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">track</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="nx">title</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+      <span class="nx">artist</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+      <span class="nx">album</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+      <span class="nx">artLocation</span><span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+      <span class="nx">rating</span><span class="o">:</span> <span class="kc">null</span>
+    <span class="p">}</span>
 
-    player.setTrack(track)
-    player.setPlaybackState(PlaybackState.UNKNOWN)
+    <span class="nx">player</span><span class="p">.</span><span class="nx">setTrack</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span>
+    <span class="nx">player</span><span class="p">.</span><span class="nx">setPlaybackState</span><span class="p">(</span><span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">UNKNOWN</span><span class="p">)</span>
 
-    // Schedule the next update
-    setTimeout(this.update.bind(this), 500)
-  }
+    <span class="c1">// Schedule the next update</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+  <span class="p">}</span>
 
-  // Handler of playback actions
-  WebApp._onActionActivated = function (emitter, name, param) {
-  }
+  <span class="c1">// Handler of playback actions</span>
+  <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">}</span>
 
-  WebApp.start();
+  <span class="nx">WebApp</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
 
-})(this)  // function (Nuvola)</code></pre>
+<span class="p">})(</span><span class="k">this</span><span class="p">)</span>  <span class="c1">// function (Nuvola)</span>
+</pre></div>
+</td></tr></table>
 <dl>
 <dt>Lines 2-22</dt>
 <dd>
@@ -457,16 +545,18 @@ or <a href="../apps/custom-actions.html">Custom Actions</a>.</p>
 because it is updated between Nuvola releases. I always recommend running
 <code>flatpak update --system; flatpak update --user</code> before doing any work.</p>
 <p>Then run <code>nuvolasdk check-project</code> (inside Nuvola ADK environment) to check there are no common errors.</p>
-<pre class="codehilite"><code>$ nuvolasdk check-project
+<div class="codehilite"><pre><span></span>$ nuvolasdk check-project
 Checking the project...
-No errors have been found.</code></pre>
+No errors have been found.
+</pre></div>
 <p>Finally, execute following commands:</p>
 <ul>
 <li><code>./configure</code> to generate <code>Makefile</code> and <code>metadata.json</code> from <code>metadata.in.json</code></li>
 <li><code>make all</code> to build the project</li>
 </ul>
 <p>After the project have been built, you can run your script with Nuvola Runtime from terminal with following command.</p>
-<pre class="codehilite"><code>$ nuvolaruntime -D</code></pre>
+<div class="codehilite"><pre><span></span>$ nuvolaruntime -D
+</pre></div>
 <p>First of all, show <strong>developer's sidebar</strong> (Gear menu → Show sidebar → select "Developer" in the right
 sidebar), then enable <strong>Web Inspector</strong> (click Open Dev Tools button for Chromium-based backend or
 right-click the web page anywhere and select "Inspect element" for WebKitGTK backend).</p>
@@ -574,8 +664,9 @@ Apps project</strong> and distributed in Nuvola Player repository, follow these 
      See <a href="http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1">GitHub For Beginners: Don't Get Scared, Get Started</a> for help.</li>
 <li>
 <p>Push content of your local repository to the remote repository.</p>
-<pre class="codehilite"><code class="language-sh">git remote add origin git@github.com:fenryxo/nuvola-app-test.git
-git push -u origin master</code></pre>
+<div class="codehilite"><pre><span></span>git remote add origin git@github.com:fenryxo/nuvola-app-test.git
+git push -u origin master
+</pre></div>
 </li>
 <li>
 <p>Create new issue in your repository titled "Push to Nuvola Apps project"</p>
