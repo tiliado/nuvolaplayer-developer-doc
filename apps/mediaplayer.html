@@ -88,6 +88,8 @@
 <li><a href="#media-player-actions">Media Player Actions</a></li>
 <li><a href="#progress-bar">Progress bar</a></li>
 <li><a href="#volume-management">Volume management</a></li>
+<li><a href="#repeat-status">Repeat Status</a></li>
+<li><a href="#shuffle-status">Shuffle Status</a></li>
 <li><a href="#track-rating">Track Rating</a></li>
 <li><a href="#custom-actions">Custom Actions</a></li>
 </ul>
@@ -268,7 +270,9 @@ and finally splits the combined play/pause button.</p>
     <span class="nx">repeat</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'repeat'</span><span class="p">),</span>
     <span class="nx">shuffle</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'shuffle'</span><span class="p">),</span>
     <span class="nx">progressbar</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'progressbar'</span><span class="p">),</span>
-    <span class="nx">volumebar</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'volume-bar'</span><span class="p">)</span>
+    <span class="nx">volumebar</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'volume-bar'</span><span class="p">),</span>
+    <span class="nx">repeat</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'repeat'</span><span class="p">),</span>
+    <span class="nx">shuffle</span><span class="o">:</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'shuffle'</span><span class="p">)</span>
   <span class="p">}</span>
 
   <span class="c1">// Ignore disabled buttons</span>
@@ -510,6 +514,88 @@ use these API calls:</p>
 <span class="p">...</span>
 </pre></div>
 <p><img alt="Playback volume" src="../images/guide/volume_management.png"/></p>
+<h3 id="repeat-status">Repeat Status</h3>
+<p>Since <strong>Nuvola 4.12.86</strong>, it is possible to integrate the <strong>repeat status</strong>.</p>
+<ul>
+<li>It is implemented as an action <a href="./api_reference.html#Nuvola.PlayerAction.REPEAT">PlayerAction.REPEAT</a> with three states:
+    <a href="./api_reference.html#Nuvola.PlayerRepeat.NONE">PlayerRepeat.NONE</a> (default, don't repeat),
+    <a href="./api_reference.html#Nuvola.PlayerRepeat.TRACK">PlayerRepeat.TRACK</a> (repeat a single track), and
+    <a href="./api_reference.html#Nuvola.PlayerRepeat.PLAYLIST">PlayerRepeat.PLAYLIST</a> (repeat the whole playlist).</li>
+<li>Use <a href="./api_reference.html#Nuvola.Actions.updateEnabledFlag">Actions.updateEnabledFlag</a> to enable the action
+    and <a href="./api_reference.html#Nuvola.Actions.updateState">Actions.updateState</a> to update the current state.</li>
+<li>The <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction.REPEAT</a> is emitted whenever the repeat status is changed remotely.
+    The parameter is the new repeat status.</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_getRepeat</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getElements</span><span class="p">().</span><span class="nx">repeat</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">elm</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">null</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">elm</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">src</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">'ic_repeat_one_48px.svg'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerRepeat</span><span class="p">.</span><span class="nx">TRACK</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s1">'btn-info'</span><span class="p">)</span> <span class="o">?</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerRepeat</span><span class="p">.</span><span class="nx">PLAYLIST</span> <span class="o">:</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">PlayerRepeat</span><span class="p">.</span><span class="nx">NONE</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_setRepeat</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">repeat</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">while</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_getRepeat</span><span class="p">()</span> <span class="o">!==</span> <span class="nx">repeat</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_getElements</span><span class="p">().</span><span class="nx">repeat</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="p">...</span>
+  <span class="kd">var</span> <span class="nx">repeat</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getRepeat</span><span class="p">()</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlag</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">REPEAT</span><span class="p">,</span> <span class="nx">repeat</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateState</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">REPEAT</span><span class="p">,</span> <span class="nx">repeat</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">REPEAT</span><span class="o">:</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_setRepeat</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span>
+      <span class="k">break</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><img alt="Repeat tracks" src="../images/guide/tracks_repeat.png"/></p>
+<h3 id="shuffle-status">Shuffle Status</h3>
+<p>Since <strong>Nuvola 4.12.86</strong>, it is possible to integrate the <strong>shuffle status</strong>.</p>
+<ul>
+<li>It is implemented as an action <a href="./api_reference.html#Nuvola.PlayerAction.SHUFFLE">PlayerAction.SHUFFLE</a> with two states:
+    <code>true</code> (shuffle tracks) and <code>false</code> (do not shuffle).</li>
+<li>Use <a href="./api_reference.html#Nuvola.Actions.updateEnabledFlag">Actions.updateEnabledFlag</a> to enable the action
+    and <a href="./api_reference.html#Nuvola.Actions.updateState">Actions.updateState</a> to update the current state.</li>
+<li>The <a href="./api_reference.html#Nuvola.PlayerAction.SHUFFLE">PlayerAction.SHUFFLE</a> is emitted whenever the shuffle status is
+    changed remotely. The parameter is the new shuffle status.</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">_getShuffle</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getElements</span><span class="p">().</span><span class="nx">shuffle</span>
+  <span class="k">return</span> <span class="nx">elm</span> <span class="o">?</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s1">'btn-info'</span><span class="p">)</span> <span class="o">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="p">...</span>
+  <span class="kd">var</span> <span class="nx">shuffle</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getShuffle</span><span class="p">()</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlag</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">SHUFFLE</span><span class="p">,</span> <span class="nx">shuffle</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateState</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">SHUFFLE</span><span class="p">,</span> <span class="o">!!</span><span class="nx">shuffle</span><span class="p">)</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+
+<span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onActionActivated</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">param</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">...</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">SHUFFLE</span><span class="o">:</span>
+      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nx">elms</span><span class="p">.</span><span class="nx">shuffle</span><span class="p">)</span>
+      <span class="k">break</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><img alt="Shuffle tracks" src="../images/guide/tracks_shuffle.png"/></p>
 <h3 id="track-rating">Track Rating</h3>
 <p>Since <strong>Nuvola 3.1</strong>, it is also possible to integrate track rating. One of consumers of this metadata is
 <a href="https://extensions.gnome.org/extension/55/media-player-indicator/">GNOME Shell Media Player extension</a>, for example:</p>
