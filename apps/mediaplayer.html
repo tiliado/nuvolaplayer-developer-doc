@@ -515,14 +515,14 @@ use these API calls:</p>
 </pre></div>
 <p><img alt="Playback volume" src="../images/guide/volume_management.png"/></p>
 <h3 id="repeat-status">Repeat Status</h3>
-<p>Since <strong>Nuvola 4.12.86</strong>, it is possible to integrate the <strong>repeat status</strong>.</p>
+<p>Since <strong>Nuvola 4.12.92</strong>, it is possible to integrate the <strong>repeat status</strong>.</p>
 <ul>
 <li>It is implemented as an action <a href="./api_reference.html#Nuvola.PlayerAction.REPEAT">PlayerAction.REPEAT</a> with three states:
     <a href="./api_reference.html#Nuvola.PlayerRepeat.NONE">PlayerRepeat.NONE</a> (default, don't repeat),
     <a href="./api_reference.html#Nuvola.PlayerRepeat.TRACK">PlayerRepeat.TRACK</a> (repeat a single track), and
     <a href="./api_reference.html#Nuvola.PlayerRepeat.PLAYLIST">PlayerRepeat.PLAYLIST</a> (repeat the whole playlist).</li>
-<li>Use <a href="./api_reference.html#Nuvola.Actions.updateEnabledFlag">Actions.updateEnabledFlag</a> to enable the action
-    and <a href="./api_reference.html#Nuvola.Actions.updateState">Actions.updateState</a> to update the current state.</li>
+<li>Use <a href="./api_reference.html#Nuvola.MediaPlayer.setCanRepeat">MediaPlayer.setCanRepeat</a> to enable the action
+    and <a href="./api_reference.html#Nuvola.MediaPlayer.setRepeatState">MediaPlayer.setRepeatState</a> to update the current state.</li>
 <li>The <a href="./api_reference.html#Nuvola.PlayerAction">PlayerAction.REPEAT</a> is emitted whenever the repeat status is changed remotely.
     The parameter is the new repeat status.</li>
 </ul>
@@ -546,8 +546,8 @@ use these API calls:</p>
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="p">...</span>
   <span class="kd">var</span> <span class="nx">repeat</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getRepeat</span><span class="p">()</span>
-  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlag</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">REPEAT</span><span class="p">,</span> <span class="nx">repeat</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span>
-  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateState</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">REPEAT</span><span class="p">,</span> <span class="nx">repeat</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="nx">player</span><span class="p">.</span><span class="nx">setCanRepeat</span><span class="p">(</span><span class="nx">repeat</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span>
+  <span class="nx">player</span><span class="p">.</span><span class="nx">setRepeatState</span><span class="p">(</span><span class="nx">repeat</span><span class="p">)</span>
   <span class="p">...</span>
 <span class="p">}</span>
 
@@ -563,12 +563,12 @@ use these API calls:</p>
 </pre></div>
 <p><img alt="Repeat tracks" src="../images/guide/tracks_repeat.png"/></p>
 <h3 id="shuffle-status">Shuffle Status</h3>
-<p>Since <strong>Nuvola 4.12.86</strong>, it is possible to integrate the <strong>shuffle status</strong>.</p>
+<p>Since <strong>Nuvola 4.12.91</strong>, it is possible to integrate the <strong>shuffle status</strong>.</p>
 <ul>
 <li>It is implemented as an action <a href="./api_reference.html#Nuvola.PlayerAction.SHUFFLE">PlayerAction.SHUFFLE</a> with two states:
     <code>true</code> (shuffle tracks) and <code>false</code> (do not shuffle).</li>
-<li>Use <a href="./api_reference.html#Nuvola.Actions.updateEnabledFlag">Actions.updateEnabledFlag</a> to enable the action
-    and <a href="./api_reference.html#Nuvola.Actions.updateState">Actions.updateState</a> to update the current state.</li>
+<li>Use <a href="./api_reference.html#Nuvola.MediaPlayer.setCanShuffle">MediaPlayer.setCanShuffle</a> to enable the action
+    and <a href="./api_reference.html#Nuvola.MediaPlayer.setShuffleState">MediaPlayer.setShuffleState</a> to update the current state.</li>
 <li>The <a href="./api_reference.html#Nuvola.PlayerAction.SHUFFLE">PlayerAction.SHUFFLE</a> is emitted whenever the shuffle status is
     changed remotely. The parameter is the new shuffle status.</li>
 </ul>
@@ -580,8 +580,8 @@ use these API calls:</p>
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="p">...</span>
   <span class="kd">var</span> <span class="nx">shuffle</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_getShuffle</span><span class="p">()</span>
-  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlag</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">SHUFFLE</span><span class="p">,</span> <span class="nx">shuffle</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span>
-  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateState</span><span class="p">(</span><span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">SHUFFLE</span><span class="p">,</span> <span class="o">!!</span><span class="nx">shuffle</span><span class="p">)</span>
+  <span class="nx">player</span><span class="p">.</span><span class="nx">setCanShuffle</span><span class="p">(</span><span class="nx">shuffle</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span>
+  <span class="nx">player</span><span class="p">.</span><span class="nx">setShuffleState</span><span class="p">(</span><span class="nx">shuffle</span><span class="p">)</span>
   <span class="p">...</span>
 <span class="p">}</span>
 

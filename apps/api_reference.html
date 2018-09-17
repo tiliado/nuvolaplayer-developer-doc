@@ -196,8 +196,12 @@
 <li><a href="#Nuvola.MediaPlayer.setCanPause">setCanPause</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanPlay">setCanPlay</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanRate">setCanRate</a></li>
+<li><a href="#Nuvola.MediaPlayer.setCanRepeat">setCanRepeat</a></li>
 <li><a href="#Nuvola.MediaPlayer.setCanSeek">setCanSeek</a></li>
+<li><a href="#Nuvola.MediaPlayer.setCanShuffle">setCanShuffle</a></li>
 <li><a href="#Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</a></li>
+<li><a href="#Nuvola.MediaPlayer.setRepeatState">setRepeatState</a></li>
+<li><a href="#Nuvola.MediaPlayer.setShuffleState">setShuffleState</a></li>
 <li><a href="#Nuvola.MediaPlayer.setTrack">setTrack</a></li>
 <li><a href="#Nuvola.MediaPlayer.setTrackPosition">setTrackPosition</a></li>
 <li><a href="#Nuvola.MediaPlayer.updateVolume">updateVolume</a></li>
@@ -1392,6 +1396,15 @@ If the argument is same as in the previous call, this method does nothing.</p><p
 </ul>
 </li>
 
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanRepeat">setCanRepeat</b>(canRepeat)<br />
+<p>Set whether it is possible to repeat a track or a playlist.</p>
+<p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> Nuvola 4.13</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>Boolean <b>canRepeat</b> - true if the repeat state can be changed.</li>
+</ul>
+</li>
+
 <li><small> method</small> <b id="Nuvola.MediaPlayer.setCanSeek">setCanSeek</b>(canSeek)<br />
 <p>Set whether it is possible to seek to a specific position of the track</p>
 <p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> API 4.5</p>
@@ -1401,11 +1414,37 @@ If the argument is same as in the previous call, this method does nothing.</p><p
 </ul>
 </li>
 
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setCanShuffle">setCanShuffle</b>(canShuffle)<br />
+<p>Set whether it is possible to shuffle playlist.</p>
+<p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> Nuvola 4.13</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>Boolean <b>canShuffle</b> - true if shuffle state should be allowed</li>
+</ul>
+</li>
+
 <li><small> method</small> <b id="Nuvola.MediaPlayer.setPlaybackState">setPlaybackState</b>(state)<br />
 <p>Set current playback state</p>
 <p>If the current state is same as the previous one, this method does nothing.</p><p><b>Parameters</b></p>
 <ul>
 <li><a href="#Nuvola.PlaybackState">PlaybackState</a> <b>state</b> - current playback state</li>
+</ul>
+</li>
+
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setRepeatState">setRepeatState</b>(repeat)<br />
+<p>Set the current repeat state.</p>
+<p>If the current state is same as the previous one, this method does nothing.</p><p><b>Parameters</b></p>
+<ul>
+<li><a href="#Nuvola.PlayerRepeat">PlayerRepeat</a> <b>repeat</b> - The current repeat state.</li>
+</ul>
+</li>
+
+<li><small> method</small> <b id="Nuvola.MediaPlayer.setShuffleState">setShuffleState</b>(shuffle)<br />
+<p>Set the current shuffle state.</p>
+<p>If the argument is same as in the previous call, this method does nothing.</p><p><b>Available since</b> Nuvola 4.13</p>
+<p><b>Parameters</b></p>
+<ul>
+<li>Boolean <b>shuffle</b> - true if the playback is in the shuffle mode</li>
 </ul>
 </li>
 
@@ -1835,7 +1874,7 @@ other arguments should be specified at each signal's description.</p><p><b>Param
 <li><b id="Nuvola.PlayerRepeat.PLAYLIST">PLAYLIST</b> - The playback loops through a list of tracks.</li>
 <li><b id="Nuvola.PlayerRepeat.TRACK">TRACK</b> - The current track will start again from the beginning once it has finished playing.</li>
 </ul></li>
-</ul><h2 id="x-changelog">Changelog</h2><h3 id="x-changelog-3-1">Since 3.1</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanRate">Nuvola.MediaPlayer.setCanRate</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer::RatingSet">Nuvola.MediaPlayer::RatingSet</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-5">Since 4.5</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanChangeVolume">Nuvola.MediaPlayer.setCanChangeVolume</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setCanSeek">Nuvola.MediaPlayer.setCanSeek</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setTrackPosition">Nuvola.MediaPlayer.setTrackPosition</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.updateVolume">Nuvola.MediaPlayer.updateVolume</a> <i>(new)</i></li><li><a href="#Nuvola.checkVersion">Nuvola.checkVersion</a> <i>(new)</i></li><li><a href="#Nuvola.clickOnElement">Nuvola.clickOnElement</a> <i>(new)</i>: x, y coordinates were added.</li><li><a href="#Nuvola.encodeVersion">Nuvola.encodeVersion</a> <i>(new)</i></li><li><a href="#Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</a> <i>(new)</i>: x, y coordinates were added.</li></ul><h3 id="x-changelog-4-8">Since 4.8</h3><ul><li><a href="#Nuvola.Actions.getState">Nuvola.Actions.getState</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.getStateAsync">Nuvola.Actions.getStateAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Actions.isEnabled">Nuvola.Actions.isEnabled</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.isEnabledAsync">Nuvola.Actions.isEnabledAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.getComponentInfo">Nuvola.Core.getComponentInfo</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.getComponentInfoAsync">Nuvola.Core.getComponentInfoAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentActive">Nuvola.Core.isComponentActive</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentActiveAsync">Nuvola.Core.isComponentActiveAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentLoaded">Nuvola.Core.isComponentLoaded</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentLoadedAsync">Nuvola.Core.isComponentLoadedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.get">Nuvola.KeyValueStorage.get</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.getAsync">Nuvola.KeyValueStorage.getAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.hasKey">Nuvola.KeyValueStorage.hasKey</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.hasKeyAsync">Nuvola.KeyValueStorage.hasKeyAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.set">Nuvola.KeyValueStorage.set</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setAsync">Nuvola.KeyValueStorage.setAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.setDefault">Nuvola.KeyValueStorage.setDefault</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setDefaultAsync">Nuvola.KeyValueStorage.setDefaultAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Notifications.isPersistenceSupported">Nuvola.Notifications.isPersistenceSupported</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Notifications.isPersistenceSupportedAsync">Nuvola.Notifications.isPersistenceSupportedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.logException">Nuvola.logException</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-10">Since 4.10</h3><ul><li><a href="#Nuvola.showInfoBar">Nuvola.showInfoBar</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-11">Since 4.11</h3><ul><li><a href="#Nuvola.exportImageAsBase64">Nuvola.exportImageAsBase64</a> <i>(new)</i></li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i></li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i></li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-12">Since 4.12</h3><ul><li><a href="#Nuvola.Core::NavigationRequest">Nuvola.Core::NavigationRequest</a> <i>(new)</i>: You can overwrite  `request.url` field to force redirect.</li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i>: You can specify a parent element and a relative selector as an array of [parent element, selector].</li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i>: You can specify a parent element and a relative selector as an array of [parent element, selector].</li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i>: The change event is emitted as well.</li></ul><h3 id="x-changelog-4-13">Since 4.13</h3><ul><li><a href="#Nuvola.PlayerAction">PlayerAction</a> <i>(new)</i>: `REPEAT` and `SHUFFLE` actions were added.</li><li><a href="#Nuvola.PlayerRepeat">PlayerRepeat</a> <i>(new)</i></li></ul>
+</ul><h2 id="x-changelog">Changelog</h2><h3 id="x-changelog-3-1">Since 3.1</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanRate">Nuvola.MediaPlayer.setCanRate</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer::RatingSet">Nuvola.MediaPlayer::RatingSet</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-5">Since 4.5</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanChangeVolume">Nuvola.MediaPlayer.setCanChangeVolume</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setCanSeek">Nuvola.MediaPlayer.setCanSeek</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setTrackPosition">Nuvola.MediaPlayer.setTrackPosition</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.updateVolume">Nuvola.MediaPlayer.updateVolume</a> <i>(new)</i></li><li><a href="#Nuvola.checkVersion">Nuvola.checkVersion</a> <i>(new)</i></li><li><a href="#Nuvola.clickOnElement">Nuvola.clickOnElement</a> <i>(new)</i>: x, y coordinates were added.</li><li><a href="#Nuvola.encodeVersion">Nuvola.encodeVersion</a> <i>(new)</i></li><li><a href="#Nuvola.triggerMouseEvent">Nuvola.triggerMouseEvent</a> <i>(new)</i>: x, y coordinates were added.</li></ul><h3 id="x-changelog-4-8">Since 4.8</h3><ul><li><a href="#Nuvola.Actions.getState">Nuvola.Actions.getState</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.getStateAsync">Nuvola.Actions.getStateAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Actions.isEnabled">Nuvola.Actions.isEnabled</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Actions.isEnabledAsync">Nuvola.Actions.isEnabledAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.getComponentInfo">Nuvola.Core.getComponentInfo</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.getComponentInfoAsync">Nuvola.Core.getComponentInfoAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentActive">Nuvola.Core.isComponentActive</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentActiveAsync">Nuvola.Core.isComponentActiveAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Core.isComponentLoaded">Nuvola.Core.isComponentLoaded</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Core.isComponentLoadedAsync">Nuvola.Core.isComponentLoadedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.get">Nuvola.KeyValueStorage.get</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.getAsync">Nuvola.KeyValueStorage.getAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.hasKey">Nuvola.KeyValueStorage.hasKey</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.hasKeyAsync">Nuvola.KeyValueStorage.hasKeyAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.set">Nuvola.KeyValueStorage.set</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setAsync">Nuvola.KeyValueStorage.setAsync</a> <i>(new)</i></li><li><a href="#Nuvola.KeyValueStorage.setDefault">Nuvola.KeyValueStorage.setDefault</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.KeyValueStorage.setDefaultAsync">Nuvola.KeyValueStorage.setDefaultAsync</a> <i>(new)</i></li><li><a href="#Nuvola.Notifications.isPersistenceSupported">Nuvola.Notifications.isPersistenceSupported</a> <i>(deprecated)</i>: Use async variant instead.</li><li><a href="#Nuvola.Notifications.isPersistenceSupportedAsync">Nuvola.Notifications.isPersistenceSupportedAsync</a> <i>(new)</i></li><li><a href="#Nuvola.logException">Nuvola.logException</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-10">Since 4.10</h3><ul><li><a href="#Nuvola.showInfoBar">Nuvola.showInfoBar</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-11">Since 4.11</h3><ul><li><a href="#Nuvola.exportImageAsBase64">Nuvola.exportImageAsBase64</a> <i>(new)</i></li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i></li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i></li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i></li></ul><h3 id="x-changelog-4-12">Since 4.12</h3><ul><li><a href="#Nuvola.Core::NavigationRequest">Nuvola.Core::NavigationRequest</a> <i>(new)</i>: You can overwrite  `request.url` field to force redirect.</li><li><a href="#Nuvola.queryAttribute">Nuvola.queryAttribute</a> <i>(new)</i>: You can specify a parent element and a relative selector as an array of [parent element, selector].</li><li><a href="#Nuvola.queryText">Nuvola.queryText</a> <i>(new)</i>: You can specify a parent element and a relative selector as an array of [parent element, selector].</li><li><a href="#Nuvola.setInputValueWithEvent">Nuvola.setInputValueWithEvent</a> <i>(new)</i>: The change event is emitted as well.</li></ul><h3 id="x-changelog-4-13">Since 4.13</h3><ul><li><a href="#Nuvola.MediaPlayer.setCanRepeat">Nuvola.MediaPlayer.setCanRepeat</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setCanShuffle">Nuvola.MediaPlayer.setCanShuffle</a> <i>(new)</i></li><li><a href="#Nuvola.MediaPlayer.setShuffleState">Nuvola.MediaPlayer.setShuffleState</a> <i>(new)</i></li><li><a href="#Nuvola.PlayerAction">PlayerAction</a> <i>(new)</i>: `REPEAT` and `SHUFFLE` actions were added.</li><li><a href="#Nuvola.PlayerRepeat">PlayerRepeat</a> <i>(new)</i></li></ul>
 
 <div class="footer">
   <hr />
