@@ -114,7 +114,7 @@ initialization and preferences forms.</p>
 loaded. You should use it only for configuration your service information cannot live without.
 For example, Logitech Media Server integration needs to know an address of server instance,
 because it has no idea what web page to load without this information.</p>
-<p>The initialization from is show when <code>entries</code> parameter of
+<p>The initialization form is shown when <code>entries</code> parameter of
 <a href="./api_reference.html#Nuvola.Core%3A%3AInitializationForm">Nuvola.Core::InitializationForm</a> signal
 handler is not left empty. The example bellow asks user to provide name to show a greeting.
 API used in <code>WebApp.appendPreferences</code> will be <a href="#form-specification">described later</a>.</p>
@@ -353,7 +353,7 @@ item of a form entry describes a type of the entry.</p>
 <span class="s1">  entries.push(['</span><span class="nx">header</span><span class="s1">', _('</span><span class="nx">Amazon</span> <span class="nx">Cloud</span> <span class="nx">Player</span><span class="s1">')])</span>
 <span class="s1">  entries.push(['</span><span class="nx">label</span><span class="s1">', _('</span><span class="nx">Preferred</span> <span class="nx">national</span> <span class="nx">variant</span><span class="s1">')])</span>
 <span class="s1">  for (var i = 0; i &lt; COUNTRY_VARIANTS.length; i++) {</span>
-<span class="s1">    entries.push(['</span><span class="nx">option</span><span class="err">'</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]])</span>
+<span class="s1">    entries.push(['</span><span class="nx">option</span><span class="err">'</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANT</span><span class="p">,</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mf">0</span><span class="p">],</span> <span class="nx">COUNTRY_VARIANTS</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mf">1</span><span class="p">]])</span>
   <span class="p">}</span>
 <span class="p">}</span>
 

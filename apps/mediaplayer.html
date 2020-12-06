@@ -237,7 +237,7 @@ offers a high level API for Media Player Integration.</p>
     <span class="c1">// ...</span>
 
     <span class="c1">// Schedule the next update</span>
-    <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mf">500</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="c1">// Handler of playback actions</span>
@@ -331,7 +331,7 @@ track details to method <a href="./api_reference.html#Nuvola.MediaPlayer.setTrac
       <span class="nx">artist</span><span class="o">:</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">queryText</span><span class="p">(</span><span class="s1">'#track-artist'</span><span class="p">),</span>
       <span class="nx">album</span><span class="o">:</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">queryText</span><span class="p">(</span><span class="s1">'#track-album'</span><span class="p">),</span>
       <span class="nx">artLocation</span><span class="o">:</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">queryAttribute</span><span class="p">(</span><span class="s1">'#track-cover'</span><span class="p">,</span> <span class="s1">'src'</span><span class="p">,</span> <span class="p">(</span><span class="nx">src</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">(</span>
-        <span class="nx">src</span> <span class="o">?</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">src</span> <span class="o">:</span> <span class="kc">null</span>
+        <span class="nx">src</span> <span class="o">?</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">src</span> <span class="o">:</span> <span class="kc">null</span>
       <span class="p">)),</span>
     <span class="p">}</span>
 
@@ -460,7 +460,7 @@ use these API calls:</p>
     <span class="p">...</span>
     <span class="k">case</span> <span class="nx">PlayerAction</span><span class="p">.</span><span class="nx">SEEK</span><span class="o">:</span>
         <span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">parseTimeUsec</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">queryText</span><span class="p">(</span><span class="s1">'#timetotal'</span><span class="p">))</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">param</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">param</span> <span class="o">&lt;=</span> <span class="nx">total</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">param</span> <span class="o">&gt;</span> <span class="mf">0</span> <span class="o">&amp;&amp;</span> <span class="nx">param</span> <span class="o">&lt;=</span> <span class="nx">total</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nx">elms</span><span class="p">.</span><span class="nx">progressbar</span><span class="p">,</span> <span class="nx">param</span> <span class="o">/</span> <span class="nx">total</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
         <span class="p">}</span>
         <span class="k">break</span>
@@ -478,7 +478,7 @@ use these API calls:</p>
 <a href="./api_reference.html#Nuvola.queryAttribute">Nuvola.queryAttribute()</a> for that.</p>
 <div class="codehilite"><pre><span></span><span class="nx">WebApp</span><span class="p">.</span><span class="nx">update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="p">...</span>
-  <span class="nx">player</span><span class="p">.</span><span class="nx">updateVolume</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">queryAttribute</span><span class="p">(</span><span class="s1">'#volume-mark'</span><span class="p">,</span> <span class="s1">'aria-valuenow'</span><span class="p">,</span> <span class="p">(</span><span class="nx">volume</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">volume</span> <span class="o">/</span> <span class="mi">100</span><span class="p">))</span>
+  <span class="nx">player</span><span class="p">.</span><span class="nx">updateVolume</span><span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">queryAttribute</span><span class="p">(</span><span class="s1">'#volume-mark'</span><span class="p">,</span> <span class="s1">'aria-valuenow'</span><span class="p">,</span> <span class="p">(</span><span class="nx">volume</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">volume</span> <span class="o">/</span> <span class="mf">100</span><span class="p">))</span>
   <span class="p">...</span>
 <span class="p">}</span>
 </pre></div>
@@ -642,7 +642,7 @@ Here are some suggestions:</p>
 
   <span class="c1">// Parse rating</span>
   <span class="kd">var</span> <span class="nx">rating</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'rating'</span><span class="p">)</span>
-    <span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mf">0</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">for</span> <span class="p">(;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="nx">rating</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">stars</span><span class="p">].</span><span class="nx">src</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'star_border_white'</span><span class="p">))</span> <span class="p">{</span>
@@ -667,19 +667,19 @@ Here are some suggestions:</p>
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onRatingSet</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">emitter</span><span class="p">,</span> <span class="nx">rating</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">stars</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">0</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;</span> <span class="mf">0.3</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">1</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">2</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;</span> <span class="mf">0.7</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">3</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;</span> <span class="mf">0.9</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">4</span>
   <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span> <span class="o">&lt;</span> <span class="mf">1.1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">5</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nx">stars</span> <span class="o">=</span> <span class="mf">0</span>
   <span class="p">}</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">_setRating</span><span class="p">(</span><span class="nx">stars</span><span class="p">)</span>
 <span class="p">}</span>
@@ -687,19 +687,19 @@ Here are some suggestions:</p>
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_setRating</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">stars</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'rating-change'</span><span class="p">)</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">elm</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">stars</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">stars</span> <span class="o">===</span> <span class="mf">0</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">// Click on the current star to erase it</span>
       <span class="kd">var</span> <span class="nx">rating</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'rating'</span><span class="p">)</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="nx">rating</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nx">stars</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="nx">rating</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
           <span class="k">if</span> <span class="p">(</span><span class="nx">rating</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">stars</span><span class="p">].</span><span class="nx">src</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">'star_border_white'</span><span class="p">))</span> <span class="p">{</span>
             <span class="k">break</span>
           <span class="p">}</span>
         <span class="p">}</span>
       <span class="p">}</span>
     <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">stars</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">stars</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">stars</span> <span class="o">&gt;</span> <span class="mf">0</span> <span class="o">&amp;&amp;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mf">6</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">clickOnElement</span><span class="p">(</span><span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">stars</span> <span class="o">-</span> <span class="mf">1</span><span class="p">])</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -723,22 +723,22 @@ a dock item, or can have a keyboard shortcut:</p>
 <span class="c1">// Define rating options - 5 states with state id 0-5 representing 0-5 stars</span>
 <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[</span>
   <span class="c1">// stateId, label, mnemo_label, icon, keybinding</span>
-  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 0 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 1 star'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 2 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 3 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 4 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 5 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">]</span>
+  <span class="p">[</span><span class="mf">0</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 0 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 1 star'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">2</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 2 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">3</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 3 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">4</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 4 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">5</span><span class="p">,</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'Rating: 5 stars'</span><span class="p">),</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">]</span>
 <span class="p">]</span>
 <span class="c1">// Add new radio action named `rating` with initial state `3` (3 stars)</span>
 <span class="kd">var</span> <span class="nx">ACTION_RATING</span> <span class="o">=</span> <span class="s1">'rating'</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
+<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
 
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="c1">// Add extra actions</span>
   <span class="kd">var</span> <span class="nx">actions</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mf">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">actions</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s1">'::'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span>
   <span class="p">}</span>
   <span class="nx">player</span><span class="p">.</span><span class="nx">addExtraActions</span><span class="p">(</span><span class="nx">actions</span><span class="p">)</span>

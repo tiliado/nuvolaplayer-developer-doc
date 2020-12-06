@@ -131,7 +131,7 @@ I'm looking forward to a code review ;-)</p>
 <li>
 <p>Create a project directory <code>~/projects/nuvola-apps</code> (or any other name, but don't forget to
     adjust paths in this tutorial).</p>
-<div class="codehilite"><pre><span></span>mkdir -p ~/projects/nuvola-apps
+<div class="codehilite"><pre><span></span><span class="err">mkdir -p ~/projects/nuvola-apps</span>
 </pre></div>
 </li>
 <li>
@@ -451,7 +451,7 @@ modifications.</p>
     <span class="nx">player</span><span class="p">.</span><span class="nx">setPlaybackState</span><span class="p">(</span><span class="nx">PlaybackState</span><span class="p">.</span><span class="nx">UNKNOWN</span><span class="p">)</span>
 
     <span class="c1">// Schedule the next update</span>
-    <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mf">500</span><span class="p">)</span>
   <span class="p">}</span>
 
   <span class="c1">// Handler of playback actions</span>
@@ -473,43 +473,43 @@ recommended to use the license of Nuvola Apps Runtime as shown in the example.</
 <dd>
 <p>Use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode">strict JavaScript mode</a> in your scripts.</p>
 </dd>
-<dt>Lines 27-28 and 86</dt>
+<dt>Lines 27 and 83</dt>
 <dd>
 <p>Use <a href="http://markdalgleish.com/2011/03/self-executing-anonymous-functions/">self-executing anonymous function</a> to create closure with <a href="./api_reference.html#">Nuvola object</a>.
 (Integration script are executed with <code>Nuvola</code> object bound to <code>this</code>).</p>
 </dd>
-<dt>Line 31</dt>
+<dt>Line 30</dt>
 <dd>
 <p>Create <a href="./api_reference.html#Nuvola.MediaPlayer">MediaPlayer</a> component that adds playback actions and is later used to provide playback
 details.</p>
 </dd>
-<dt>Line 38</dt>
+<dt>Line 37</dt>
 <dd>
 <p>Create new WebApp prototype object derived from the <a href="./api_reference.html#Nuvola.WebApp">Nuvola.WebApp</a> prototype that contains
 handy default handlers for initialization routines and signals from Nuvola core.
 You can override them if your web app requires more magic ;-)</p>
 </dd>
-<dt>Lines 41-50</dt>
+<dt>Lines 40-49</dt>
 <dd>
 <p>Handler for <a href="./api_reference.html#Core%3A%3AInitWebWorker">Nuvola.Core::InitWebWorker signal</a> signal that
 emitted in clear JavaScript environment with a brand new global <code>window</code> object. You should
 not touch it, only perform necessary initialization (usually not needed) and set your listener
 for either <code>document</code>'s <code>DOMContentLoaded</code> event (preferred) or <code>window</code>'s <code>load</code> event.</p>
 </dd>
-<dt>Lines 53-60</dt>
+<dt>Lines 52-58</dt>
 <dd>
 <p>When document object model of a web page is ready, we register a signal handler for playback
 actions and call update() method.</p>
 </dd>
-<dt>Lines 63-77</dt>
+<dt>Lines 61-75</dt>
 <dd>
 <p>The update() method periodically extracts playback state and track details.</p>
 </dd>
-<dt>Lines 81-82</dt>
+<dt>Lines 78-79</dt>
 <dd>
 <p>Actions handler is used to respond to player actions.</p>
 </dd>
-<dt>Line 84</dt>
+<dt>Line 81</dt>
 <dd>
 <p>Convenience method to create and register new instance of your web app integration.</p>
 </dd>

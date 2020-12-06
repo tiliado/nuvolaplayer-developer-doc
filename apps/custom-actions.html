@@ -152,7 +152,7 @@ singular and plural forms.</p>
   <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">,</span> <span class="nx">C_</span><span class="p">(</span><span class="s1">'Action'</span><span class="p">,</span> <span class="s1">'Thumbs down'</span><span class="p">),</span>
     <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
   <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">stars</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">stars</span> <span class="o">&lt;</span> <span class="mf">6</span><span class="p">;</span> <span class="nx">stars</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">ratingOptions</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span>
       <span class="nx">stars</span><span class="p">,</span> <span class="c1">// stateId</span>
       <span class="c1">/// Star rating, {1} is a placeholder for a number</span>
@@ -162,7 +162,7 @@ singular and plural forms.</p>
       <span class="kc">null</span>  <span class="c1">// keybinding</span>
     <span class="p">])</span>
   <span class="p">}</span>
-  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
+  <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">'playback'</span><span class="p">,</span> <span class="s1">'win'</span><span class="p">,</span> <span class="nx">ACTION_RATING</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="p">...</span>
@@ -192,7 +192,7 @@ action name and the option id separated by two colons <code>::</code>.</p>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">_onPageReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">actions</span> <span class="o">=</span> <span class="p">[</span><span class="nx">ACTION_ALERT</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mf">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">actions</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s1">'::'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span>
   <span class="p">}</span>
 
@@ -231,7 +231,7 @@ state of radio and toggle actions with method
   <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span> <span class="o">=</span> <span class="kc">false</span> <span class="c1">// off/unchecked</span>
 
   <span class="nx">actionsEnabled</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span>
-  <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">// three stars</span>
+  <span class="nx">actionsStates</span><span class="p">[</span><span class="nx">ACTION_RATING</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3</span> <span class="c1">// three stars</span>
 
   <span class="c1">// Compare with previous values and update if necessary</span>
   <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">updateEnabledFlags</span><span class="p">(</span><span class="nx">actionsEnabled</span><span class="p">)</span>
@@ -303,7 +303,7 @@ turn on five-star ratting in Music Labs. The following code detects which rating
 and adds actions accordingly.</p>
 <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">THUMBS_ACTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="nx">ACTION_THUMBS_UP</span><span class="p">,</span> <span class="nx">ACTION_THUMBS_DOWN</span><span class="p">]</span>
 <span class="kd">var</span> <span class="nx">STARS_ACTIONS</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mf">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">STARS_ACTIONS</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">ACTION_RATING</span> <span class="o">+</span> <span class="s1">'::'</span> <span class="o">+</span> <span class="nx">i</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -315,7 +315,7 @@ and adds actions accordingly.</p>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">getThumbs</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">elm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'#player-right-wrapper .thumbs.rating-container'</span><span class="p">)</span>
-  <span class="k">return</span> <span class="p">[</span><span class="nx">elm</span><span class="p">,</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+  <span class="k">return</span> <span class="p">[</span><span class="nx">elm</span><span class="p">,</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span> <span class="nx">elm</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mf">1</span><span class="p">]]</span>
 <span class="p">}</span>
 
 <span class="nx">WebApp</span><span class="p">.</span><span class="nx">getStars</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -329,12 +329,12 @@ and adds actions accordingly.</p>
   <span class="kd">var</span> <span class="nx">thumbsUp</span><span class="p">,</span> <span class="nx">thumbsDown</span>
   <span class="k">try</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">thumbs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getThumbs</span><span class="p">()</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">thumbs</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">===</span> <span class="s1">'hidden'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">thumbs</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">===</span> <span class="s1">'hidden'</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="kc">null</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">toggleThumbRating</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-      <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">className</span> <span class="o">===</span> <span class="s1">'selected'</span>
-      <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">className</span> <span class="o">===</span> <span class="s1">'selected'</span>
+      <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">className</span> <span class="o">===</span> <span class="s1">'selected'</span>
+      <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="nx">thumbs</span><span class="p">[</span><span class="mf">2</span><span class="p">].</span><span class="nx">className</span> <span class="o">===</span> <span class="s1">'selected'</span>
     <span class="p">}</span>
   <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">thumbsUp</span> <span class="o">=</span> <span class="nx">thumbsDown</span> <span class="o">=</span> <span class="kc">null</span>
@@ -348,7 +348,7 @@ and adds actions accordingly.</p>
         <span class="nx">starRating</span> <span class="o">=</span> <span class="kc">null</span>
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">toggleStarRating</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-        <span class="nx">starRating</span> <span class="o">=</span> <span class="nx">stars</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'data-rating'</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span>
+        <span class="nx">starRating</span> <span class="o">=</span> <span class="nx">stars</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">'data-rating'</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1</span>
       <span class="p">}</span>
   <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">starRating</span> <span class="o">=</span> <span class="kc">null</span>

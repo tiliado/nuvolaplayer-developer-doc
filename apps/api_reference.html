@@ -433,7 +433,7 @@ See <a href="#Nuvola.$object">$object</a> for instance object creation. Prototyp
 <ul>
 <li><p>true if Nuvola's version is greater than or equal to the required version</p></li>
 </ul>
-<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span> <span class="o">&amp;&amp;</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span> <span class="o">&amp;&amp;</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">checkVersion</span><span class="p">(</span><span class="mf">4</span><span class="p">,</span> <span class="mf">5</span><span class="p">))</span> <span class="p">{</span>
   <span class="c1">// Safe to use API &gt;= 4.5</span>
 <span class="p">}</span>
 </pre></div></li>
@@ -683,16 +683,16 @@ web app integration scripts can create custom actions with <a href="#Nuvola.Acti
 <div class="codehilite"><pre><span></span><span class="c1">// define rating options - 5 states with state id 0-5 representing 0-5 stars</span>
 <span class="kd">var</span> <span class="nx">ratingOptions</span> <span class="o">=</span> <span class="p">[</span>
   <span class="c1">// stateId, label, mnemo_label, icon, keybinding</span>
-  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Rating: 0 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Rating: 1 star&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Rating: 2 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Rating: 3 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Rating: 4 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
-  <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Rating: 5 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">]</span>
+  <span class="p">[</span><span class="mf">0</span><span class="p">,</span> <span class="s1">&#39;Rating: 0 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="s1">&#39;Rating: 1 star&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">2</span><span class="p">,</span> <span class="s1">&#39;Rating: 2 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">3</span><span class="p">,</span> <span class="s1">&#39;Rating: 3 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">4</span><span class="p">,</span> <span class="s1">&#39;Rating: 4 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">5</span><span class="p">,</span> <span class="s1">&#39;Rating: 5 stars&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">null</span><span class="p">]</span>
 <span class="p">]</span>
 
 <span class="c1">// Add new radio action named ``rating`` with initial state ``0`` (0 stars)</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">&#39;playback&#39;</span><span class="p">,</span> <span class="s1">&#39;win&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
+<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">addRadioAction</span><span class="p">(</span><span class="s1">&#39;playback&#39;</span><span class="p">,</span> <span class="s1">&#39;win&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="mf">0</span><span class="p">,</span> <span class="nx">ratingOptions</span><span class="p">)</span>
 </pre></div></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.bindButton">bindButton</b>(button, name, parameter)<br />
@@ -793,7 +793,7 @@ states and updates them only if necessary.</p><p><b>Parameters</b></p>
 <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;thumbs-up&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span>
 
 <span class="c1">// Set 5 stars</span>
-<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nx">Nuvola</span><span class="p">.</span><span class="nx">actions</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="mf">5</span><span class="p">)</span>
 </pre></div></li>
 
 <li><small> method</small> <b id="Nuvola.Actions.updateEnabledFlag">updateEnabledFlag</b>(name, enabled)<br />
@@ -1707,7 +1707,7 @@ translatable strings.</p>
 <li><p>String           translated string</p></li>
 </ul>
 <div class="codehilite"><pre><span></span><span class="kd">var</span> <span class="nx">ngettext</span> <span class="o">=</span> <span class="nx">Nuvola</span><span class="p">.</span><span class="nx">Translate</span><span class="p">.</span><span class="nx">ngettext</span>
-<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="kd">var</span> <span class="nx">eggs</span> <span class="o">=</span> <span class="mf">5</span>
 <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">ngettext</span><span class="p">(</span>
   <span class="s1">&#39;There is {1} egg in the fridge.&#39;</span><span class="p">,</span>
   <span class="s1">&#39;There are {1} eggs in the fridge.&#39;</span><span class="p">,</span>
